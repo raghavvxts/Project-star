@@ -68,20 +68,28 @@ button{
   75%{transform:translateX(-6px)}
 }
 
-/* constellation */
-.const-wrap{position:relative;width:100%;max-width:320px;height:160px;margin:18px auto 0;overflow:hidden}
+/* constellation (STABLE) */
+.const-wrap{
+  position:relative;width:100%;max-width:320px;height:160px;
+  margin:18px auto 0;overflow:hidden
+}
 .const-star{
   position:absolute;width:6px;height:6px;border-radius:50%;
   background:#fde68a;box-shadow:0 0 10px #fde68a;
-  opacity:0;animation:fadeIn .6s forwards,twinkle 3s infinite
+  opacity:0;animation:fadeIn .6s forwards
 }
 @keyframes fadeIn{to{opacity:1}}
-@keyframes twinkle{0%,100%{opacity:.6}50%{opacity:1}}
+
 .const-line{
-  position:absolute;height:2px;background:rgba(253,230,138,.6);
-  transform-origin:left center;animation:drawLine .8s forwards
+  position:absolute;height:2px;
+  background:rgba(253,230,138,.6);
+  transform-origin:left center;
+  animation:drawLine .8s forwards
 }
-@keyframes drawLine{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+@keyframes drawLine{
+  from{transform:scaleX(0)}
+  to{transform:scaleX(1)}
+}
 
 /* title animation */
 .letter{opacity:0;animation:appear .6s forwards}
@@ -155,22 +163,19 @@ function animateTitle(){
   });
 }
 animateTitle();
-
-/* replay on visibility */
 document.addEventListener('visibilitychange',()=>{
   if(!document.hidden) animateTitle();
 });
 
 /* orbits */
 let t=0;
-function animateOrbits(){
+(function animateOrbits(){
   t+=0.01;
   document.querySelectorAll('.orbit').forEach(o=>{
     o.style.transform=`rotate(${t*o.dataset.speed*360}deg)`;
   });
   requestAnimationFrame(animateOrbits);
-}
-animateOrbits();
+})();
 
 /* parallax */
 document.addEventListener('mousemove',e=>{
@@ -186,7 +191,7 @@ if(window.DeviceOrientationEvent){
   });
 }
 
-/* app flow */
+/* flow */
 function ask(){
   card.innerHTML=`
     <h1>Astronomy Check 🌞</h1>
@@ -226,11 +231,13 @@ function reveal(){
   card.innerHTML=`
     <div class="star-core shake" id="core"></div>
     <div style="margin-top:22px">
-      <div class="glitter" style="font-size:38px">Vedannshi 💛</div>
+      <div class="glitter" style="font-size:38px">Vedannshi</div>
       <div style="font-size:28px;font-weight:800;margin-top:10px">
         YOU’RE GOING TO PROM<br>WITH ME!!!!!
       </div>
-      <p style="margin-top:16px;font-size:14px;color:#6b7280">📸 Screenshot this moment</p>
+      <p style="margin-top:16px;font-size:14px;color:#6b7280">
+        📸 Screenshot this moment
+      </p>
     </div>
     <div class="const-wrap" id="const"></div>
   `;
@@ -245,14 +252,17 @@ function reveal(){
 function drawConstellation(){
   const wrap=document.getElementById('const');
   wrap.innerHTML='';
-  const scaleX=wrap.clientWidth/480,scaleY=wrap.clientHeight/220;
-  const pts=[[20,110],[40,80],[60,110],[90,80],[90,110],[110,95],[90,95],[140,80],[140,110],[165,95],[195,110],[205,80],[215,110],[205,95],[245,80],[245,110],[265,95],[285,80],[285,110],[305,95],[335,85],[355,95],[335,105],[385,80],[385,110],[405,95],[435,80],[435,110]];
+  const sx=wrap.clientWidth/480, sy=wrap.clientHeight/220;
+  const pts=[[20,110],[40,80],[60,110],[90,80],[90,110],[110,95],[90,95],
+             [140,80],[140,110],[165,95],[195,110],[205,80],[215,110],[205,95],
+             [245,80],[245,110],[265,95],[285,80],[285,110],[305,95],
+             [335,85],[355,95],[335,105],[385,80],[385,110],[405,95],[435,80],[435,110]];
   const stars=[];
   pts.forEach(([x,y],i)=>{
     const s=document.createElement('div');
     s.className='const-star';
-    s.style.left=x*scaleX+'px';
-    s.style.top=y*scaleY+'px';
+    s.style.left=x*sx+'px';
+    s.style.top=y*sy+'px';
     s.style.animationDelay=i*.08+'s';
     wrap.appendChild(s);
     stars.push(s);
@@ -272,7 +282,7 @@ function drawConstellation(){
 }
 
 function hearts(){
-  for(let i=0;i<26;i++){
+  for(let i=0;i<24;i++){
     const h=document.createElement('div');
     h.className='heart';
     h.textContent='💛';
