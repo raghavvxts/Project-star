@@ -32,26 +32,28 @@ body {
 .planet {
   position: absolute;
   border-radius: 50%;
-  opacity: 0.9;
+  opacity: 0.85;
 }
 
-/* card */
+/* glowing card */
 .card {
   background: white;
   color: #111827;
-  padding: 34px;
-  border-radius: 22px;
-  width: min(420px, 92vw);
+  padding: 36px;
+  border-radius: 26px;
+  width: min(460px, 92vw);
   text-align: center;
-  box-shadow: 0 30px 60px rgba(0,0,0,0.4);
+  box-shadow:
+    0 30px 60px rgba(0,0,0,0.4),
+    0 0 40px rgba(253,230,138,0.45);
   z-index: 5;
 }
 
-h1 { font-size: 22px; margin-bottom: 10px; }
-p { font-size: 15px; margin-bottom: 20px; }
+h1 { font-size: 26px; margin-bottom: 12px; }
+p { font-size: 16px; margin-bottom: 22px; }
 
 button {
-  padding: 14px 28px;
+  padding: 14px 32px;
   font-size: 16px;
   border-radius: 999px;
   border: none;
@@ -59,22 +61,23 @@ button {
   margin: 8px;
 }
 
-.primary { background: linear-gradient(135deg,#2563eb,#3b82f6); color:white; }
+.primary {
+  background: linear-gradient(135deg,#2563eb,#3b82f6);
+  color:white;
+}
 .secondary { background:#e5e7eb; }
 
 /* buttons area */
-.buttons { position: relative; height: 140px; }
+.buttons { position: relative; height: 150px; }
 
 #no {
   position: absolute;
-  left: 200px;
+  left: 240px;
   top: 40px;
 }
 
-/* angry shake */
-.shake {
-  animation: shake 0.3s;
-}
+/* shake */
+.shake { animation: shake 0.3s; }
 @keyframes shake {
   0%{transform:translateX(0)}
   25%{transform:translateX(-4px)}
@@ -90,39 +93,49 @@ button {
   pointer-events: none;
 }
 
-/* cake */
-.cake {
-  position: relative;
-  width: 220px;
-  height: 130px;
-  background: #f472b6;
-  border-radius: 0 0 22px 22px;
+/* 🌟 star core */
+.star-core {
+  width: 170px;
+  height: 170px;
   margin: 40px auto 0;
+  background: radial-gradient(circle, #fff7cc, #facc15);
+  border-radius: 50%;
+  box-shadow: 0 0 60px #fde68a;
+  animation: pulse 3s ease-in-out infinite;
 }
 
-.cake::before {
-  content:"";
-  position:absolute;
-  top:-32px;
-  width:100%;
-  height:32px;
-  background:#fde68a;
-  border-radius:22px 22px 0 0;
+.star-core.shake {
+  animation: slowShake 1.5s ease-in-out infinite;
 }
 
-.cake.shake { animation: cakeShake 0.4s infinite; }
+@keyframes pulse {
+  50% { transform: scale(1.08); }
+}
 
-@keyframes cakeShake {
-  0%{transform:translateX(0)}
+@keyframes slowShake {
+  0%,100%{transform:translateX(0)}
   25%{transform:translateX(-6px)}
   50%{transform:translateX(6px)}
   75%{transform:translateX(-6px)}
-  100%{transform:translateX(0)}
+}
+
+/* constellation stars */
+.constellation-star {
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  background: #fde68a;
+  border-radius: 50%;
+  animation: fade 2.5s ease-out forwards;
+}
+
+@keyframes fade {
+  to { opacity: 0; transform: scale(0.4); }
 }
 
 /* glitter text */
 .glitter {
-  background: linear-gradient(90deg,#facc15,#f472b6,#60a5fa,#facc15);
+  background: linear-gradient(90deg,#fde68a,#f472b6,#60a5fa,#fde68a);
   background-size:300%;
   -webkit-background-clip:text;
   -webkit-text-fill-color:transparent;
@@ -134,35 +147,17 @@ button {
   100%{background-position:300%}
 }
 
-/* burst */
-.burst {
-  position:absolute;
-  top:50%;
-  left:50%;
-  transform:translate(-50%,40px) scale(0);
-  animation: burst 1.2s ease forwards;
-  text-align:center;
-  font-weight:800;
+/* hearts */
+.heart {
+  position: absolute;
+  font-size: 22px;
+  animation: floatUp 3.5s ease-out forwards;
 }
 
-@keyframes burst {
-  60%{transform:translate(-50%,-90px) scale(1.2)}
-  100%{transform:translate(-50%,-120px) scale(1)}
-}
-
-/* fireworks */
-.firework {
-  position:absolute;
-  width:6px;
-  height:6px;
-  border-radius:50%;
-  animation: explode 1.4s ease-out forwards;
-}
-
-@keyframes explode {
+@keyframes floatUp {
   to {
-    transform:translate(var(--x),var(--y));
-    opacity:0;
+    transform: translateY(-120vh);
+    opacity: 0;
   }
 }
 </style>
@@ -176,13 +171,13 @@ button {
 
 <div class="card" id="card">
   <h1>🔬 Science Interaction Demo</h1>
-  <p>This project studies how users respond to simple astronomy questions.</p>
+  <p>This project studies responses to astronomy questions.</p>
   <button class="primary" onclick="ask()">Start 🚀</button>
 </div>
 
 <script>
-/* stars + planets */
-for(let i=0;i<80;i++){
+/* stars */
+for(let i=0;i<100;i++){
   const s=document.createElement("div");
   s.className="star";
   s.style.left=Math.random()*100+"vw";
@@ -190,14 +185,15 @@ for(let i=0;i<80;i++){
   document.body.appendChild(s);
 }
 
-["#facc15","#60a5fa","#f472b6"].forEach((c,i)=>{
+/* planets */
+["#fde68a","#60a5fa","#f472b6"].forEach((c,i)=>{
   const p=document.createElement("div");
   p.className="planet";
-  p.style.width=50+i*25+"px";
-  p.style.height=50+i*25+"px";
+  p.style.width=70+i*30+"px";
+  p.style.height=70+i*30+"px";
   p.style.background=c;
-  p.style.left=10+i*30+"vw";
-  p.style.top=20+i*25+"vh";
+  p.style.left=5+i*35+"vw";
+  p.style.top=15+i*25+"vh";
   document.body.appendChild(p);
 });
 
@@ -222,7 +218,6 @@ function ask(){
   function run(){
     no.classList.add("shake");
     setTimeout(()=>no.classList.remove("shake"),300);
-
     const x=Math.random()*(area.clientWidth-no.offsetWidth);
     const y=Math.random()*(area.clientHeight-no.offsetHeight);
     no.style.left=x+"px";
@@ -233,52 +228,61 @@ function ask(){
 
   no.addEventListener("mouseenter",run);
   no.addEventListener("touchstart",e=>{e.preventDefault();run();});
-  document.getElementById("yes").onclick=celebrate;
+  document.getElementById("yes").onclick=confirm;
 }
 
-function celebrate(){
+function confirm(){
   card.innerHTML=`
-    <h1>🎉 Final Confirmation</h1>
-    <button class="primary" onclick="cake()">YESSS</button>
-    <button class="secondary" onclick="cake()">YUPEEE</button>
+    <h1>Final Confirmation ⭐</h1>
+    <button class="primary" onclick="reveal()">YESSS</button>
+    <button class="secondary" onclick="reveal()">YUPEEE</button>
   `;
 }
 
-function cake(){
+function reveal(){
   card.innerHTML=`
-    <h1>🎂 Celebration Mode</h1>
-    <div class="cake shake" id="cake">
-      <div class="burst">
-        <div class="glitter" style="font-size:28px">Vedanshi ✨</div>
-        <div style="font-size:22px;margin-top:6px">
-          YOU’RE GOING TO PROM<br>WITH ME!!!!!
-        </div>
+    <h1>🌌 Celebration Mode</h1>
+    <div class="star-core shake" id="core"></div>
+
+    <div style="margin-top:26px;">
+      <div class="glitter" style="font-size:36px;">Vedanshi ✨</div>
+      <div style="font-size:28px;font-weight:800;margin-top:10px;">
+        YOU’RE GOING TO PROM<br>WITH ME!!!!!
       </div>
+      <p style="margin-top:18px;font-size:14px;color:#6b7280;">
+        📸 Screenshot this moment
+      </p>
     </div>
   `;
 
   setTimeout(()=>{
-    document.getElementById("cake").classList.remove("shake");
+    document.getElementById("core").classList.remove("shake");
     document.getElementById("music").play();
-    fireworks();
-  },700);
+    explodeConstellation();
+    hearts();
+  },1500);
 }
 
-function fireworks(){
-  for(let i=0;i<10;i++){
-    const cx=Math.random()*innerWidth;
-    const cy=Math.random()*innerHeight*0.6;
-    for(let j=0;j<25;j++){
-      const f=document.createElement("div");
-      f.className="firework";
-      f.style.left=cx+"px";
-      f.style.top=cy+"px";
-      f.style.background=["#facc15","#f472b6","#60a5fa","#34d399"][Math.floor(Math.random()*4)];
-      f.style.setProperty("--x",(Math.random()*200-100)+"px");
-      f.style.setProperty("--y",(Math.random()*200-100)+"px");
-      document.body.appendChild(f);
-      setTimeout(()=>f.remove(),1500);
-    }
+function explodeConstellation(){
+  for(let i=0;i<20;i++){
+    const s=document.createElement("div");
+    s.className="constellation-star";
+    s.style.left=(50+Math.random()*40-20)+"%";
+    s.style.top=(45+Math.random()*40-20)+"%";
+    document.body.appendChild(s);
+    setTimeout(()=>s.remove(),2500);
+  }
+}
+
+function hearts(){
+  for(let i=0;i<28;i++){
+    const h=document.createElement("div");
+    h.className="heart";
+    h.innerText="💛";
+    h.style.left=Math.random()*100+"vw";
+    h.style.bottom="-20px";
+    document.body.appendChild(h);
+    setTimeout(()=>h.remove(),4000);
   }
 }
 </script>
