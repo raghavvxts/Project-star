@@ -1,15 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Science Interaction Demo</title>
 
 <style>
-* {
-  box-sizing: border-box;
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
-}
+* { box-sizing: border-box; font-family: system-ui, sans-serif; }
 
 body {
   margin: 0;
@@ -19,7 +16,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #fff;
+  color: white;
 }
 
 /* stars */
@@ -28,7 +25,6 @@ body {
   width: 2px;
   height: 2px;
   background: white;
-  border-radius: 50%;
   opacity: 0.8;
 }
 
@@ -43,7 +39,7 @@ body {
 .card {
   background: white;
   color: #111827;
-  padding: 36px;
+  padding: 34px;
   border-radius: 22px;
   width: min(420px, 92vw);
   text-align: center;
@@ -51,18 +47,11 @@ body {
   z-index: 5;
 }
 
-h1 {
-  font-size: 24px;
-  margin-bottom: 10px;
-}
-
-p {
-  font-size: 15px;
-  margin-bottom: 20px;
-}
+h1 { font-size: 22px; margin-bottom: 10px; }
+p { font-size: 15px; margin-bottom: 20px; }
 
 button {
-  padding: 14px 30px;
+  padding: 14px 28px;
   font-size: 16px;
   border-radius: 999px;
   border: none;
@@ -70,112 +59,110 @@ button {
   margin: 8px;
 }
 
-.primary {
-  background: linear-gradient(135deg, #2563eb, #3b82f6);
-  color: white;
+.primary { background: linear-gradient(135deg,#2563eb,#3b82f6); color:white; }
+.secondary { background:#e5e7eb; }
+
+/* buttons area */
+.buttons { position: relative; height: 140px; }
+
+#no {
+  position: absolute;
+  left: 200px;
+  top: 40px;
 }
 
-.secondary {
-  background: #e5e7eb;
+/* angry shake */
+.shake {
+  animation: shake 0.3s;
+}
+@keyframes shake {
+  0%{transform:translateX(0)}
+  25%{transform:translateX(-4px)}
+  50%{transform:translateX(4px)}
+  75%{transform:translateX(-4px)}
+  100%{transform:translateX(0)}
+}
+
+/* cat */
+.cat {
+  position: absolute;
+  font-size: 26px;
+  pointer-events: none;
 }
 
 /* cake */
 .cake {
   position: relative;
   width: 220px;
-  height: 120px;
+  height: 130px;
   background: #f472b6;
   border-radius: 0 0 22px 22px;
   margin: 40px auto 0;
-  animation: none;
 }
 
 .cake::before {
-  content: "";
-  position: absolute;
-  top: -32px;
-  left: 0;
-  width: 100%;
-  height: 32px;
-  background: #fde68a;
-  border-radius: 22px 22px 0 0;
+  content:"";
+  position:absolute;
+  top:-32px;
+  width:100%;
+  height:32px;
+  background:#fde68a;
+  border-radius:22px 22px 0 0;
 }
 
-.shake {
-  animation: shake 0.4s infinite;
-}
+.cake.shake { animation: cakeShake 0.4s infinite; }
 
-@keyframes shake {
-  0% { transform: translateX(0); }
-  25% { transform: translateX(-5px); }
-  50% { transform: translateX(5px); }
-  75% { transform: translateX(-5px); }
-  100% { transform: translateX(0); }
+@keyframes cakeShake {
+  0%{transform:translateX(0)}
+  25%{transform:translateX(-6px)}
+  50%{transform:translateX(6px)}
+  75%{transform:translateX(-6px)}
+  100%{transform:translateX(0)}
 }
 
 /* glitter text */
 .glitter {
-  background: linear-gradient(
-    90deg,
-    #facc15,
-    #f472b6,
-    #60a5fa,
-    #facc15
-  );
-  background-size: 300%;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+  background: linear-gradient(90deg,#facc15,#f472b6,#60a5fa,#facc15);
+  background-size:300%;
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
   animation: glitter 3s linear infinite;
 }
 
 @keyframes glitter {
-  0% { background-position: 0%; }
-  100% { background-position: 300%; }
+  0%{background-position:0%}
+  100%{background-position:300%}
 }
 
-/* burst text */
-.burst-text {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, 40px) scale(0);
-  text-align: center;
+/* burst */
+.burst {
+  position:absolute;
+  top:50%;
+  left:50%;
+  transform:translate(-50%,40px) scale(0);
   animation: burst 1.2s ease forwards;
-  color: white;
-  font-weight: 800;
+  text-align:center;
+  font-weight:800;
 }
 
 @keyframes burst {
-  0% {
-    transform: translate(-50%, 40px) scale(0);
-    opacity: 0;
-  }
-  60% {
-    transform: translate(-50%, -90px) scale(1.2);
-    opacity: 1;
-  }
-  100% {
-    transform: translate(-50%, -120px) scale(1);
-  }
+  60%{transform:translate(-50%,-90px) scale(1.2)}
+  100%{transform:translate(-50%,-120px) scale(1)}
 }
 
 /* fireworks */
 .firework {
-  position: absolute;
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  animation: explode 1.5s ease-out forwards;
+  position:absolute;
+  width:6px;
+  height:6px;
+  border-radius:50%;
+  animation: explode 1.4s ease-out forwards;
 }
 
 @keyframes explode {
-  from {
-    transform: translate(0,0);
-    opacity: 1;
-  }
   to {
-    transform: translate(var(--x), var(--y));
-    opacity: 0;
+    transform:translate(var(--x),var(--y));
+    opacity:0;
   }
 }
 </style>
@@ -189,21 +176,20 @@ button {
 
 <div class="card" id="card">
   <h1>🔬 Science Interaction Demo</h1>
-  <p>This mini project tests responses to simple astronomy questions.</p>
-  <button class="primary" onclick="question()">Start 🚀</button>
+  <p>This project studies how users respond to simple astronomy questions.</p>
+  <button class="primary" onclick="ask()">Start 🚀</button>
 </div>
 
 <script>
-/* stars */
-for (let i = 0; i < 90; i++) {
-  const s = document.createElement("div");
-  s.className = "star";
-  s.style.left = Math.random() * 100 + "vw";
-  s.style.top = Math.random() * 100 + "vh";
+/* stars + planets */
+for(let i=0;i<80;i++){
+  const s=document.createElement("div");
+  s.className="star";
+  s.style.left=Math.random()*100+"vw";
+  s.style.top=Math.random()*100+"vh";
   document.body.appendChild(s);
 }
 
-/* planets */
 ["#facc15","#60a5fa","#f472b6"].forEach((c,i)=>{
   const p=document.createElement("div");
   p.className="planet";
@@ -215,59 +201,81 @@ for (let i = 0; i < 90; i++) {
   document.body.appendChild(p);
 });
 
-const card = document.getElementById("card");
+const card=document.getElementById("card");
 
-function question() {
-  card.innerHTML = `
+function ask(){
+  card.innerHTML=`
     <h1>🌞 Astronomy Check</h1>
     <p>Is the Sun a star?</p>
-    <button class="primary" onclick="celebrate()">Yes</button>
+    <div class="buttons">
+      <button class="primary" id="yes">Yes</button>
+      <button class="secondary" id="no">No</button>
+      <div class="cat" id="cat">🐱</div>
+    </div>
+    <p style="font-size:12px;color:#6b7280">No may behave unpredictably</p>
   `;
+
+  const no=document.getElementById("no");
+  const cat=document.getElementById("cat");
+  const area=document.querySelector(".buttons");
+
+  function run(){
+    no.classList.add("shake");
+    setTimeout(()=>no.classList.remove("shake"),300);
+
+    const x=Math.random()*(area.clientWidth-no.offsetWidth);
+    const y=Math.random()*(area.clientHeight-no.offsetHeight);
+    no.style.left=x+"px";
+    no.style.top=y+"px";
+    cat.style.left=(x-26)+"px";
+    cat.style.top=(y+6)+"px";
+  }
+
+  no.addEventListener("mouseenter",run);
+  no.addEventListener("touchstart",e=>{e.preventDefault();run();});
+  document.getElementById("yes").onclick=celebrate;
 }
 
-function celebrate() {
-  card.innerHTML = `
+function celebrate(){
+  card.innerHTML=`
     <h1>🎉 Final Confirmation</h1>
-    <p>Please choose one (both are correct):</p>
     <button class="primary" onclick="cake()">YESSS</button>
     <button class="secondary" onclick="cake()">YUPEEE</button>
   `;
 }
 
-function cake() {
-  card.innerHTML = `
+function cake(){
+  card.innerHTML=`
     <h1>🎂 Celebration Mode</h1>
     <div class="cake shake" id="cake">
-      <div class="burst-text">
-        <div class="glitter" style="font-size:26px;">Vedanshi ✨</div>
-        <div style="font-size:22px;margin-top:6px;">
+      <div class="burst">
+        <div class="glitter" style="font-size:28px">Vedanshi ✨</div>
+        <div style="font-size:22px;margin-top:6px">
           YOU’RE GOING TO PROM<br>WITH ME!!!!!
         </div>
       </div>
     </div>
   `;
 
-  const music = document.getElementById("music");
-  setTimeout(() => {
+  setTimeout(()=>{
     document.getElementById("cake").classList.remove("shake");
-    music.play();
+    document.getElementById("music").play();
     fireworks();
-  }, 700);
+  },700);
 }
 
-function fireworks() {
-  for (let i = 0; i < 12; i++) {
-    const cx = Math.random() * window.innerWidth;
-    const cy = Math.random() * window.innerHeight * 0.6;
-
-    for (let j = 0; j < 25; j++) {
-      const f = document.createElement("div");
-      f.className = "firework";
-      f.style.left = cx + "px";
-      f.style.top = cy + "px";
-      f.style.background = ["#facc15","#f472b6","#60a5fa","#34d399"][Math.floor(Math.random()*4)];
-      f.style.setProperty("--x", (Math.random()*200-100)+"px");
-      f.style.setProperty("--y", (Math.random()*200-100)+"px");
+function fireworks(){
+  for(let i=0;i<10;i++){
+    const cx=Math.random()*innerWidth;
+    const cy=Math.random()*innerHeight*0.6;
+    for(let j=0;j<25;j++){
+      const f=document.createElement("div");
+      f.className="firework";
+      f.style.left=cx+"px";
+      f.style.top=cy+"px";
+      f.style.background=["#facc15","#f472b6","#60a5fa","#34d399"][Math.floor(Math.random()*4)];
+      f.style.setProperty("--x",(Math.random()*200-100)+"px");
+      f.style.setProperty("--y",(Math.random()*200-100)+"px");
       document.body.appendChild(f);
       setTimeout(()=>f.remove(),1500);
     }
