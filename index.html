@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>UI Interaction Demo</title>
+<title>Science Interaction Demo</title>
 
 <style>
   * {
@@ -14,42 +14,59 @@
   body {
     margin: 0;
     height: 100vh;
-    background: linear-gradient(135deg, #0f172a, #020617);
-    color: #e5e7eb;
+    background: linear-gradient(
+      135deg,
+      #60a5fa,
+      #a78bfa,
+      #f472b6
+    );
+    background-size: 300% 300%;
+    animation: bgMove 8s ease infinite;
     display: flex;
     align-items: center;
     justify-content: center;
-    overflow: hidden;
+  }
+
+  @keyframes bgMove {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
   }
 
   .card {
-    background: #020617;
-    padding: 32px;
-    border-radius: 16px;
+    background: rgba(255,255,255,0.95);
+    padding: 34px;
+    border-radius: 22px;
     width: min(380px, 92vw);
-    box-shadow: 0 25px 60px rgba(0,0,0,0.6);
     text-align: center;
+    box-shadow: 0 30px 60px rgba(0,0,0,0.25);
+    transition: all 0.3s ease;
   }
 
   h1 {
-    font-size: 18px;
-    margin-bottom: 8px;
+    font-size: 20px;
+    margin-bottom: 10px;
   }
 
   p {
-    font-size: 14px;
-    color: #9ca3af;
+    font-size: 15px;
+    color: #374151;
     margin-bottom: 22px;
   }
 
   button {
-    padding: 12px 22px;
-    font-size: 14px;
-    border-radius: 10px;
+    padding: 12px 26px;
+    font-size: 15px;
+    border-radius: 999px;
     border: none;
     cursor: pointer;
     margin: 6px;
-    transition: transform 0.2s;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+
+  button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.2);
   }
 
   button:active {
@@ -57,24 +74,25 @@
   }
 
   .primary {
-    background: #2563eb;
+    background: linear-gradient(135deg, #2563eb, #3b82f6);
     color: white;
   }
 
   .secondary {
-    background: #1f2933;
-    color: #cbd5f5;
+    background: #e5e7eb;
+    color: #111827;
   }
 
   .buttons {
     position: relative;
-    height: 140px;
+    height: 150px;
+    margin-top: 10px;
   }
 
   #no {
     position: absolute;
     left: 200px;
-    top: 20px;
+    top: 30px;
   }
 
   .cat {
@@ -82,20 +100,26 @@
     font-size: 26px;
     pointer-events: none;
   }
+
+  .hint {
+    font-size: 12px;
+    color: #6b7280;
+    margin-top: 14px;
+  }
 </style>
 </head>
 
 <body>
 
 <div class="card" id="card">
-  <h1>UX Interaction Test</h1>
+  <h1>🔬 Science Interaction Demo</h1>
   <p>
-    This mini project evaluates user behavior
-    during simple decision-based flows.
+    This mini project explores how people respond
+    to simple yes/no scientific questions.
   </p>
 
-  <button class="primary" onclick="step2()">Continue</button>
-  <button class="secondary" onclick="step2()">Skip</button>
+  <button class="primary" onclick="step2()">Start Experiment 🚀</button>
+  <button class="secondary" onclick="step2()">Skip Intro</button>
 </div>
 
 <script>
@@ -103,18 +127,20 @@
 
   function step2() {
     card.innerHTML = `
-      <h1>Quick Check</h1>
+      <h1>🧠 Warm-up Question</h1>
       <p>
         Please answer honestly.  
-        This helps validate interaction patterns.
+        There are no wrong answers.
+        (Probably.)
       </p>
-      <button class="primary" onclick="step3()">Proceed</button>
+
+      <button class="primary" onclick="step3()">Continue</button>
     `;
   }
 
   function step3() {
     card.innerHTML = `
-      <h1>Astronomy Check</h1>
+      <h1>🌞 Astronomy Check</h1>
       <p>Is the Sun a star?</p>
 
       <div class="buttons">
@@ -123,9 +149,9 @@
         <div class="cat" id="cat">🐱</div>
       </div>
 
-      <p style="font-size:12px;color:#6b7280;margin-top:12px">
-        “No” may behave unpredictably
-      </p>
+      <div class="hint">
+        *One of these buttons may be uncooperative*
+      </div>
     `;
 
     const noBtn = document.getElementById("no");
@@ -143,8 +169,8 @@
       noBtn.style.left = x + "px";
       noBtn.style.top = y + "px";
 
-      cat.style.left = (x - 24) + "px";
-      cat.style.top = (y + 6) + "px";
+      cat.style.left = (x - 26) + "px";
+      cat.style.top = (y + 8) + "px";
     }
 
     noBtn.addEventListener("mouseenter", moveNo);
@@ -158,17 +184,17 @@
 
   function reveal() {
     card.innerHTML = `
-      <h1 style="font-size:22px;">Plot twist 😭💖</h1>
-      <p style="margin-bottom:18px;">
-        Vedanshi, this wasn’t a project.
+      <h1 style="font-size:24px;">Correct 😄✨</h1>
+      <p style="margin-bottom:16px;">
+        Also… confession time.
       </p>
 
       <h1 style="font-size:26px;">
-        Will you go to prom with me? 💃🕺
+        Vedanshi, will you go to prom with me? 💃🕺
       </h1>
 
-      <p style="color:#9ca3af;margin-top:12px;">
-        (UX study failed successfully)
+      <p style="color:#6b7280;margin-top:12px;">
+        (This experiment got slightly out of hand)
       </p>
     `;
   }
@@ -176,5 +202,3 @@
 
 </body>
 </html>
-
-
