@@ -1,111 +1,136 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Science Interaction Demo</title>
 
 <style>
-  * {
-    box-sizing: border-box;
-    font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
-  }
+* {
+  box-sizing: border-box;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+}
 
-  body {
-    margin: 0;
-    height: 100vh;
-    background: linear-gradient(
-      135deg,
-      #60a5fa,
-      #a78bfa,
-      #f472b6
-    );
-    background-size: 300% 300%;
-    animation: bgMove 8s ease infinite;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
+body {
+  margin: 0;
+  height: 100vh;
+  overflow: hidden;
+  background: radial-gradient(circle at top, #1e3a8a, #020617);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+}
 
-  @keyframes bgMove {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
-  }
+/* ⭐ Stars */
+.star {
+  position: absolute;
+  background: white;
+  border-radius: 50%;
+  opacity: 0.8;
+  animation: twinkle 3s infinite ease-in-out;
+}
 
-  .card {
-    background: rgba(255,255,255,0.95);
-    padding: 34px;
-    border-radius: 22px;
-    width: min(380px, 92vw);
-    text-align: center;
-    box-shadow: 0 30px 60px rgba(0,0,0,0.25);
-    transition: all 0.3s ease;
-  }
+@keyframes twinkle {
+  0%,100% { opacity: 0.3; }
+  50% { opacity: 1; }
+}
 
-  h1 {
-    font-size: 20px;
-    margin-bottom: 10px;
-  }
+/* 🪐 Planets */
+.planet {
+  position: absolute;
+  border-radius: 50%;
+  opacity: 0.9;
+  animation: float 8s ease-in-out infinite;
+}
 
-  p {
-    font-size: 15px;
-    color: #374151;
-    margin-bottom: 22px;
-  }
+@keyframes float {
+  0%,100% { transform: translateY(0); }
+  50% { transform: translateY(-20px); }
+}
 
-  button {
-    padding: 12px 26px;
-    font-size: 15px;
-    border-radius: 999px;
-    border: none;
-    cursor: pointer;
-    margin: 6px;
-    transition: transform 0.2s, box-shadow 0.2s;
-  }
+.card {
+  background: rgba(255,255,255,0.95);
+  color: #111827;
+  padding: 36px;
+  border-radius: 22px;
+  width: min(380px, 92vw);
+  text-align: center;
+  box-shadow: 0 30px 60px rgba(0,0,0,0.4);
+  z-index: 10;
+}
 
-  button:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 10px 20px rgba(0,0,0,0.2);
-  }
+h1 {
+  font-size: 22px;
+  margin-bottom: 10px;
+}
 
-  button:active {
-    transform: scale(0.95);
-  }
+p {
+  font-size: 15px;
+  margin-bottom: 22px;
+  color: #374151;
+}
 
-  .primary {
-    background: linear-gradient(135deg, #2563eb, #3b82f6);
-    color: white;
-  }
+button {
+  padding: 12px 28px;
+  font-size: 15px;
+  border-radius: 999px;
+  border: none;
+  cursor: pointer;
+  margin: 6px;
+  transition: transform 0.2s;
+}
 
-  .secondary {
-    background: #e5e7eb;
-    color: #111827;
-  }
+button:active {
+  transform: scale(0.95);
+}
 
-  .buttons {
-    position: relative;
-    height: 150px;
-    margin-top: 10px;
-  }
+.primary {
+  background: linear-gradient(135deg, #2563eb, #3b82f6);
+  color: white;
+}
 
-  #no {
-    position: absolute;
-    left: 200px;
-    top: 30px;
-  }
+.secondary {
+  background: #e5e7eb;
+}
 
-  .cat {
-    position: absolute;
-    font-size: 26px;
-    pointer-events: none;
-  }
+.buttons {
+  position: relative;
+  height: 150px;
+}
 
-  .hint {
-    font-size: 12px;
-    color: #6b7280;
-    margin-top: 14px;
+#no {
+  position: absolute;
+  left: 200px;
+  top: 40px;
+}
+
+/* 😡 Angry shake */
+.shake {
+  animation: shake 0.3s;
+}
+
+@keyframes shake {
+  0% { transform: translateX(0); }
+  25% { transform: translateX(-4px); }
+  50% { transform: translateX(4px); }
+  75% { transform: translateX(-4px); }
+  100% { transform: translateX(0); }
+}
+
+/* 🎉 Confetti */
+.confetti {
+  position: absolute;
+  font-size: 20px;
+  animation: fall 3s linear forwards;
+}
+
+@keyframes fall {
+  to {
+    transform: translateY(110vh) rotate(360deg);
+    opacity: 0;
   }
+}
 </style>
 </head>
 
@@ -114,90 +139,104 @@
 <div class="card" id="card">
   <h1>🔬 Science Interaction Demo</h1>
   <p>
-    This mini project explores how people respond
-    to simple yes/no scientific questions.
+    This mini project studies how people respond
+    to simple astronomy questions.
   </p>
 
-  <button class="primary" onclick="step2()">Start Experiment 🚀</button>
-  <button class="secondary" onclick="step2()">Skip Intro</button>
+  <button class="primary" onclick="step2()">Start 🚀</button>
+  <button class="secondary" onclick="step2()">Skip</button>
 </div>
 
 <script>
-  const card = document.getElementById("card");
+/* ⭐ Stars */
+for (let i = 0; i < 80; i++) {
+  const star = document.createElement("div");
+  star.className = "star";
+  const size = Math.random() * 2 + 1;
+  star.style.width = size + "px";
+  star.style.height = size + "px";
+  star.style.left = Math.random() * 100 + "vw";
+  star.style.top = Math.random() * 100 + "vh";
+  document.body.appendChild(star);
+}
 
-  function step2() {
-    card.innerHTML = `
-      <h1>🧠 Warm-up Question</h1>
-      <p>
-        Please answer honestly.  
-        There are no wrong answers.
-        (Probably.)
-      </p>
+/* 🪐 Planets */
+const planetColors = ["#facc15", "#f472b6", "#60a5fa"];
+planetColors.forEach((c, i) => {
+  const p = document.createElement("div");
+  p.className = "planet";
+  p.style.width = 60 + i * 20 + "px";
+  p.style.height = 60 + i * 20 + "px";
+  p.style.background = c;
+  p.style.left = 10 + i * 30 + "vw";
+  p.style.top = 20 + i * 20 + "vh";
+  document.body.appendChild(p);
+});
 
-      <button class="primary" onclick="step3()">Continue</button>
-    `;
-  }
+const card = document.getElementById("card");
 
-  function step3() {
-    card.innerHTML = `
-      <h1>🌞 Astronomy Check</h1>
-      <p>Is the Sun a star?</p>
+function step2() {
+  card.innerHTML = `
+    <h1>🌞 Astronomy Check</h1>
+    <p>Is the Sun a star?</p>
 
-      <div class="buttons">
-        <button class="primary" id="yes">Yes</button>
-        <button class="secondary" id="no">No</button>
-        <div class="cat" id="cat">🐱</div>
-      </div>
+    <div class="buttons">
+      <button class="primary" id="yes">Yes</button>
+      <button class="secondary" id="no">No</button>
+    </div>
+  `;
 
-      <div class="hint">
-        *One of these buttons may be uncooperative*
-      </div>
-    `;
+  const noBtn = document.getElementById("no");
+  const yesBtn = document.getElementById("yes");
+  const area = document.querySelector(".buttons");
 
-    const noBtn = document.getElementById("no");
-    const cat = document.getElementById("cat");
-    const yesBtn = document.getElementById("yes");
-    const area = document.querySelector(".buttons");
+  function moveNo() {
+    noBtn.classList.add("shake");
+    setTimeout(() => {
+      noBtn.classList.remove("shake");
 
-    function moveNo() {
       const maxX = area.clientWidth - noBtn.offsetWidth;
       const maxY = area.clientHeight - noBtn.offsetHeight;
 
-      const x = Math.random() * maxX;
-      const y = Math.random() * maxY;
-
-      noBtn.style.left = x + "px";
-      noBtn.style.top = y + "px";
-
-      cat.style.left = (x - 26) + "px";
-      cat.style.top = (y + 8) + "px";
-    }
-
-    noBtn.addEventListener("mouseenter", moveNo);
-    noBtn.addEventListener("touchstart", (e) => {
-      e.preventDefault();
-      moveNo();
-    });
-
-    yesBtn.addEventListener("click", reveal);
+      noBtn.style.left = Math.random() * maxX + "px";
+      noBtn.style.top = Math.random() * maxY + "px";
+    }, 300);
   }
 
-  function reveal() {
-    card.innerHTML = `
-      <h1 style="font-size:24px;">Correct 😄✨</h1>
-      <p style="margin-bottom:16px;">
-        Also… confession time.
-      </p>
+  noBtn.addEventListener("mouseenter", moveNo);
+  noBtn.addEventListener("touchstart", e => {
+    e.preventDefault();
+    moveNo();
+  });
 
-      <h1 style="font-size:26px;">
-        Vedanshi, will you go to prom with me? 💃🕺
-      </h1>
+  yesBtn.addEventListener("click", reveal);
+}
 
-      <p style="color:#6b7280;margin-top:12px;">
-        (This experiment got slightly out of hand)
-      </p>
-    `;
+function reveal() {
+  card.innerHTML = `
+    <h1>🎉 Correct!</h1>
+    <p>Also… small confession 😄</p>
+    <h1 style="font-size:26px;">
+      Vedanshi, will you go to prom with me? 💃🕺
+    </h1>
+  `;
+  launchConfetti();
+}
+
+function launchConfetti() {
+  const emojis = ["🎉","✨","💖","🌟"];
+  for (let i = 0; i < 60; i++) {
+    const c = document.createElement("div");
+    c.className = "confetti";
+    c.innerText = emojis[Math.floor(Math.random() * emojis.length)];
+    c.style.left = Math.random() * 100 + "vw";
+    c.style.top = "-20px";
+    c.style.animationDuration = 2 + Math.random() * 2 + "s";
+    document.body.appendChild(c);
+
+    setTimeout(() => c.remove(), 4000);
   }
+}
 </script>
 
 </body>
