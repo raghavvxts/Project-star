@@ -22,67 +22,52 @@ body {
   color: #fff;
 }
 
-/* ⭐ Stars */
+/* stars */
 .star {
   position: absolute;
+  width: 2px;
+  height: 2px;
   background: white;
   border-radius: 50%;
   opacity: 0.8;
-  animation: twinkle 3s infinite ease-in-out;
 }
 
-@keyframes twinkle {
-  0%,100% { opacity: 0.3; }
-  50% { opacity: 1; }
-}
-
-/* 🪐 Planets */
+/* planets */
 .planet {
   position: absolute;
   border-radius: 50%;
   opacity: 0.9;
-  animation: float 8s ease-in-out infinite;
 }
 
-@keyframes float {
-  0%,100% { transform: translateY(0); }
-  50% { transform: translateY(-20px); }
-}
-
+/* card */
 .card {
-  background: rgba(255,255,255,0.95);
+  background: white;
   color: #111827;
   padding: 36px;
   border-radius: 22px;
-  width: min(380px, 92vw);
+  width: min(420px, 92vw);
   text-align: center;
   box-shadow: 0 30px 60px rgba(0,0,0,0.4);
-  z-index: 10;
+  z-index: 5;
 }
 
 h1 {
-  font-size: 22px;
+  font-size: 24px;
   margin-bottom: 10px;
 }
 
 p {
   font-size: 15px;
-  margin-bottom: 22px;
-  color: #374151;
+  margin-bottom: 20px;
 }
 
 button {
-  padding: 12px 28px;
-  font-size: 15px;
+  padding: 14px 30px;
+  font-size: 16px;
   border-radius: 999px;
   border: none;
   cursor: pointer;
-  margin: 6px;
-  transition: transform 0.2s;
-}
-
-button:active {
-  transform: scale(0.95);
+  margin: 8px;
 }
 
 .primary {
@@ -94,40 +79,102 @@ button:active {
   background: #e5e7eb;
 }
 
-.buttons {
+/* cake */
+.cake {
   position: relative;
-  height: 150px;
+  width: 220px;
+  height: 120px;
+  background: #f472b6;
+  border-radius: 0 0 22px 22px;
+  margin: 40px auto 0;
+  animation: none;
 }
 
-#no {
+.cake::before {
+  content: "";
   position: absolute;
-  left: 200px;
-  top: 40px;
+  top: -32px;
+  left: 0;
+  width: 100%;
+  height: 32px;
+  background: #fde68a;
+  border-radius: 22px 22px 0 0;
 }
 
-/* 😡 Angry shake */
 .shake {
-  animation: shake 0.3s;
+  animation: shake 0.4s infinite;
 }
 
 @keyframes shake {
   0% { transform: translateX(0); }
-  25% { transform: translateX(-4px); }
-  50% { transform: translateX(4px); }
-  75% { transform: translateX(-4px); }
+  25% { transform: translateX(-5px); }
+  50% { transform: translateX(5px); }
+  75% { transform: translateX(-5px); }
   100% { transform: translateX(0); }
 }
 
-/* 🎉 Confetti */
-.confetti {
-  position: absolute;
-  font-size: 20px;
-  animation: fall 3s linear forwards;
+/* glitter text */
+.glitter {
+  background: linear-gradient(
+    90deg,
+    #facc15,
+    #f472b6,
+    #60a5fa,
+    #facc15
+  );
+  background-size: 300%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: glitter 3s linear infinite;
 }
 
-@keyframes fall {
+@keyframes glitter {
+  0% { background-position: 0%; }
+  100% { background-position: 300%; }
+}
+
+/* burst text */
+.burst-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, 40px) scale(0);
+  text-align: center;
+  animation: burst 1.2s ease forwards;
+  color: white;
+  font-weight: 800;
+}
+
+@keyframes burst {
+  0% {
+    transform: translate(-50%, 40px) scale(0);
+    opacity: 0;
+  }
+  60% {
+    transform: translate(-50%, -90px) scale(1.2);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(-50%, -120px) scale(1);
+  }
+}
+
+/* fireworks */
+.firework {
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  animation: explode 1.5s ease-out forwards;
+}
+
+@keyframes explode {
+  from {
+    transform: translate(0,0);
+    opacity: 1;
+  }
   to {
-    transform: translateY(110vh) rotate(360deg);
+    transform: translate(var(--x), var(--y));
     opacity: 0;
   }
 }
@@ -136,105 +183,94 @@ button:active {
 
 <body>
 
+<audio id="music">
+  <source src="https://cdn.pixabay.com/audio/2022/03/10/audio_8c6f2a4c68.mp3">
+</audio>
+
 <div class="card" id="card">
   <h1>🔬 Science Interaction Demo</h1>
-  <p>
-    This mini project studies how people respond
-    to simple astronomy questions.
-  </p>
-
-  <button class="primary" onclick="step2()">Start 🚀</button>
-  <button class="secondary" onclick="step2()">Skip</button>
+  <p>This mini project tests responses to simple astronomy questions.</p>
+  <button class="primary" onclick="question()">Start 🚀</button>
 </div>
 
 <script>
-/* ⭐ Stars */
-for (let i = 0; i < 80; i++) {
-  const star = document.createElement("div");
-  star.className = "star";
-  const size = Math.random() * 2 + 1;
-  star.style.width = size + "px";
-  star.style.height = size + "px";
-  star.style.left = Math.random() * 100 + "vw";
-  star.style.top = Math.random() * 100 + "vh";
-  document.body.appendChild(star);
+/* stars */
+for (let i = 0; i < 90; i++) {
+  const s = document.createElement("div");
+  s.className = "star";
+  s.style.left = Math.random() * 100 + "vw";
+  s.style.top = Math.random() * 100 + "vh";
+  document.body.appendChild(s);
 }
 
-/* 🪐 Planets */
-const planetColors = ["#facc15", "#f472b6", "#60a5fa"];
-planetColors.forEach((c, i) => {
-  const p = document.createElement("div");
-  p.className = "planet";
-  p.style.width = 60 + i * 20 + "px";
-  p.style.height = 60 + i * 20 + "px";
-  p.style.background = c;
-  p.style.left = 10 + i * 30 + "vw";
-  p.style.top = 20 + i * 20 + "vh";
+/* planets */
+["#facc15","#60a5fa","#f472b6"].forEach((c,i)=>{
+  const p=document.createElement("div");
+  p.className="planet";
+  p.style.width=50+i*25+"px";
+  p.style.height=50+i*25+"px";
+  p.style.background=c;
+  p.style.left=10+i*30+"vw";
+  p.style.top=20+i*25+"vh";
   document.body.appendChild(p);
 });
 
 const card = document.getElementById("card");
 
-function step2() {
+function question() {
   card.innerHTML = `
     <h1>🌞 Astronomy Check</h1>
     <p>Is the Sun a star?</p>
+    <button class="primary" onclick="celebrate()">Yes</button>
+  `;
+}
 
-    <div class="buttons">
-      <button class="primary" id="yes">Yes</button>
-      <button class="secondary" id="no">No</button>
+function celebrate() {
+  card.innerHTML = `
+    <h1>🎉 Final Confirmation</h1>
+    <p>Please choose one (both are correct):</p>
+    <button class="primary" onclick="cake()">YESSS</button>
+    <button class="secondary" onclick="cake()">YUPEEE</button>
+  `;
+}
+
+function cake() {
+  card.innerHTML = `
+    <h1>🎂 Celebration Mode</h1>
+    <div class="cake shake" id="cake">
+      <div class="burst-text">
+        <div class="glitter" style="font-size:26px;">Vedanshi ✨</div>
+        <div style="font-size:22px;margin-top:6px;">
+          YOU’RE GOING TO PROM<br>WITH ME!!!!!
+        </div>
+      </div>
     </div>
   `;
 
-  const noBtn = document.getElementById("no");
-  const yesBtn = document.getElementById("yes");
-  const area = document.querySelector(".buttons");
-
-  function moveNo() {
-    noBtn.classList.add("shake");
-    setTimeout(() => {
-      noBtn.classList.remove("shake");
-
-      const maxX = area.clientWidth - noBtn.offsetWidth;
-      const maxY = area.clientHeight - noBtn.offsetHeight;
-
-      noBtn.style.left = Math.random() * maxX + "px";
-      noBtn.style.top = Math.random() * maxY + "px";
-    }, 300);
-  }
-
-  noBtn.addEventListener("mouseenter", moveNo);
-  noBtn.addEventListener("touchstart", e => {
-    e.preventDefault();
-    moveNo();
-  });
-
-  yesBtn.addEventListener("click", reveal);
+  const music = document.getElementById("music");
+  setTimeout(() => {
+    document.getElementById("cake").classList.remove("shake");
+    music.play();
+    fireworks();
+  }, 700);
 }
 
-function reveal() {
-  card.innerHTML = `
-    <h1>🎉 Correct!</h1>
-    <p>Also… small confession 😄</p>
-    <h1 style="font-size:26px;">
-      Vedanshi, will you go to prom with me? 💃🕺
-    </h1>
-  `;
-  launchConfetti();
-}
+function fireworks() {
+  for (let i = 0; i < 12; i++) {
+    const cx = Math.random() * window.innerWidth;
+    const cy = Math.random() * window.innerHeight * 0.6;
 
-function launchConfetti() {
-  const emojis = ["🎉","✨","💖","🌟"];
-  for (let i = 0; i < 60; i++) {
-    const c = document.createElement("div");
-    c.className = "confetti";
-    c.innerText = emojis[Math.floor(Math.random() * emojis.length)];
-    c.style.left = Math.random() * 100 + "vw";
-    c.style.top = "-20px";
-    c.style.animationDuration = 2 + Math.random() * 2 + "s";
-    document.body.appendChild(c);
-
-    setTimeout(() => c.remove(), 4000);
+    for (let j = 0; j < 25; j++) {
+      const f = document.createElement("div");
+      f.className = "firework";
+      f.style.left = cx + "px";
+      f.style.top = cy + "px";
+      f.style.background = ["#facc15","#f472b6","#60a5fa","#34d399"][Math.floor(Math.random()*4)];
+      f.style.setProperty("--x", (Math.random()*200-100)+"px");
+      f.style.setProperty("--y", (Math.random()*200-100)+"px");
+      document.body.appendChild(f);
+      setTimeout(()=>f.remove(),1500);
+    }
   }
 }
 </script>
