@@ -28,7 +28,7 @@ body{
   opacity:.65;
 }
 
-/* planets + orbits */
+/* orbits + planets */
 .orbit{
   position:absolute;
   border-radius:50%;
@@ -51,8 +51,6 @@ body{
   width:min(460px,92vw);
   text-align:center;
   z-index:10;
-
-  /* glow synced later */
   box-shadow:
     0 30px 70px rgba(0,0,0,.6),
     0 0 50px rgba(253,230,138,.35);
@@ -78,26 +76,50 @@ button{
   background:#e5e7eb;
 }
 
-/* astronomy question */
+/* question */
 .buttons{position:relative;height:150px}
 #no{position:absolute;left:220px;top:40px}
 .cat{position:absolute;font-size:26px;pointer-events:none}
 
-/* star core */
+/* star photo core */
 .star-core{
+  position:relative;
   width:170px;
   height:170px;
   margin:30px auto 0;
   border-radius:50%;
-  background:radial-gradient(circle,#fff7cc,#facc15);
+  background:
+    radial-gradient(circle,#fff7cc,#facc15),
+    url("us.jpg");
+  background-size:cover;
+  background-position:center;
   box-shadow:0 0 70px #fde68a;
-  animation:pulse 3s ease-in-out infinite;
+  animation:pulse 3s ease-in-out infinite, fadeInPhoto 1.6s ease forwards;
+  opacity:0;
+  overflow:hidden;
 }
+
+/* soft vignette */
+.star-core::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  border-radius:50%;
+  background:
+    radial-gradient(circle at center,
+      rgba(255,255,255,0) 55%,
+      rgba(0,0,0,0.35) 100%);
+}
+
 @keyframes pulse{
   50%{transform:scale(1.08)}
 }
 
-/* constellation — etched into space */
+@keyframes fadeInPhoto{
+  to{opacity:1}
+}
+
+/* constellation (etched) */
 .const-wrap{
   position:relative;
   width:100%;
@@ -123,15 +145,9 @@ button{
 }
 
 /* title animation */
-.letter{
-  opacity:0;
-  animation:appear .6s forwards;
-}
+.letter{opacity:0;animation:appear .6s forwards}
 @keyframes appear{to{opacity:1}}
-.twinkle{
-  display:inline-block;
-  animation:twinkleEmoji 2.5s infinite;
-}
+.twinkle{display:inline-block;animation:twinkleEmoji 2.5s infinite}
 @keyframes twinkleEmoji{
   0%,100%{opacity:.6}
   50%{opacity:1}
@@ -170,7 +186,6 @@ button{
   <img src="planet-jupiter.png" class="planet" width="140">
 </div>
 
-<!-- card -->
 <div class="card" id="card">
   <h1 id="mainTitle">Astronomy Interaction <span class="twinkle">🔭</span></h1>
   <p>This project studies responses to astronomy questions.</p>
@@ -208,7 +223,7 @@ document.addEventListener('visibilitychange',()=>{
   if(!document.hidden) animateTitle();
 });
 
-/* orbits */
+/* orbit motion */
 let t=0;
 (function orbitLoop(){
   t+=0.01;
@@ -318,7 +333,7 @@ function drawConstellation(){
   });
 }
 
-/* glow synced to music (soft pulse) */
+/* glow synced to music */
 function pulseGlow(audio){
   const ctx=new AudioContext();
   const src=ctx.createMediaElementSource(audio);
