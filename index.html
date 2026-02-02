@@ -81,7 +81,7 @@ button{
 #no{position:absolute;left:220px;top:40px}
 .cat{position:absolute;font-size:26px;pointer-events:none}
 
-/* PHOTO CORE (replaces yellow star) */
+/* PHOTO CORE */
 .star-core{
   width:170px;
   height:170px;
@@ -91,15 +91,13 @@ button{
   box-shadow:0 0 50px rgba(253,230,138,.6);
 }
 
-/* constellation — etched into space */
+/* constellation — NO fade, NO blur */
 .const-wrap{
   position:relative;
   width:100%;
   max-width:320px;
   height:140px;
   margin:26px auto 0;
-  opacity:0.45;
-  filter:blur(0.6px);
 }
 .const-star{
   position:absolute;
@@ -198,9 +196,6 @@ function animateTitle(){
   });
 }
 animateTitle();
-document.addEventListener('visibilitychange',()=>{
-  if(!document.hidden) animateTitle();
-});
 
 /* orbits */
 let t=0;
@@ -211,15 +206,6 @@ let t=0;
   });
   requestAnimationFrame(orbitLoop);
 })();
-
-/* parallax */
-document.addEventListener('mousemove',e=>{
-  const x=(e.clientX/window.innerWidth-.5)*10;
-  const y=(e.clientY/window.innerHeight-.5)*10;
-  document.querySelectorAll('.orbit').forEach(o=>{
-    o.style.translate=`${x}px ${y}px`;
-  });
-});
 
 /* flow */
 function ask(){
@@ -306,4 +292,3 @@ function drawConstellation(){
 
 </body>
 </html>
-
