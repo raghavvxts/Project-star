@@ -6,7 +6,10 @@
 <title>Astronomy Interaction</title>
 
 <style>
-*{box-sizing:border-box;font-family:system-ui,-apple-system,sans-serif}
+*{
+  box-sizing:border-box;
+  font-family:system-ui,-apple-system,BlinkMacSystemFont,sans-serif;
+}
 
 body{
   margin:0;
@@ -19,41 +22,41 @@ body{
   color:white;
 }
 
-/* background stars */
+/* stars */
 .star{
   position:absolute;
   width:2px;
   height:2px;
   background:white;
-  opacity:.65;
+  opacity:.6;
 }
 
-/* planets + orbits */
+/* orbits */
 .orbit{
   position:absolute;
   border-radius:50%;
   pointer-events:none;
+  will-change:transform;
 }
 .planet{
   position:absolute;
   top:0;
   left:50%;
   transform:translateX(-50%);
-  opacity:.95;
 }
 
-/* main card */
+/* card */
 .card{
   background:white;
   color:#0f172a;
   padding:36px 28px;
-  border-radius:30px;
+  border-radius:28px;
   width:min(460px,92vw);
   text-align:center;
   z-index:10;
   box-shadow:
-    0 30px 70px rgba(0,0,0,.6),
-    0 0 50px rgba(253,230,138,.35);
+    0 20px 50px rgba(0,0,0,.45),
+    0 0 30px rgba(253,230,138,.3);
 }
 
 /* typography */
@@ -68,6 +71,7 @@ button{
   cursor:pointer;
   margin:8px;
 }
+
 .primary{
   background:linear-gradient(135deg,#2563eb,#3b82f6);
   color:white;
@@ -76,22 +80,36 @@ button{
   background:#e5e7eb;
 }
 
-/* astronomy question */
-.buttons{position:relative;height:150px}
-#no{position:absolute;left:220px;top:40px}
-.cat{position:absolute;font-size:26px;pointer-events:none}
-
-/* PHOTO CORE */
-.star-core{
-  width:170px;
-  height:170px;
-  margin:30px auto 0;
-  border-radius:50%;
-  background:url("us2.jpg") center/cover no-repeat;
-  box-shadow:0 0 50px rgba(253,230,138,.6);
+/* yes / no */
+.buttons{
+  position:relative;
+  height:150px;
+}
+#no{
+  position:absolute;
+  left:200px;
+  top:40px;
+}
+.cat{
+  position:absolute;
+  font-size:26px;
+  pointer-events:none;
 }
 
-/* constellation — NO fade, NO blur */
+/* star core replacement (CSS only) */
+.star-core{
+  width:160px;
+  height:160px;
+  margin:28px auto 0;
+  border-radius:50%;
+  background:
+    radial-gradient(circle at 30% 30%,#fff,#fde68a 40%,#f59e0b 65%,transparent 70%);
+  box-shadow:
+    0 0 40px rgba(253,230,138,.6),
+    0 0 80px rgba(253,230,138,.35);
+}
+
+/* constellation */
 .const-wrap{
   position:relative;
   width:100%;
@@ -105,7 +123,6 @@ button{
   height:6px;
   border-radius:50%;
   background:#fde68a;
-  box-shadow:0 0 6px rgba(253,230,138,.6);
 }
 .const-line{
   position:absolute;
@@ -117,19 +134,20 @@ button{
 /* title animation */
 .letter{
   opacity:0;
-  animation:appear .6s forwards;
+  animation:appear .5s forwards;
 }
 @keyframes appear{to{opacity:1}}
+
 .twinkle{
   display:inline-block;
-  animation:twinkleEmoji 2.5s infinite;
+  animation:twinkle 2.5s infinite;
 }
-@keyframes twinkleEmoji{
+@keyframes twinkle{
   0%,100%{opacity:.6}
   50%{opacity:1}
 }
 
-/* glitter name */
+/* glitter text */
 .glitter{
   background:linear-gradient(90deg,#fde68a,#f472b6,#60a5fa,#fde68a);
   background-size:300%;
@@ -138,8 +156,12 @@ button{
   animation:glitter 3s linear infinite;
 }
 @keyframes glitter{
-  0%{background-position:0%}
-  100%{background-position:300%}
+  to{background-position:300%}
+}
+
+/* motion safety */
+@media (prefers-reduced-motion: reduce){
+  *{animation:none !important}
 }
 </style>
 </head>
@@ -162,16 +184,16 @@ button{
   <img src="planet-jupiter.png" class="planet" width="140">
 </div>
 
-<!-- card -->
 <div class="card" id="card">
   <h1 id="mainTitle">Astronomy Interaction <span class="twinkle">🔭</span></h1>
   <p>This project studies responses to astronomy questions.</p>
-  <button class="primary" onclick="ask()">Start 🚀</button>
+  <button class="primary" id="startBtn">Start 🚀</button>
 </div>
 
 <script>
 /* stars */
-for(let i=0;i<140;i++){
+const STAR_COUNT = 130;
+for(let i=0;i<STAR_COUNT;i++){
   const s=document.createElement('div');
   s.className='star';
   s.style.left=Math.random()*100+'vw';
@@ -179,35 +201,39 @@ for(let i=0;i<140;i++){
   document.body.appendChild(s);
 }
 
-const card=document.getElementById('card');
+/* cached refs */
+const card = document.getElementById('card');
+const orbits = document.querySelectorAll('.orbit');
+const music = document.getElementById('music');
 
 /* title animation */
-function animateTitle(){
+(function animateTitle(){
   const el=document.getElementById('mainTitle');
-  if(!el) return;
   const text=el.innerText;
-  el.innerHTML='';
+  el.textContent='';
   [...text].forEach((c,i)=>{
     const span=document.createElement('span');
     span.className='letter';
-    span.style.animationDelay=i*0.05+'s';
+    span.style.animationDelay=i*0.04+'s';
     span.innerHTML=c===' ' ? '&nbsp;' : c;
     el.appendChild(span);
   });
-}
-animateTitle();
+})();
 
-/* orbits */
+/* orbit animation */
 let t=0;
-(function orbitLoop(){
+function orbitLoop(){
   t+=0.01;
-  document.querySelectorAll('.orbit').forEach(o=>{
+  orbits.forEach(o=>{
     o.style.transform=`rotate(${t*o.dataset.speed*360}deg)`;
   });
   requestAnimationFrame(orbitLoop);
-})();
+}
+orbitLoop();
 
 /* flow */
+document.getElementById('startBtn').onclick = ask;
+
 function ask(){
   card.innerHTML=`
     <h1>Astronomy Check 🌞</h1>
@@ -219,28 +245,33 @@ function ask(){
     </div>
     <p style="font-size:12px;color:#6b7280">No may behave unpredictably</p>
   `;
+
   const no=document.getElementById('no');
   const cat=document.getElementById('cat');
-  const area=document.querySelector('.buttons');
-  function run(){
+  const area=card.querySelector('.buttons');
+
+  const dodge=()=>{
     const x=Math.random()*(area.clientWidth-no.offsetWidth);
     const y=Math.random()*(area.clientHeight-no.offsetHeight);
     no.style.left=x+'px';
     no.style.top=y+'px';
     cat.style.left=(x-26)+'px';
     cat.style.top=(y+6)+'px';
-  }
-  no.addEventListener('mouseenter',run);
-  no.addEventListener('touchstart',e=>{e.preventDefault();run();});
+  };
+
+  no.addEventListener('mouseenter',dodge);
+  no.addEventListener('touchstart',e=>{e.preventDefault();dodge();});
   document.getElementById('yes').onclick=confirm;
 }
 
 function confirm(){
   card.innerHTML=`
     <h1>Final Confirmation ⭐</h1>
-    <button class="primary" onclick="reveal()">Okiee Yawrr</button>
-    <button class="secondary" onclick="reveal()">YUPEEE</button>
+    <button class="primary" id="ok">Okiee Yawrr</button>
+    <button class="secondary" id="yup">YUPEEE</button>
   `;
+  document.getElementById('ok').onclick=reveal;
+  document.getElementById('yup').onclick=reveal;
 }
 
 function reveal(){
@@ -257,29 +288,32 @@ function reveal(){
     </div>
     <div class="const-wrap" id="const"></div>
   `;
-  setTimeout(()=>{
-    document.getElementById('music').play();
-    drawConstellation();
-  },500);
+
+  music.play().catch(()=>{});
+  drawConstellation();
 }
 
 /* constellation */
 function drawConstellation(){
   const wrap=document.getElementById('const');
-  const pts=[[30,70],[60,40],[90,70],[130,40],[130,70],
-             [170,55],[210,40],[210,70],[250,55],
-             [290,40],[290,70]];
+  const pts=[
+    [30,70],[60,40],[90,70],[130,40],[130,70],
+    [170,55],[210,40],[210,70],[250,55],
+    [290,40],[290,70]
+  ];
+
   pts.forEach((p,i)=>{
     const s=document.createElement('div');
     s.className='const-star';
     s.style.left=p[0]+'px';
     s.style.top=p[1]+'px';
     wrap.appendChild(s);
+
     if(i>0){
       const l=document.createElement('div');
-      l.className='const-line';
       const dx=p[0]-pts[i-1][0];
       const dy=p[1]-pts[i-1][1];
+      l.className='const-line';
       l.style.left=pts[i-1][0]+'px';
       l.style.top=pts[i-1][1]+'px';
       l.style.width=Math.hypot(dx,dy)+'px';
