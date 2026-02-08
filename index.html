@@ -5,38 +5,36 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Astronomy Interaction</title>
 
+<!-- LIBRARIES -->
+<script src="https://unpkg.com/gsap@3/dist/gsap.min.js"></script>
+<script src="https://unpkg.com/animejs@3/lib/anime.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/tsparticles@2/tsparticles.bundle.min.js"></script>
+<script src="https://unpkg.com/howler/dist/howler.min.js"></script>
+<script src="https://unpkg.com/lottie-web/build/player/lottie.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+
 <style>
-*{
-  box-sizing:border-box;
-  font-family:system-ui,-apple-system,BlinkMacSystemFont,sans-serif;
-}
+*{box-sizing:border-box;font-family:system-ui,-apple-system,sans-serif}
 
 body{
   margin:0;
   min-height:100vh;
   overflow:hidden;
-  background:radial-gradient(circle at top,#0b1d3a,#000 72%);
+  background:radial-gradient(circle at top,#0b1d3a,#000 75%);
   display:flex;
   align-items:center;
   justify-content:center;
   color:white;
 }
 
-/* stars */
-.star{
-  position:absolute;
-  width:2px;
-  height:2px;
-  background:white;
-  opacity:.6;
-}
+#stars{position:fixed;inset:0;z-index:0}
 
-/* orbits */
+/* ORBITS + PLANETS */
 .orbit{
   position:absolute;
   border-radius:50%;
   pointer-events:none;
-  will-change:transform;
+  z-index:1;
 }
 .planet{
   position:absolute;
@@ -45,7 +43,7 @@ body{
   transform:translateX(-50%);
 }
 
-/* card */
+/* CARD */
 .card{
   background:white;
   color:#0f172a;
@@ -54,185 +52,122 @@ body{
   width:min(460px,92vw);
   text-align:center;
   z-index:10;
-  box-shadow:
-    0 20px 50px rgba(0,0,0,.45),
-    0 0 30px rgba(253,230,138,.3);
+  box-shadow:0 20px 50px rgba(0,0,0,.45);
 }
 
-/* typography */
 h1{font-size:26px;margin-bottom:12px}
 p{font-size:16px;margin-bottom:22px}
 
 button{
-  padding:14px 32px;
-  font-size:16px;
+  padding:14px 28px;
+  font-size:15px;
   border-radius:999px;
   border:none;
   cursor:pointer;
-  margin:8px;
+  margin:6px;
 }
 
-.primary{
-  background:linear-gradient(135deg,#2563eb,#3b82f6);
-  color:white;
-}
-.secondary{
-  background:#e5e7eb;
-}
+.primary{background:linear-gradient(135deg,#2563eb,#3b82f6);color:white}
+.secondary{background:#e5e7eb}
 
-/* yes / no */
-.buttons{
-  position:relative;
-  height:150px;
-}
-#no{
-  position:absolute;
-  left:200px;
-  top:40px;
-}
-.cat{
-  position:absolute;
-  font-size:26px;
-  pointer-events:none;
-}
+.buttons{position:relative;height:150px}
+#no{position:absolute;left:200px;top:40px}
+.cat{position:absolute;font-size:26px;pointer-events:none}
 
-/* star core replacement (CSS only) */
+/* STAR CORE */
 .star-core{
-  width:160px;
-  height:160px;
-  margin:28px auto 0;
-  border-radius:50%;
-  background:
-    radial-gradient(circle at 30% 30%,#fff,#fde68a 40%,#f59e0b 65%,transparent 70%);
-  box-shadow:
-    0 0 40px rgba(253,230,138,.6),
-    0 0 80px rgba(253,230,138,.35);
+  width:160px;height:160px;margin:24px auto 0;border-radius:50%;
+  background:radial-gradient(circle at 30% 30%,#fff,#fde68a 40%,#f59e0b 65%,transparent 70%);
+  box-shadow:0 0 40px rgba(253,230,138,.6);
 }
 
-/* constellation */
+/* CONSTELLATION */
 .const-wrap{
   position:relative;
-  width:100%;
-  max-width:320px;
-  height:140px;
-  margin:26px auto 0;
+  width:420px;
+  height:180px;
+  margin:22px auto 0;
 }
 .const-star{
   position:absolute;
-  width:6px;
-  height:6px;
+  width:5px;height:5px;
   border-radius:50%;
   background:#fde68a;
+  opacity:0;
 }
 .const-line{
   position:absolute;
   height:2px;
   background:rgba(253,230,138,.55);
   transform-origin:left center;
+  scale:0;
 }
 
-/* title animation */
-.letter{
-  opacity:0;
-  animation:appear .5s forwards;
-}
-@keyframes appear{to{opacity:1}}
-
-.twinkle{
-  display:inline-block;
-  animation:twinkle 2.5s infinite;
-}
-@keyframes twinkle{
-  0%,100%{opacity:.6}
-  50%{opacity:1}
-}
-
-/* glitter text */
-.glitter{
-  background:linear-gradient(90deg,#fde68a,#f472b6,#60a5fa,#fde68a);
-  background-size:300%;
-  -webkit-background-clip:text;
-  -webkit-text-fill-color:transparent;
-  animation:glitter 3s linear infinite;
-}
-@keyframes glitter{
-  to{background-position:300%}
-}
-
-/* motion safety */
-@media (prefers-reduced-motion: reduce){
-  *{animation:none !important}
-}
+.actions{margin-top:16px}
 </style>
 </head>
 
 <body>
 
-<audio id="music" src="taaron-se.mp3" preload="auto"></audio>
+<div id="stars"></div>
 
-<!-- planets -->
-<div class="orbit" data-speed="0.002" style="width:420px;height:420px;left:8vw;top:22vh">
+<!-- PLANETS -->
+<div class="orbit" data-speed="1.2" style="width:420px;height:420px;left:6vw;top:20vh">
   <img src="planet-earth.png" class="planet" width="110">
 </div>
-<div class="orbit" data-speed="0.0015" style="width:560px;height:560px;right:6vw;top:12vh">
+<div class="orbit" data-speed="0.9" style="width:560px;height:560px;right:6vw;top:10vh">
   <img src="planet-saturn.png" class="planet" width="160">
 </div>
-<div class="orbit" data-speed="0.0025" style="width:320px;height:320px;left:14vw;bottom:10vh">
+<div class="orbit" data-speed="1.4" style="width:320px;height:320px;left:14vw;bottom:10vh">
   <img src="planet-mars.png" class="planet" width="90">
 </div>
-<div class="orbit" data-speed="0.001" style="width:640px;height:640px;right:8vw;bottom:6vh">
+<div class="orbit" data-speed="0.7" style="width:640px;height:640px;right:8vw;bottom:6vh">
   <img src="planet-jupiter.png" class="planet" width="140">
 </div>
 
 <div class="card" id="card">
-  <h1 id="mainTitle">Astronomy Interaction <span class="twinkle">🔭</span></h1>
+  <h1>Astronomy Interaction 🔭</h1>
   <p>This project studies responses to astronomy questions.</p>
   <button class="primary" id="startBtn">Start 🚀</button>
 </div>
 
 <script>
-/* stars */
-const STAR_COUNT = 130;
-for(let i=0;i<STAR_COUNT;i++){
-  const s=document.createElement('div');
-  s.className='star';
-  s.style.left=Math.random()*100+'vw';
-  s.style.top=Math.random()*100+'vh';
-  document.body.appendChild(s);
-}
+/* STAR BACKGROUND */
+tsParticles.load("stars",{
+  fullScreen:false,
+  particles:{
+    number:{value:150},
+    size:{value:{min:1,max:2}},
+    move:{enable:true,speed:0.15},
+    opacity:{value:0.7},
+    color:{value:"#ffffff"}
+  }
+});
 
-/* cached refs */
-const card = document.getElementById('card');
-const orbits = document.querySelectorAll('.orbit');
-const music = document.getElementById('music');
-
-/* title animation */
-(function animateTitle(){
-  const el=document.getElementById('mainTitle');
-  const text=el.innerText;
-  el.textContent='';
-  [...text].forEach((c,i)=>{
-    const span=document.createElement('span');
-    span.className='letter';
-    span.style.animationDelay=i*0.04+'s';
-    span.innerHTML=c===' ' ? '&nbsp;' : c;
-    el.appendChild(span);
+/* ROTATING ORBITS */
+gsap.utils.toArray(".orbit").forEach(o=>{
+  gsap.to(o,{
+    rotation:360,
+    duration:120 / o.dataset.speed,
+    repeat:-1,
+    ease:"none"
   });
-})();
+});
 
-/* orbit animation */
-let t=0;
-function orbitLoop(){
-  t+=0.01;
-  orbits.forEach(o=>{
-    o.style.transform=`rotate(${t*o.dataset.speed*360}deg)`;
-  });
-  requestAnimationFrame(orbitLoop);
+/* MUSIC */
+const music=new Howl({
+  src:["taaron-se.mp3"],
+  volume:0.8,
+  html5:true
+});
+
+/* FLOW */
+const card=document.getElementById("card");
+document.getElementById("startBtn").onclick=ask;
+
+function animateCard(){
+  gsap.from(card,{scale:.9,opacity:0,duration:.4,ease:"power2.out"});
 }
-orbitLoop();
-
-/* flow */
-document.getElementById('startBtn').onclick = ask;
 
 function ask(){
   card.innerHTML=`
@@ -242,87 +177,138 @@ function ask(){
       <button class="primary" id="yes">Yes</button>
       <button class="secondary" id="no">No</button>
       <div class="cat" id="cat">🐱</div>
-    </div>
-    <p style="font-size:12px;color:#6b7280">No may behave unpredictably</p>
-  `;
+    </div>`;
+  animateCard();
 
-  const no=document.getElementById('no');
-  const cat=document.getElementById('cat');
-  const area=card.querySelector('.buttons');
+  const no=document.getElementById("no");
+  const cat=document.getElementById("cat");
+  const area=card.querySelector(".buttons");
 
   const dodge=()=>{
     const x=Math.random()*(area.clientWidth-no.offsetWidth);
     const y=Math.random()*(area.clientHeight-no.offsetHeight);
-    no.style.left=x+'px';
-    no.style.top=y+'px';
-    cat.style.left=(x-26)+'px';
-    cat.style.top=(y+6)+'px';
+    gsap.to(no,{left:x,top:y,duration:.25});
+    gsap.to(cat,{left:x-26,top:y+6,duration:.25});
   };
 
-  no.addEventListener('mouseenter',dodge);
-  no.addEventListener('touchstart',e=>{e.preventDefault();dodge();});
-  document.getElementById('yes').onclick=confirm;
+  no.addEventListener("mouseenter",dodge);
+  document.getElementById("yes").onclick=confirm;
 }
 
 function confirm(){
   card.innerHTML=`
     <h1>Final Confirmation ⭐</h1>
     <button class="primary" id="ok">Okiee Yawrr</button>
-    <button class="secondary" id="yup">YUPEEE</button>
-  `;
-  document.getElementById('ok').onclick=reveal;
-  document.getElementById('yup').onclick=reveal;
+    <button class="secondary" id="yup">YUPEEE</button>`;
+  animateCard();
+  document.getElementById("ok").onclick=reveal;
+  document.getElementById("yup").onclick=reveal;
 }
 
 function reveal(){
   card.innerHTML=`
+    <div id="celebrate" style="width:170px;margin:auto"></div>
     <div class="star-core"></div>
-    <div style="margin-top:22px">
-      <div class="glitter" style="font-size:38px">Vedannshi</div>
-      <div style="font-size:28px;font-weight:800;margin-top:10px">
+    <div style="margin-top:12px">
+      <div style="font-size:34px;font-weight:800">Vedannshi</div>
+      <div style="font-size:24px;font-weight:800;margin-top:6px">
         YOU’RE GOING TO PROM<br>WITH ME!!!!!
       </div>
-      <p style="margin-top:16px;font-size:14px;color:#6b7280">
-        📸 Screenshot this moment
-      </p>
     </div>
     <div class="const-wrap" id="const"></div>
-  `;
+    <div class="actions">
+      <button class="primary" onclick="location.reload()">Replay 🔁</button>
+      <button class="secondary" onclick="saveShot()">Save 💾</button>
+    </div>`;
+  animateCard();
+  music.play();
 
-  music.play().catch(()=>{});
-  drawConstellation();
+  lottie.loadAnimation({
+    container:document.getElementById("celebrate"),
+    renderer:"svg",
+    loop:true,
+    autoplay:true,
+    path:"https://assets10.lottiefiles.com/packages/lf20_jbrw3hcz.json"
+  });
+
+  drawCursiveConstellation();
 }
 
-/* constellation */
-function drawConstellation(){
-  const wrap=document.getElementById('const');
-  const pts=[
-    [30,70],[60,40],[90,70],[130,40],[130,70],
-    [170,55],[210,40],[210,70],[250,55],
-    [290,40],[290,70]
-  ];
+/* CURSIVE + HEART + TWINKLE */
+function drawCursiveConstellation(){
+  const wrap=document.getElementById("const");
 
-  pts.forEach((p,i)=>{
-    const s=document.createElement('div');
-    s.className='const-star';
-    s.style.left=p[0]+'px';
-    s.style.top=p[1]+'px';
-    wrap.appendChild(s);
+  const stroke=[[20,90],[50,60],[80,80],[110,60],[140,80],
+                [170,60],[200,80],[230,60],[260,80],[290,65],[320,80]];
 
-    if(i>0){
-      const l=document.createElement('div');
-      const dx=p[0]-pts[i-1][0];
-      const dy=p[1]-pts[i-1][1];
-      l.className='const-line';
-      l.style.left=pts[i-1][0]+'px';
-      l.style.top=pts[i-1][1]+'px';
-      l.style.width=Math.hypot(dx,dy)+'px';
-      l.style.transform=`rotate(${Math.atan2(dy,dx)}rad)`;
-      wrap.appendChild(l);
-    }
+  const heart=[[300,120],[290,105],[270,105],[260,120],
+               [270,135],[300,155],[330,135],[340,120],
+               [330,105],[310,105],[300,120]];
+
+  function draw(points,start){
+    points.forEach((p,i)=>{
+      const s=document.createElement("div");
+      s.className="const-star";
+      s.style.left=p[0]+"px";
+      s.style.top=p[1]+"px";
+      wrap.appendChild(s);
+
+      if(i>0){
+        const prev=points[i-1];
+        const l=document.createElement("div");
+        const dx=p[0]-prev[0],dy=p[1]-prev[1];
+        l.className="const-line";
+        l.style.left=prev[0]+"px";
+        l.style.top=prev[1]+"px";
+        l.style.width=Math.hypot(dx,dy)+"px";
+        l.style.transform=`rotate(${Math.atan2(dy,dx)}rad)`;
+        wrap.appendChild(l);
+      }
+    });
+
+    anime({
+      targets:wrap.querySelectorAll(".const-line"),
+      scaleX:[0,1],
+      easing:"easeOutSine",
+      duration:600,
+      delay:anime.stagger(80,{start})
+    });
+
+    anime({
+      targets:wrap.querySelectorAll(".const-star"),
+      opacity:[0,1],
+      scale:[0,1],
+      easing:"easeOutBack",
+      delay:anime.stagger(60,{start})
+    });
+  }
+
+  draw(stroke,0);
+  draw(heart,1200);
+
+  anime({
+    targets:".const-star",
+    opacity:[0.4,1],
+    duration:2000,
+    easing:"linear",
+    loop:true,
+    delay:anime.stagger(120)
+  });
+
+  gsap.to(".const-wrap",{filter:"drop-shadow(0 0 10px #fde68a)"});
+}
+
+/* SAVE */
+function saveShot(){
+  html2canvas(document.body).then(canvas=>{
+    const a=document.createElement("a");
+    a.href=canvas.toDataURL("image/png");
+    a.download="constellation.png";
+    a.click();
   });
 }
 </script>
 
 </body>
-</html> what improvements are available
+</html>
+
