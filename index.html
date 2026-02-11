@@ -19,16 +19,36 @@ body{
   color:white;
 }
 
-/* stars */
+/* ---------------- BACKGROUND STARS ---------------- */
 .star{
   position:absolute;
   width:2px;
   height:2px;
   background:white;
-  opacity:.65;
+  opacity:.6;
+  animation:twinkle 3s infinite ease-in-out alternate;
+}
+@keyframes twinkle{
+  from{opacity:.4}
+  to{opacity:1}
 }
 
-/* planets */
+/* ---------------- SHOOTING STAR ---------------- */
+.shooting-star{
+  position:absolute;
+  width:120px;
+  height:2px;
+  background:linear-gradient(90deg,white,transparent);
+  top:20%;
+  left:-150px;
+  opacity:0;
+}
+@keyframes shoot{
+  0%{transform:translateX(0) translateY(0);opacity:1}
+  100%{transform:translateX(120vw) translateY(40vh);opacity:0}
+}
+
+/* ---------------- PLANETS ---------------- */
 .orbit{
   position:absolute;
   border-radius:50%;
@@ -39,10 +59,14 @@ body{
   top:0;
   left:50%;
   transform:translateX(-50%);
-  opacity:.95;
+  animation:rotatePlanet 60s linear infinite;
+}
+@keyframes rotatePlanet{
+  from{transform:translateX(-50%) rotate(0deg)}
+  to{transform:translateX(-50%) rotate(360deg)}
 }
 
-/* card */
+/* ---------------- CARD ---------------- */
 .card{
   background:rgba(255,255,255,0.96);
   backdrop-filter:blur(6px);
@@ -55,15 +79,23 @@ body{
   box-shadow:
     0 30px 70px rgba(0,0,0,.6),
     0 0 50px rgba(253,230,138,.35);
-  transition:transform .35s ease;
+  transition:transform .6s ease;
+}
+.card.zoom{
+  transform:scale(1.08);
 }
 
-.card.reveal-animate{
-  animation:popIn .45s ease forwards;
+/* subtle vibration */
+@keyframes subtleShake{
+  0%{transform:scale(1.08) translateX(0)}
+  20%{transform:scale(1.08) translateX(-2px)}
+  40%{transform:scale(1.08) translateX(2px)}
+  60%{transform:scale(1.08) translateX(-1px)}
+  80%{transform:scale(1.08) translateX(1px)}
+  100%{transform:scale(1.08) translateX(0)}
 }
-@keyframes popIn{
-  from{transform:scale(.95);opacity:.8;}
-  to{transform:scale(1);opacity:1;}
+.card.impact{
+  animation:subtleShake .4s ease;
 }
 
 h1{font-size:26px;margin-bottom:12px}
@@ -78,7 +110,6 @@ button{
   margin:8px;
   transition:.25s ease;
 }
-
 .primary{
   background:linear-gradient(135deg,#2563eb,#3b82f6);
   color:white;
@@ -87,53 +118,65 @@ button{
   transform:scale(1.12);
   box-shadow:0 8px 25px rgba(59,130,246,.5);
 }
-
 .secondary{background:#e5e7eb}
 
 .buttons{position:relative;height:150px}
-
 #no{
   position:absolute;
   left:220px;
   top:40px;
   transition:.2s ease;
 }
-
 .cat{position:absolute;font-size:26px;pointer-events:none}
 
-/* photo circle */
+/* ---------------- PHOTO ---------------- */
 .star-core{
   width:170px;
   height:170px;
   margin:30px auto 0;
   border-radius:50%;
   background:url("us2.jpg") center/cover no-repeat;
-  box-shadow:0 0 50px rgba(253,230,138,.6);
+  box-shadow:0 0 60px rgba(253,230,138,.7);
 }
 
-/* constellation container */
+/* ---------------- CONSTELLATION ---------------- */
 .const-wrap{
   position:relative;
   width:100%;
-  height:150px;
+  height:160px;
   margin:24px auto 0;
   overflow:hidden;
 }
-
 .const-star{
   position:absolute;
   width:7px;
   height:7px;
   border-radius:50%;
   background:#fde68a;
-  box-shadow:0 0 8px rgba(253,230,138,.8);
+  box-shadow:0 0 14px rgba(253,230,138,.9);
+  animation:pulseStar 2.4s ease-in-out infinite alternate;
 }
-
+@keyframes pulseStar{
+  from{transform:scale(1);opacity:.8}
+  to{transform:scale(1.4);opacity:1}
+}
 .const-line{
   position:absolute;
   height:2px;
-  background:rgba(253,230,138,.7);
+  background:rgba(253,230,138,.85);
   transform-origin:left center;
+  box-shadow:0 0 12px rgba(253,230,138,.8);
+  opacity:0;
+}
+
+/* text pop */
+@keyframes textPop{
+  0%{transform:scale(.9);opacity:0}
+  60%{transform:scale(1.05)}
+  100%{transform:scale(1);opacity:1}
+}
+.final-text{
+  animation:textPop .6s ease forwards;
 }
 
 /* glitter */
@@ -154,6 +197,7 @@ button{
 <body>
 
 <audio id="music" src="taaron-se.mp3" preload="auto"></audio>
+<div class="shooting-star" id="shoot"></div>
 
 <!-- planets -->
 <div class="orbit" style="width:420px;height:420px;left:8vw;top:22vh">
@@ -181,8 +225,17 @@ for(let i=0;i<140;i++){
   s.className='star';
   s.style.left=Math.random()*100+'vw';
   s.style.top=Math.random()*100+'vh';
+  s.style.animationDelay=Math.random()*3+'s';
   document.body.appendChild(s);
 }
+
+setInterval(()=>{
+  const shoot=document.getElementById('shoot');
+  shoot.style.top=Math.random()*40+'%';
+  shoot.style.animation='none';
+  void shoot.offsetWidth;
+  shoot.style.animation='shoot 2s linear';
+},12000);
 
 const card=document.getElementById('card');
 
@@ -200,7 +253,6 @@ function ask(){
   const no=document.getElementById('no');
   const cat=document.getElementById('cat');
   const area=document.querySelector('.buttons');
-
   function run(){
     const x=Math.random()*(area.clientWidth-no.offsetWidth);
     const y=Math.random()*(area.clientHeight-no.offsetHeight);
@@ -209,7 +261,6 @@ function ask(){
     cat.style.left=(x-26)+'px';
     cat.style.top=(y+6)+'px';
   }
-
   no.addEventListener('mouseenter',run);
   document.getElementById('yes').onclick=confirm;
 }
@@ -223,11 +274,13 @@ function confirm(){
 }
 
 function reveal(){
+  card.classList.add("zoom");
+
   card.innerHTML=`
     <div class="star-core"></div>
     <div style="margin-top:22px">
       <div class="glitter" style="font-size:40px">Vedannshi</div>
-      <div style="font-size:28px;font-weight:800;margin-top:10px">
+      <div class="final-text" style="font-size:28px;font-weight:800;margin-top:10px">
         YOU’RE GOING TO PROM<br>WITH ME!!!!!
       </div>
       <p style="margin-top:16px;font-size:14px;color:#6b7280">
@@ -236,7 +289,12 @@ function reveal(){
     </div>
     <div class="const-wrap" id="const"></div>
   `;
-  card.classList.add("reveal-animate");
+
+  setTimeout(()=>{
+    card.classList.add("impact");
+    setTimeout(()=>card.classList.remove("impact"),400);
+  },450);
+
   setTimeout(()=>{
     document.getElementById('music').play();
     drawConstellation();
@@ -246,18 +304,16 @@ function reveal(){
 function drawConstellation(){
   const wrap=document.getElementById('const');
   wrap.innerHTML='';
-
   const letters={
-    V:[[0,0],[20,55],[40,0]],
-    E:[[40,0],[0,0],[0,27],[32,27],[0,55],[40,55]],
-    D:[[0,0],[0,55],[40,27]],
-    A:[[0,55],[20,0],[40,55],[10,30],[30,30]],
-    N:[[0,55],[0,0],[40,55],[40,0]],
-    S:[[40,0],[0,0],[0,27],[40,27],[40,55],[0,55]],
-    H:[[0,0],[0,55],[40,0],[40,55],[0,27],[40,27]],
-    I:[[20,0],[20,55]]
+    V:{points:[[0,0],[20,55],[40,0]],lines:[[0,1],[1,2]]},
+    E:{points:[[40,0],[0,0],[0,55],[40,55],[0,27],[32,27]],lines:[[0,1],[1,2],[2,3],[2,4],[4,5]]},
+    D:{points:[[0,0],[0,55],[30,45],[40,27],[30,10],[0,0]],lines:[[0,1],[1,2],[2,3],[3,4],[4,5]]},
+    A:{points:[[0,55],[20,0],[40,55],[10,30],[30,30]],lines:[[0,1],[1,2],[3,4]]},
+    N:{points:[[0,55],[0,0],[40,55],[40,0]],lines:[[0,1],[1,2],[2,3]]},
+    S:{points:[[40,0],[0,0],[0,27],[40,27],[40,55],[0,55]],lines:[[0,1],[1,2],[2,3],[3,4],[4,5]]},
+    H:{points:[[0,0],[0,55],[40,0],[40,55],[0,27],[40,27]],lines:[[0,1],[2,3],[4,5]]},
+    I:{points:[[20,0],[20,55]],lines:[[0,1]]}
   };
-
   const name="VEDANNSHI";
   const baseSpacing=55;
   const maxWidth=wrap.clientWidth-20;
@@ -266,26 +322,28 @@ function drawConstellation(){
   const spacing=baseSpacing*scale;
   const startX=(wrap.clientWidth-(name.length*spacing))/2;
   const baseY=20;
-
   let offsetX=startX;
+  let delay=0;
 
   for(let char of name){
-    const pts=letters[char];
+    const data=letters[char];
+    const pts=data.points;
 
     pts.forEach(p=>{
       const s=document.createElement('div');
       s.className='const-star';
       s.style.left=(offsetX+p[0]*scale)+'px';
       s.style.top=(baseY+p[1]*scale)+'px';
+      s.style.animationDelay=Math.random()*2+'s';
       wrap.appendChild(s);
     });
 
-    for(let i=0;i<pts.length-1;i++){
+    data.lines.forEach(pair=>{
+      const [i,j]=pair;
       const x1=offsetX+pts[i][0]*scale;
       const y1=baseY+pts[i][1]*scale;
-      const x2=offsetX+pts[i+1][0]*scale;
-      const y2=baseY+pts[i+1][1]*scale;
-
+      const x2=offsetX+pts[j][0]*scale;
+      const y2=baseY+pts[j][1]*scale;
       const l=document.createElement('div');
       l.className='const-line';
       l.style.left=x1+'px';
@@ -295,7 +353,12 @@ function drawConstellation(){
       l.style.width=Math.hypot(dx,dy)+'px';
       l.style.transform=`rotate(${Math.atan2(dy,dx)}rad)`;
       wrap.appendChild(l);
-    }
+      setTimeout(()=>{
+        l.style.transition="opacity .6s ease";
+        l.style.opacity="1";
+      },delay);
+      delay+=180;
+    });
 
     offsetX+=spacing;
   }
