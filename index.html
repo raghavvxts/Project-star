@@ -19,7 +19,7 @@ body{
   color:white;
 }
 
-/* background stars */
+/* stars */
 .star{
   position:absolute;
   width:2px;
@@ -42,7 +42,7 @@ body{
   opacity:.95;
 }
 
-/* main card */
+/* card */
 .card{
   background:rgba(255,255,255,0.96);
   backdrop-filter:blur(6px);
@@ -55,25 +55,20 @@ body{
   box-shadow:
     0 30px 70px rgba(0,0,0,.6),
     0 0 50px rgba(253,230,138,.35);
-  transform:scale(1);
   transition:transform .35s ease;
 }
 
-/* reveal entrance animation */
 .card.reveal-animate{
   animation:popIn .45s ease forwards;
 }
-
 @keyframes popIn{
-  from{transform:scale(.95); opacity:.8;}
-  to{transform:scale(1); opacity:1;}
+  from{transform:scale(.95);opacity:.8;}
+  to{transform:scale(1);opacity:1;}
 }
 
-/* typography */
 h1{font-size:26px;margin-bottom:12px}
 p{font-size:16px;margin-bottom:22px}
 
-/* buttons */
 button{
   padding:14px 32px;
   font-size:16px;
@@ -88,18 +83,13 @@ button{
   background:linear-gradient(135deg,#2563eb,#3b82f6);
   color:white;
 }
-
-/* stronger hover */
 .primary:hover{
   transform:scale(1.12);
   box-shadow:0 8px 25px rgba(59,130,246,.5);
 }
 
-.secondary{
-  background:#e5e7eb;
-}
+.secondary{background:#e5e7eb}
 
-/* astronomy question */
 .buttons{position:relative;height:150px}
 
 #no{
@@ -109,13 +99,9 @@ button{
   transition:.2s ease;
 }
 
-.cat{
-  position:absolute;
-  font-size:26px;
-  pointer-events:none;
-}
+.cat{position:absolute;font-size:26px;pointer-events:none}
 
-/* PHOTO CORE */
+/* photo circle */
 .star-core{
   width:170px;
   height:170px;
@@ -125,43 +111,28 @@ button{
   box-shadow:0 0 50px rgba(253,230,138,.6);
 }
 
-/* constellation (sharp) */
+/* constellation */
 .const-wrap{
   position:relative;
   width:100%;
-  max-width:320px;
-  height:140px;
-  margin:26px auto 0;
+  height:180px;
+  margin:30px auto 0;
 }
+
 .const-star{
   position:absolute;
-  width:6px;
-  height:6px;
+  width:7px;
+  height:7px;
   border-radius:50%;
   background:#fde68a;
-  box-shadow:0 0 6px rgba(253,230,138,.6);
+  box-shadow:0 0 8px rgba(253,230,138,.8);
 }
+
 .const-line{
   position:absolute;
   height:2px;
-  background:rgba(253,230,138,.55);
+  background:rgba(253,230,138,.7);
   transform-origin:left center;
-}
-
-/* title animation */
-.letter{
-  opacity:0;
-  animation:appear .6s forwards;
-}
-@keyframes appear{to{opacity:1}}
-
-.twinkle{
-  display:inline-block;
-  animation:twinkleEmoji 2.5s infinite;
-}
-@keyframes twinkleEmoji{
-  0%,100%{opacity:.6}
-  50%{opacity:1}
 }
 
 /* glitter name */
@@ -184,28 +155,26 @@ button{
 <audio id="music" src="taaron-se.mp3" preload="auto"></audio>
 
 <!-- planets -->
-<div class="orbit" data-speed="0.002" style="width:420px;height:420px;left:8vw;top:22vh">
+<div class="orbit" style="width:420px;height:420px;left:8vw;top:22vh">
   <img src="planet-earth.png" class="planet" width="110">
 </div>
-<div class="orbit" data-speed="0.0015" style="width:560px;height:560px;right:6vw;top:12vh">
+<div class="orbit" style="width:560px;height:560px;right:6vw;top:12vh">
   <img src="planet-saturn.png" class="planet" width="160">
 </div>
-<div class="orbit" data-speed="0.0025" style="width:320px;height:320px;left:14vw;bottom:10vh">
+<div class="orbit" style="width:320px;height:320px;left:14vw;bottom:10vh">
   <img src="planet-mars.png" class="planet" width="90">
 </div>
-<div class="orbit" data-speed="0.001" style="width:640px;height:640px;right:8vw;bottom:6vh">
+<div class="orbit" style="width:640px;height:640px;right:8vw;bottom:6vh">
   <img src="planet-jupiter.png" class="planet" width="140">
 </div>
 
-<!-- card -->
 <div class="card" id="card">
-  <h1 id="mainTitle">Astronomy Interaction <span class="twinkle">🔭</span></h1>
+  <h1>Astronomy Interaction 🔭</h1>
   <p>This project studies responses to astronomy questions.</p>
   <button class="primary" onclick="ask()">Start 🚀</button>
 </div>
 
 <script>
-/* stars */
 for(let i=0;i<140;i++){
   const s=document.createElement('div');
   s.className='star';
@@ -216,23 +185,6 @@ for(let i=0;i<140;i++){
 
 const card=document.getElementById('card');
 
-/* title animation */
-function animateTitle(){
-  const el=document.getElementById('mainTitle');
-  if(!el) return;
-  const text=el.innerText;
-  el.innerHTML='';
-  [...text].forEach((c,i)=>{
-    const span=document.createElement('span');
-    span.className='letter';
-    span.style.animationDelay=i*0.05+'s';
-    span.innerHTML=c===' ' ? '&nbsp;' : c;
-    el.appendChild(span);
-  });
-}
-animateTitle();
-
-/* flow */
 function ask(){
   card.innerHTML=`
     <h1>Astronomy Check 🌞</h1>
@@ -273,8 +225,8 @@ function reveal(){
   card.innerHTML=`
     <div class="star-core"></div>
     <div style="margin-top:22px">
-      <div class="glitter" style="font-size:38px">Vedannshi</div>
-      <div style="font-size:28px;font-weight:800;margin-top:10px">
+      <div class="glitter" style="font-size:40px">Vedannshi</div>
+      <div style="font-size:30px;font-weight:800;margin-top:10px">
         YOU’RE GOING TO PROM<br>WITH ME!!!!!
       </div>
       <p style="margin-top:16px;font-size:14px;color:#6b7280">
@@ -283,39 +235,66 @@ function reveal(){
     </div>
     <div class="const-wrap" id="const"></div>
   `;
-
   card.classList.add("reveal-animate");
-
   setTimeout(()=>{
     document.getElementById('music').play();
     drawConstellation();
   },500);
 }
 
-/* constellation */
 function drawConstellation(){
   const wrap=document.getElementById('const');
-  const pts=[[30,70],[60,40],[90,70],[130,40],[130,70],
-             [170,55],[210,40],[210,70],[250,55],
-             [290,40],[290,70]];
-  pts.forEach((p,i)=>{
-    const s=document.createElement('div');
-    s.className='const-star';
-    s.style.left=p[0]+'px';
-    s.style.top=p[1]+'px';
-    wrap.appendChild(s);
-    if(i>0){
+  wrap.innerHTML='';
+
+  const letters={
+    V:[[0,0],[25,70],[50,0]],
+    E:[[50,0],[0,0],[0,35],[40,35],[0,70],[50,70]],
+    D:[[0,0],[0,70],[50,35]],
+    A:[[0,70],[25,0],[50,70],[15,40],[35,40]],
+    N:[[0,70],[0,0],[50,70],[50,0]],
+    S:[[50,0],[0,0],[0,35],[50,35],[50,70],[0,70]],
+    H:[[0,0],[0,70],[50,0],[50,70],[0,35],[50,35]],
+    I:[[25,0],[25,70]]
+  };
+
+  const name="VEDANNSHI";
+  const spacing=80;
+  const totalWidth=name.length*spacing;
+  const startX=(wrap.clientWidth-totalWidth)/2;
+  const baseY=40;
+
+  let offsetX=startX;
+
+  for(let char of name){
+    const pts=letters[char];
+
+    pts.forEach(p=>{
+      const s=document.createElement('div');
+      s.className='const-star';
+      s.style.left=(offsetX+p[0])+'px';
+      s.style.top=(baseY+p[1])+'px';
+      wrap.appendChild(s);
+    });
+
+    for(let i=0;i<pts.length-1;i++){
+      const x1=offsetX+pts[i][0];
+      const y1=baseY+pts[i][1];
+      const x2=offsetX+pts[i+1][0];
+      const y2=baseY+pts[i+1][1];
+
       const l=document.createElement('div');
       l.className='const-line';
-      const dx=p[0]-pts[i-1][0];
-      const dy=p[1]-pts[i-1][1];
-      l.style.left=pts[i-1][0]+'px';
-      l.style.top=pts[i-1][1]+'px';
+      l.style.left=x1+'px';
+      l.style.top=y1+'px';
+      const dx=x2-x1;
+      const dy=y2-y1;
       l.style.width=Math.hypot(dx,dy)+'px';
       l.style.transform=`rotate(${Math.atan2(dy,dx)}rad)`;
       wrap.appendChild(l);
     }
-  });
+
+    offsetX+=spacing;
+  }
 }
 </script>
 
