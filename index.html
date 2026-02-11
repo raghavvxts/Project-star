@@ -111,12 +111,13 @@ button{
   box-shadow:0 0 50px rgba(253,230,138,.6);
 }
 
-/* constellation */
+/* constellation container */
 .const-wrap{
   position:relative;
   width:100%;
-  height:180px;
-  margin:30px auto 0;
+  height:150px;
+  margin:24px auto 0;
+  overflow:hidden;
 }
 
 .const-star{
@@ -135,7 +136,7 @@ button{
   transform-origin:left center;
 }
 
-/* glitter name */
+/* glitter */
 .glitter{
   background:linear-gradient(90deg,#fde68a,#f472b6,#60a5fa,#fde68a);
   background-size:300%;
@@ -226,7 +227,7 @@ function reveal(){
     <div class="star-core"></div>
     <div style="margin-top:22px">
       <div class="glitter" style="font-size:40px">Vedannshi</div>
-      <div style="font-size:30px;font-weight:800;margin-top:10px">
+      <div style="font-size:28px;font-weight:800;margin-top:10px">
         YOU’RE GOING TO PROM<br>WITH ME!!!!!
       </div>
       <p style="margin-top:16px;font-size:14px;color:#6b7280">
@@ -247,21 +248,24 @@ function drawConstellation(){
   wrap.innerHTML='';
 
   const letters={
-    V:[[0,0],[25,70],[50,0]],
-    E:[[50,0],[0,0],[0,35],[40,35],[0,70],[50,70]],
-    D:[[0,0],[0,70],[50,35]],
-    A:[[0,70],[25,0],[50,70],[15,40],[35,40]],
-    N:[[0,70],[0,0],[50,70],[50,0]],
-    S:[[50,0],[0,0],[0,35],[50,35],[50,70],[0,70]],
-    H:[[0,0],[0,70],[50,0],[50,70],[0,35],[50,35]],
-    I:[[25,0],[25,70]]
+    V:[[0,0],[20,55],[40,0]],
+    E:[[40,0],[0,0],[0,27],[32,27],[0,55],[40,55]],
+    D:[[0,0],[0,55],[40,27]],
+    A:[[0,55],[20,0],[40,55],[10,30],[30,30]],
+    N:[[0,55],[0,0],[40,55],[40,0]],
+    S:[[40,0],[0,0],[0,27],[40,27],[40,55],[0,55]],
+    H:[[0,0],[0,55],[40,0],[40,55],[0,27],[40,27]],
+    I:[[20,0],[20,55]]
   };
 
   const name="VEDANNSHI";
-  const spacing=80;
-  const totalWidth=name.length*spacing;
-  const startX=(wrap.clientWidth-totalWidth)/2;
-  const baseY=40;
+  const baseSpacing=55;
+  const maxWidth=wrap.clientWidth-20;
+  const totalWidth=name.length*baseSpacing;
+  const scale=totalWidth>maxWidth?maxWidth/totalWidth:1;
+  const spacing=baseSpacing*scale;
+  const startX=(wrap.clientWidth-(name.length*spacing))/2;
+  const baseY=20;
 
   let offsetX=startX;
 
@@ -271,16 +275,16 @@ function drawConstellation(){
     pts.forEach(p=>{
       const s=document.createElement('div');
       s.className='const-star';
-      s.style.left=(offsetX+p[0])+'px';
-      s.style.top=(baseY+p[1])+'px';
+      s.style.left=(offsetX+p[0]*scale)+'px';
+      s.style.top=(baseY+p[1]*scale)+'px';
       wrap.appendChild(s);
     });
 
     for(let i=0;i<pts.length-1;i++){
-      const x1=offsetX+pts[i][0];
-      const y1=baseY+pts[i][1];
-      const x2=offsetX+pts[i+1][0];
-      const y2=baseY+pts[i+1][1];
+      const x1=offsetX+pts[i][0]*scale;
+      const y1=baseY+pts[i][1]*scale;
+      const x2=offsetX+pts[i+1][0]*scale;
+      const y2=baseY+pts[i+1][1]*scale;
 
       const l=document.createElement('div');
       l.className='const-line';
