@@ -52,6 +52,7 @@ body{
   position:absolute;
   border-radius:50%;
   pointer-events:none;
+  z-index:1;
 }
 .planet{
   position:absolute;
@@ -59,6 +60,7 @@ body{
   left:50%;
   transform:translateX(-50%);
   animation:rotatePlanet 60s linear infinite;
+  filter:drop-shadow(0 0 15px rgba(255,255,255,.3));
 }
 @keyframes rotatePlanet{
   from{transform:translateX(-50%) rotate(0deg)}
@@ -106,12 +108,18 @@ button{
   border:none;
   cursor:pointer;
   margin:8px;
-  transition:.25s ease;
+  transition:transform .25s ease, box-shadow .25s ease;
 }
+
 .primary{
   background:linear-gradient(135deg,#2563eb,#3b82f6);
   color:white;
 }
+.primary:hover{
+  transform:scale(1.18);
+  box-shadow:0 12px 35px rgba(59,130,246,.6);
+}
+
 .secondary{background:#e5e7eb}
 
 .buttons{position:relative;height:150px}
@@ -221,17 +229,18 @@ button{
 <audio id="music" src="taaron-se.mp3" preload="auto"></audio>
 <div class="shooting-star" id="shoot"></div>
 
-<div class="orbit" style="width:420px;height:420px;left:8vw;top:22vh">
-  <img src="planet-earth.png" class="planet" width="110">
+<!-- Bigger, closer planets -->
+<div class="orbit" style="width:420px;height:420px;left:6vw;top:18vh">
+  <img src="planet-earth.png" class="planet" width="150">
 </div>
-<div class="orbit" style="width:560px;height:560px;right:6vw;top:12vh">
-  <img src="planet-saturn.png" class="planet" width="160">
+<div class="orbit" style="width:560px;height:560px;right:4vw;top:8vh">
+  <img src="planet-saturn.png" class="planet" width="210">
 </div>
-<div class="orbit" style="width:320px;height:320px;left:14vw;bottom:10vh">
-  <img src="planet-mars.png" class="planet" width="90">
+<div class="orbit" style="width:320px;height:320px;left:12vw;bottom:8vh">
+  <img src="planet-mars.png" class="planet" width="120">
 </div>
-<div class="orbit" style="width:640px;height:640px;right:8vw;bottom:6vh">
-  <img src="planet-jupiter.png" class="planet" width="140">
+<div class="orbit" style="width:640px;height:640px;right:6vw;bottom:2vh">
+  <img src="planet-jupiter.png" class="planet" width="190">
 </div>
 
 <div class="card" id="card">
@@ -241,8 +250,6 @@ button{
 </div>
 
 <script>
-
-/* stars */
 for(let i=0;i<120;i++){
   const s=document.createElement('div');
   s.className='star';
@@ -252,7 +259,6 @@ for(let i=0;i<120;i++){
   document.body.appendChild(s);
 }
 
-/* shooting star */
 setInterval(()=>{
   const shoot=document.getElementById('shoot');
   shoot.style.top=Math.random()*40+'%';
@@ -292,23 +298,25 @@ function ask(){
   document.getElementById('yes').onclick=confirm;
 }
 
-/* replace with real form ID */
-function sendSecretResponse(){
-  fetch("https://docs.google.com/forms/d/e/YOUR_FORM_ID/formResponse",{
-    method:"POST",
-    mode:"no-cors",
-    headers:{"Content-Type":"application/x-www-form-urlencoded"},
-    body:"entry.123456=YES_CLICKED&entry.654321="+Date.now()
-  });
-}
-
 function confirm(){
-  sendSecretResponse();
   card.innerHTML=`
     <h1>Final Confirmation ⭐</h1>
     <button class="primary" onclick="reveal()">Okiee Yawrr</button>
     <button class="secondary" onclick="reveal()">YUPEEE</button>
   `;
+}
+
+function launchConfetti(){
+  const colors=["#fde68a","#f472b6","#60a5fa","#34d399","#f87171"];
+  for(let i=0;i<120;i++){
+    const c=document.createElement("div");
+    c.className="confetti";
+    c.style.left=Math.random()*100+"vw";
+    c.style.background=colors[Math.floor(Math.random()*colors.length)];
+    c.style.animationDuration=(2+Math.random()*2)+"s";
+    document.body.appendChild(c);
+    setTimeout(()=>c.remove(),4000);
+  }
 }
 
 function reveal(){
@@ -337,20 +345,6 @@ function reveal(){
     document.getElementById('music').play();
     drawConstellation();
   },500);
-}
-
-function launchConfetti(){
-  const colors=["#fde68a","#f472b6","#60a5fa","#34d399","#f87171"];
-  for(let i=0;i<120;i++){
-    const c=document.createElement("div");
-    c.className="confetti";
-    c.style.left=Math.random()*100+"vw";
-    c.style.background=colors[Math.floor(Math.random()*colors.length)];
-    c.style.animationDuration=(2+Math.random()*2)+"s";
-    c.style.transform="rotate("+Math.random()*360+"deg)";
-    document.body.appendChild(c);
-    setTimeout(()=>c.remove(),4000);
-  }
 }
 
 function drawConstellation(){
@@ -395,15 +389,19 @@ function drawConstellation(){
       const y1=baseY+pts[i][1]*scale;
       const x2=offsetX+pts[j][0]*scale;
       const y2=baseY+pts[j][1]*scale;
+
       const l=document.createElement('div');
       l.className='const-line';
       l.style.left=x1+'px';
       l.style.top=y1+'px';
+
       const dx=x2-x1;
       const dy=y2-y1;
       l.style.width=Math.hypot(dx,dy)+'px';
       l.style.transform=`rotate(${Math.atan2(dy,dx)}rad)`;
+
       wrap.appendChild(l);
+
       setTimeout(()=>{l.style.opacity="1";},delay);
       delay+=180;
     });
