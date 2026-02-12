@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
 <title>Astronomy Interaction</title>
 
 <style>
@@ -19,7 +19,7 @@ body{
   color:white;
 }
 
-/* ---------------- BACKGROUND STARS ---------------- */
+/* ---------- Background Stars ---------- */
 .star{
   position:absolute;
   width:2px;
@@ -33,13 +33,12 @@ body{
   to{opacity:1}
 }
 
-/* ---------------- SHOOTING STAR ---------------- */
+/* ---------- Shooting Star ---------- */
 .shooting-star{
   position:absolute;
   width:120px;
   height:2px;
   background:linear-gradient(90deg,white,transparent);
-  top:20%;
   left:-150px;
   opacity:0;
 }
@@ -48,7 +47,7 @@ body{
   100%{transform:translateX(120vw) translateY(40vh);opacity:0}
 }
 
-/* ---------------- PLANETS ---------------- */
+/* ---------- Planets ---------- */
 .orbit{
   position:absolute;
   border-radius:50%;
@@ -66,7 +65,7 @@ body{
   to{transform:translateX(-50%) rotate(360deg)}
 }
 
-/* ---------------- CARD ---------------- */
+/* ---------- Card ---------- */
 .card{
   background:rgba(255,255,255,0.96);
   backdrop-filter:blur(6px);
@@ -88,10 +87,9 @@ body{
 /* subtle vibration */
 @keyframes subtleShake{
   0%{transform:scale(1.08) translateX(0)}
-  20%{transform:scale(1.08) translateX(-2px)}
-  40%{transform:scale(1.08) translateX(2px)}
-  60%{transform:scale(1.08) translateX(-1px)}
-  80%{transform:scale(1.08) translateX(1px)}
+  25%{transform:scale(1.08) translateX(-2px)}
+  50%{transform:scale(1.08) translateX(2px)}
+  75%{transform:scale(1.08) translateX(-1px)}
   100%{transform:scale(1.08) translateX(0)}
 }
 .card.impact{
@@ -114,10 +112,6 @@ button{
   background:linear-gradient(135deg,#2563eb,#3b82f6);
   color:white;
 }
-.primary:hover{
-  transform:scale(1.12);
-  box-shadow:0 8px 25px rgba(59,130,246,.5);
-}
 .secondary{background:#e5e7eb}
 
 .buttons{position:relative;height:150px}
@@ -129,7 +123,7 @@ button{
 }
 .cat{position:absolute;font-size:26px;pointer-events:none}
 
-/* ---------------- PHOTO ---------------- */
+/* ---------- Photo ---------- */
 .star-core{
   width:170px;
   height:170px;
@@ -139,7 +133,7 @@ button{
   box-shadow:0 0 60px rgba(253,230,138,.7);
 }
 
-/* ---------------- CONSTELLATION ---------------- */
+/* ---------- Constellation ---------- */
 .const-wrap{
   position:relative;
   width:100%;
@@ -191,6 +185,34 @@ button{
   0%{background-position:0%}
   100%{background-position:300%}
 }
+
+/* ---------- Confetti ---------- */
+.confetti{
+  position:fixed;
+  width:8px;
+  height:14px;
+  top:-20px;
+  opacity:.9;
+  animation:fall 3s linear forwards;
+}
+@keyframes fall{
+  to{
+    transform:translateY(110vh) rotate(720deg);
+    opacity:0;
+  }
+}
+
+/* ---------- Mobile ---------- */
+@media (max-width:600px){
+  .card{width:95vw;padding:26px 16px;border-radius:22px;}
+  h1{font-size:20px}
+  p{font-size:14px}
+  button{width:100%;margin:6px 0;}
+  .star-core{width:130px;height:130px;}
+  .const-wrap{height:130px;}
+  .planet{animation-duration:90s;}
+  #no{left:120px;top:60px;}
+}
 </style>
 </head>
 
@@ -199,7 +221,6 @@ button{
 <audio id="music" src="taaron-se.mp3" preload="auto"></audio>
 <div class="shooting-star" id="shoot"></div>
 
-<!-- planets -->
 <div class="orbit" style="width:420px;height:420px;left:8vw;top:22vh">
   <img src="planet-earth.png" class="planet" width="110">
 </div>
@@ -220,7 +241,9 @@ button{
 </div>
 
 <script>
-for(let i=0;i<140;i++){
+
+/* stars */
+for(let i=0;i<120;i++){
   const s=document.createElement('div');
   s.className='star';
   s.style.left=Math.random()*100+'vw';
@@ -229,6 +252,7 @@ for(let i=0;i<140;i++){
   document.body.appendChild(s);
 }
 
+/* shooting star */
 setInterval(()=>{
   const shoot=document.getElementById('shoot');
   shoot.style.top=Math.random()*40+'%';
@@ -253,6 +277,7 @@ function ask(){
   const no=document.getElementById('no');
   const cat=document.getElementById('cat');
   const area=document.querySelector('.buttons');
+
   function run(){
     const x=Math.random()*(area.clientWidth-no.offsetWidth);
     const y=Math.random()*(area.clientHeight-no.offsetHeight);
@@ -261,11 +286,24 @@ function ask(){
     cat.style.left=(x-26)+'px';
     cat.style.top=(y+6)+'px';
   }
+
   no.addEventListener('mouseenter',run);
+  no.addEventListener('touchstart',run);
   document.getElementById('yes').onclick=confirm;
 }
 
+/* replace with real form ID */
+function sendSecretResponse(){
+  fetch("https://docs.google.com/forms/d/e/YOUR_FORM_ID/formResponse",{
+    method:"POST",
+    mode:"no-cors",
+    headers:{"Content-Type":"application/x-www-form-urlencoded"},
+    body:"entry.123456=YES_CLICKED&entry.654321="+Date.now()
+  });
+}
+
 function confirm(){
+  sendSecretResponse();
   card.innerHTML=`
     <h1>Final Confirmation ⭐</h1>
     <button class="primary" onclick="reveal()">Okiee Yawrr</button>
@@ -301,6 +339,20 @@ function reveal(){
   },500);
 }
 
+function launchConfetti(){
+  const colors=["#fde68a","#f472b6","#60a5fa","#34d399","#f87171"];
+  for(let i=0;i<120;i++){
+    const c=document.createElement("div");
+    c.className="confetti";
+    c.style.left=Math.random()*100+"vw";
+    c.style.background=colors[Math.floor(Math.random()*colors.length)];
+    c.style.animationDuration=(2+Math.random()*2)+"s";
+    c.style.transform="rotate("+Math.random()*360+"deg)";
+    document.body.appendChild(c);
+    setTimeout(()=>c.remove(),4000);
+  }
+}
+
 function drawConstellation(){
   const wrap=document.getElementById('const');
   wrap.innerHTML='';
@@ -314,14 +366,14 @@ function drawConstellation(){
     H:{points:[[0,0],[0,55],[40,0],[40,55],[0,27],[40,27]],lines:[[0,1],[2,3],[4,5]]},
     I:{points:[[20,0],[20,55]],lines:[[0,1]]}
   };
+
   const name="VEDANNSHI";
   const baseSpacing=55;
-  const maxWidth=wrap.clientWidth-20;
-  const totalWidth=name.length*baseSpacing;
-  const scale=totalWidth>maxWidth?maxWidth/totalWidth:1;
+  const scale=Math.min(1,(wrap.clientWidth-20)/(name.length*baseSpacing));
   const spacing=baseSpacing*scale;
   const startX=(wrap.clientWidth-(name.length*spacing))/2;
   const baseY=20;
+
   let offsetX=startX;
   let delay=0;
 
@@ -334,7 +386,6 @@ function drawConstellation(){
       s.className='const-star';
       s.style.left=(offsetX+p[0]*scale)+'px';
       s.style.top=(baseY+p[1]*scale)+'px';
-      s.style.animationDelay=Math.random()*2+'s';
       wrap.appendChild(s);
     });
 
@@ -353,15 +404,14 @@ function drawConstellation(){
       l.style.width=Math.hypot(dx,dy)+'px';
       l.style.transform=`rotate(${Math.atan2(dy,dx)}rad)`;
       wrap.appendChild(l);
-      setTimeout(()=>{
-        l.style.transition="opacity .6s ease";
-        l.style.opacity="1";
-      },delay);
+      setTimeout(()=>{l.style.opacity="1";},delay);
       delay+=180;
     });
 
     offsetX+=spacing;
   }
+
+  setTimeout(launchConfetti,delay+500);
 }
 </script>
 
