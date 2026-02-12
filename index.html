@@ -12,28 +12,52 @@ body{
   margin:0;
   min-height:100vh;
   overflow:hidden;
-  background:radial-gradient(circle at top,#0b1d3a,#000 72%);
+  background:radial-gradient(circle at top,#1a0b1f,#000 75%);
   display:flex;
   align-items:center;
   justify-content:center;
   color:white;
+  position:relative;
 }
 
-/* ---------- Background Stars ---------- */
+/* Ambient Pink Glow Pulse */
+body::after{
+  content:"";
+  position:fixed;
+  inset:0;
+  background:radial-gradient(circle at center,
+              rgba(236,72,153,0.35),
+              transparent 65%);
+  opacity:0;
+  pointer-events:none;
+  z-index:0;
+}
+
+@keyframes ambientPulse{
+  0%{opacity:0;}
+  40%{opacity:.8;}
+  100%{opacity:0;}
+}
+
+body.glow::after{
+  animation:ambientPulse 1.6s ease-out forwards;
+}
+
+/* Stars */
 .star{
   position:absolute;
   width:2px;
   height:2px;
   background:white;
   opacity:.6;
-  animation:twinkle 3s infinite ease-in-out alternate;
+  animation:twinkle 3s infinite alternate;
 }
 @keyframes twinkle{
   from{opacity:.4}
   to{opacity:1}
 }
 
-/* ---------- Shooting Star ---------- */
+/* Shooting Star */
 .shooting-star{
   position:absolute;
   width:120px;
@@ -47,7 +71,7 @@ body{
   100%{transform:translateX(120vw) translateY(40vh);opacity:0}
 }
 
-/* ---------- Planets ---------- */
+/* Planets */
 .orbit{
   position:absolute;
   border-radius:50%;
@@ -67,7 +91,7 @@ body{
   to{transform:translateX(-50%) rotate(360deg)}
 }
 
-/* ---------- Card ---------- */
+/* Card */
 .card{
   background:rgba(255,255,255,0.96);
   backdrop-filter:blur(6px);
@@ -79,14 +103,11 @@ body{
   z-index:10;
   box-shadow:
     0 30px 70px rgba(0,0,0,.6),
-    0 0 50px rgba(253,230,138,.35);
+    0 0 50px rgba(236,72,153,.35);
   transition:transform .6s ease;
 }
-.card.zoom{
-  transform:scale(1.08);
-}
+.card.zoom{transform:scale(1.08);}
 
-/* subtle vibration */
 @keyframes subtleShake{
   0%{transform:scale(1.08) translateX(0)}
   25%{transform:scale(1.08) translateX(-2px)}
@@ -94,9 +115,7 @@ body{
   75%{transform:scale(1.08) translateX(-1px)}
   100%{transform:scale(1.08) translateX(0)}
 }
-.card.impact{
-  animation:subtleShake .4s ease;
-}
+.card.impact{animation:subtleShake .4s ease;}
 
 h1{font-size:26px;margin-bottom:12px}
 p{font-size:16px;margin-bottom:22px}
@@ -112,12 +131,12 @@ button{
 }
 
 .primary{
-  background:linear-gradient(135deg,#2563eb,#3b82f6);
+  background:linear-gradient(135deg,#ec4899,#f472b6);
   color:white;
 }
 .primary:hover{
   transform:scale(1.18);
-  box-shadow:0 12px 35px rgba(59,130,246,.6);
+  box-shadow:0 12px 35px rgba(236,72,153,.6);
 }
 
 .secondary{background:#e5e7eb}
@@ -131,17 +150,17 @@ button{
 }
 .cat{position:absolute;font-size:26px;pointer-events:none}
 
-/* ---------- Photo ---------- */
+/* Photo */
 .star-core{
   width:170px;
   height:170px;
   margin:30px auto 0;
   border-radius:50%;
   background:url("us2.jpg") center/cover no-repeat;
-  box-shadow:0 0 60px rgba(253,230,138,.7);
+  box-shadow:0 0 60px rgba(236,72,153,.7);
 }
 
-/* ---------- Constellation ---------- */
+/* Constellation Pink */
 .const-wrap{
   position:relative;
   width:100%;
@@ -154,8 +173,8 @@ button{
   width:7px;
   height:7px;
   border-radius:50%;
-  background:#fde68a;
-  box-shadow:0 0 14px rgba(253,230,138,.9);
+  background:#f472b6;
+  box-shadow:0 0 14px rgba(236,72,153,.9);
   animation:pulseStar 2.4s ease-in-out infinite alternate;
 }
 @keyframes pulseStar{
@@ -165,9 +184,9 @@ button{
 .const-line{
   position:absolute;
   height:2px;
-  background:rgba(253,230,138,.85);
+  background:rgba(236,72,153,.85);
   transform-origin:left center;
-  box-shadow:0 0 12px rgba(253,230,138,.8);
+  box-shadow:0 0 12px rgba(236,72,153,.8);
   opacity:0;
 }
 
@@ -177,13 +196,11 @@ button{
   60%{transform:scale(1.05)}
   100%{transform:scale(1);opacity:1}
 }
-.final-text{
-  animation:textPop .6s ease forwards;
-}
+.final-text{animation:textPop .6s ease forwards;}
 
-/* glitter */
+/* glitter pink */
 .glitter{
-  background:linear-gradient(90deg,#fde68a,#f472b6,#60a5fa,#fde68a);
+  background:linear-gradient(90deg,#f472b6,#ec4899,#f9a8d4,#f472b6);
   background-size:300%;
   -webkit-background-clip:text;
   -webkit-text-fill-color:transparent;
@@ -194,7 +211,7 @@ button{
   100%{background-position:300%}
 }
 
-/* ---------- Confetti ---------- */
+/* Confetti */
 .confetti{
   position:fixed;
   width:8px;
@@ -210,7 +227,7 @@ button{
   }
 }
 
-/* ---------- Mobile ---------- */
+/* Mobile */
 @media (max-width:600px){
   .card{width:95vw;padding:26px 16px;border-radius:22px;}
   h1{font-size:20px}
@@ -229,7 +246,6 @@ button{
 <audio id="music" src="taaron-se.mp3" preload="auto"></audio>
 <div class="shooting-star" id="shoot"></div>
 
-<!-- Bigger, closer planets -->
 <div class="orbit" style="width:420px;height:420px;left:6vw;top:18vh">
   <img src="planet-earth.png" class="planet" width="150">
 </div>
@@ -255,7 +271,6 @@ for(let i=0;i<120;i++){
   s.className='star';
   s.style.left=Math.random()*100+'vw';
   s.style.top=Math.random()*100+'vh';
-  s.style.animationDelay=Math.random()*3+'s';
   document.body.appendChild(s);
 }
 
@@ -307,7 +322,7 @@ function confirm(){
 }
 
 function launchConfetti(){
-  const colors=["#fde68a","#f472b6","#60a5fa","#34d399","#f87171"];
+  const colors=["#f472b6","#ec4899","#f9a8d4","#fb7185","#fca5a5"];
   for(let i=0;i<120;i++){
     const c=document.createElement("div");
     c.className="confetti";
@@ -320,6 +335,10 @@ function launchConfetti(){
 }
 
 function reveal(){
+  document.body.classList.add("glow");
+
+  if(navigator.vibrate){ navigator.vibrate(80); }
+
   card.classList.add("zoom");
 
   card.innerHTML=`
@@ -394,12 +413,10 @@ function drawConstellation(){
       l.className='const-line';
       l.style.left=x1+'px';
       l.style.top=y1+'px';
-
       const dx=x2-x1;
       const dy=y2-y1;
       l.style.width=Math.hypot(dx,dy)+'px';
       l.style.transform=`rotate(${Math.atan2(dy,dx)}rad)`;
-
       wrap.appendChild(l);
 
       setTimeout(()=>{l.style.opacity="1";},delay);
