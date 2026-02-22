@@ -77,20 +77,14 @@ body.glow::after{
   border-radius:50%;
   pointer-events:none;
   z-index:1;
-  left:50%;
-  top:50%;
-  transform:translate(-50%,-50%);
 }
-.sun{
+.planet{
   position:absolute;
+  top:0;
   left:50%;
-  top:50%;
-  transform:translate(-50%,-50%);
-  z-index:2;
-  width:120px;
-  height:120px;
-  border-radius:50%;
-  box-shadow:0 0 60px rgba(255,215,0,.8);
+  transform:translateX(-50%);
+  animation:rotatePlanet 60s linear infinite;
+  filter:drop-shadow(0 0 15px rgba(255,255,255,.3));
 }
 @keyframes rotatePlanet{
   from{transform:translateX(-50%) rotate(0deg)}
@@ -146,10 +140,6 @@ button{
 }
 
 .secondary{background:#e5e7eb}
-.secondary:hover{
-  transform:scale(1.05);
-  box-shadow:0 8px 25px rgba(0,0,0,.3);
-}
 
 .buttons{position:relative;height:150px}
 #no{
@@ -245,6 +235,7 @@ button{
   button{width:100%;margin:6px 0;}
   .star-core{width:130px;height:130px;}
   .const-wrap{height:130px;}
+  .planet{animation-duration:90s;}
   #no{left:120px;top:60px;}
 }
 </style>
@@ -255,20 +246,18 @@ button{
 <audio id="music" src="taaron-se.mp3" preload="auto"></audio>
 <div class="shooting-star" id="shoot"></div>
 
-<div class="orbit" style="width:480px;height:480px">
-  <img src="planet-earth.png" class="planet" width="150" style="animation-duration:45s">
+<div class="orbit" style="width:420px;height:420px;left:6vw;top:18vh">
+  <img src="planet-earth.png" class="planet" width="150">
 </div>
-<div class="orbit" style="width:600px;height:600px">
-  <img src="planet-saturn.png" class="planet" width="210" style="animation-duration:60s">
+<div class="orbit" style="width:560px;height:560px;right:4vw;top:8vh">
+  <img src="planet-saturn.png" class="planet" width="210">
 </div>
-<div class="orbit" style="width:360px;height:360px">
-  <img src="planet-mars.png" class="planet" width="120" style="animation-duration:30s">
+<div class="orbit" style="width:320px;height:320px;left:12vw;bottom:8vh">
+  <img src="planet-mars.png" class="planet" width="120">
 </div>
-<div class="orbit" style="width:720px;height:720px">
-  <img src="planet-jupiter.png" class="planet" width="190" style="animation-duration:75s">
+<div class="orbit" style="width:640px;height:640px;right:6vw;bottom:2vh">
+  <img src="planet-jupiter.png" class="planet" width="190">
 </div>
-
-<img src="sun.png" class="sun">
 
 <div class="card" id="card">
   <h1>Astronomy Interaction 🔭</h1>
