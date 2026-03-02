@@ -3,21 +3,47 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
-<title>Astronomy Interaction</title>
+<title>PROMPOSAL • Vedanshi</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Great+Vibes&display=swap" rel="stylesheet">
 
 <style>
-*{box-sizing:border-box;font-family:system-ui,-apple-system,sans-serif}
+ *{
+  box-sizing:border-box;
+  font-family:"Poppins",system-ui,-apple-system,sans-serif;
+}
 
 body{
   margin:0;
   min-height:100vh;
   overflow:hidden;
-  background:radial-gradient(circle at top,#1a0b1f,#000 75%);
+  background:
+    radial-gradient(circle at top,#020617 0,#020617 45%,transparent 70%),
+    radial-gradient(circle at bottom,#111827 0,#020617 60%);
   display:flex;
   align-items:center;
   justify-content:center;
   color:white;
   position:relative;
+}
+
+/* Weeknd-style red room overlay for final reveal */
+body::before{
+  content:"";
+  position:fixed;
+  inset:0;
+  background:radial-gradient(circle at center,rgba(127,29,29,0.65),transparent 65%);
+  opacity:0;
+  pointer-events:none;
+  z-index:0;
+  mix-blend-mode:soft-light;
+  transition:opacity .8s ease-out;
+}
+
+body.redroom::before{
+  opacity:1;
 }
 
 /* Ambient Pink Glow Pulse */
@@ -71,40 +97,33 @@ body.glow::after{
   100%{transform:translateX(120vw) translateY(40vh);opacity:0}
 }
 
-/* Planets */
-.orbit{
+/* Background orbs instead of image planets */
+.bg-orb{
   position:absolute;
-  border-radius:50%;
+  border-radius:999px;
+  filter:blur(30px);
+  opacity:0.7;
   pointer-events:none;
-  z-index:1;
-}
-.planet{
-  position:absolute;
-  top:0;
-  left:50%;
-  transform:translateX(-50%);
-  animation:rotatePlanet 60s linear infinite;
-  filter:drop-shadow(0 0 15px rgba(255,255,255,.3));
-}
-@keyframes rotatePlanet{
-  from{transform:translateX(-50%) rotate(0deg)}
-  to{transform:translateX(-50%) rotate(360deg)}
+  z-index:0;
 }
 
 /* Card */
 .card{
-  background:rgba(255,255,255,0.96);
-  backdrop-filter:blur(6px);
-  color:#0f172a;
-  padding:36px 28px;
-  border-radius:30px;
-  width:min(460px,92vw);
+  background:rgba(9,9,11,0.82);
+  backdrop-filter:blur(18px);
+  color:#e5e7eb;
+  padding:26px 26px 24px;
+  border-radius:26px;
+  width:min(430px,92vw);
   text-align:center;
   z-index:10;
+  position:relative;
+  overflow:hidden;
+  border:1px solid rgba(148,163,184,0.4);
   box-shadow:
-    0 30px 70px rgba(0,0,0,.6),
-    0 0 50px rgba(236,72,153,.35);
-  transition:transform .6s ease;
+    0 28px 80px rgba(15,23,42,0.9),
+    0 0 60px rgba(236,72,153,0.22);
+  transition:transform .6s ease, box-shadow .6s ease, border-color .6s ease;
 }
 .card.zoom{transform:scale(1.08);}
 
@@ -133,39 +152,65 @@ button{
 .primary{
   background:linear-gradient(135deg,#ec4899,#f472b6);
   color:white;
+  box-shadow:0 8px 24px rgba(236,72,153,0.5);
 }
 .primary:hover{
-  transform:scale(1.18);
-  box-shadow:0 12px 35px rgba(236,72,153,.6);
+  transform:translateY(-1px) scale(1.04);
+  box-shadow:0 14px 40px rgba(236,72,153,0.65);
 }
 
-.secondary{background:#e5e7eb}
+.secondary{
+  background:rgba(15,23,42,0.85);
+  color:#e5e7eb;
+  border:1px solid rgba(148,163,184,0.6);
+}
+.secondary:hover{
+  transform:translateY(-1px) scale(1.03);
+  box-shadow:0 10px 26px rgba(15,23,42,0.9);
+  border-color:rgba(148,163,184,0.9);
+}
 
-.buttons{position:relative;height:150px}
+.buttons{
+  position:relative;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  gap:12px;
+  margin-top:8px;
+}
 #no{
-  position:absolute;
-  left:220px;
-  top:40px;
   transition:.2s ease;
 }
 .cat{position:absolute;font-size:26px;pointer-events:none}
 
+/* F1-style runaway No button */
+.no-run{
+  animation:noRun 0.9s ease-out forwards;
+}
+@keyframes noRun{
+  0%{transform:translateX(0) scale(1);opacity:1;filter:blur(0);}
+  40%{transform:translateX(60px) scale(1.05);opacity:1;}
+  100%{transform:translateX(220px) scale(0.9);opacity:0;filter:blur(2px);}
+}
+
 /* Photo */
 .star-core{
-  width:170px;
-  height:170px;
-  margin:30px auto 0;
-  border-radius:50%;
-  background:url("us2.jpg") center/cover no-repeat;
-  box-shadow:0 0 60px rgba(236,72,153,.7);
+  width:150px;
+  height:150px;
+  margin:18px auto 0;
+  border-radius:999px;
+  background:url("vm1.jpg") center/cover no-repeat;
+  box-shadow:
+    0 0 0 1px rgba(248,250,252,0.9),
+    0 0 55px rgba(236,72,153,0.8);
 }
 
 /* Constellation Pink */
 .const-wrap{
   position:relative;
   width:100%;
-  height:160px;
-  margin:24px auto 0;
+  height:135px;
+  margin:10px auto 0;
   overflow:hidden;
 }
 .const-star{
@@ -198,6 +243,121 @@ button{
 }
 .final-text{animation:textPop .6s ease forwards;}
 
+/* subtle Spider-Verse webs on corners */
+.card.webbed::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:
+    radial-gradient(circle at 0 0,rgba(148,163,184,0.22) 0,transparent 55%),
+    radial-gradient(circle at 100% 100%,rgba(248,113,113,0.18) 0,transparent 60%);
+  pointer-events:none;
+}
+
+/* racing line under card when lights go green */
+.card.racing::after{
+  content:"";
+  position:absolute;
+  left:-70%;
+  right:-70%;
+  bottom:14px;
+  height:3px;
+  border-radius:999px;
+  background:linear-gradient(90deg,#22c55e,#a3e635,#fbbf24);
+  box-shadow:0 0 18px rgba(34,197,94,.9);
+  animation:raceLine .7s ease-out forwards;
+}
+@keyframes raceLine{
+  0%{transform:translateX(0);opacity:1;}
+  100%{transform:translateX(60%);opacity:0;}
+}
+
+/* tiny fandom tags */
+.tags{
+  display:flex;
+  justify-content:center;
+  flex-wrap:wrap;
+  gap:6px;
+  margin-top:10px;
+}
+.tag-pill{
+  padding:4px 10px;
+  border-radius:999px;
+  font-size:11px;
+  letter-spacing:0.04em;
+  text-transform:uppercase;
+  background:rgba(15,23,42,0.9);
+  border:1px solid rgba(148,163,184,0.55);
+  color:#e5e7eb;
+}
+
+/* glitch accent on name */
+.glitch-name{
+  position:relative;
+  animation:glitch 3.5s infinite;
+}
+@keyframes glitch{
+  0%,90%,100%{
+    text-shadow:none;
+    transform:none;
+  }
+  92%{
+    text-shadow:-2px 0 rgba(56,189,248,0.8),2px 0 rgba(248,113,113,0.8);
+    transform:translate(1px,-1px);
+  }
+  94%{
+    text-shadow:2px 0 rgba(56,189,248,0.8),-2px 0 rgba(248,113,113,0.8);
+    transform:translate(-1px,1px);
+  }
+}
+
+/* Yes button spider-web glow */
+#yes{
+  position:relative;
+  overflow:hidden;
+}
+#yes::after{
+  content:"";
+  position:absolute;
+  inset:-2px;
+  border-radius:999px;
+  background:
+    radial-gradient(circle at 30% 30%,rgba(248,113,113,0.45),transparent 55%),
+    radial-gradient(circle at 70% 70%,rgba(248,113,113,0.35),transparent 60%);
+  opacity:0;
+  mix-blend-mode:screen;
+  transition:opacity .18s ease-out;
+  pointer-events:none;
+}
+#yes:hover::after{
+  opacity:1;
+}
+
+/* F1 lights-out bar */
+.lights-wrap{
+  display:flex;
+  justify-content:center;
+  gap:8px;
+  margin-top:18px;
+}
+.light-dot{
+  width:14px;
+  height:14px;
+  border-radius:999px;
+  background:#111827;
+  border:1px solid #4b5563;
+  box-shadow:0 0 0 1px rgba(15,23,42,0.8);
+}
+.light-dot.on{
+  background:#dc2626;
+  box-shadow:0 0 18px rgba(248,113,113,0.9);
+}
+
+.light-dot.green{
+  background:#22c55e;
+  box-shadow:0 0 18px rgba(34,197,94,0.9);
+}
+
 /* glitter pink */
 .glitter{
   background:linear-gradient(90deg,#f472b6,#ec4899,#f9a8d4,#f472b6);
@@ -227,6 +387,146 @@ button{
   }
 }
 
+/* chequered flag wipe overlay */
+.flag-wipe{
+  position:absolute;
+  inset:0;
+  background-size:18px 18px;
+  background-image:repeating-linear-gradient(45deg,#020617 0,#020617 9px,#f9fafb 9px,#f9fafb 18px);
+  transform:translateX(-100%);
+  animation:flagWipe .55s ease-out forwards;
+  mix-blend-mode:soft-light;
+  opacity:0.9;
+}
+@keyframes flagWipe{
+  to{
+    transform:translateX(100%);
+    opacity:0;
+  }
+}
+
+/* Weeknd-style stage beams */
+.beams{
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  z-index:0;
+  opacity:0;
+  transition:opacity 1s ease-out;
+}
+body.redroom .beams{
+  opacity:1;
+}
+.beam{
+  position:absolute;
+  width:42%;
+  height:140%;
+  background:linear-gradient(120deg,rgba(248,250,252,0.08),rgba(248,113,113,0.25),transparent 75%);
+  filter:blur(2px);
+  mix-blend-mode:screen;
+  animation:beamSweep 12s linear infinite;
+}
+.beam-left{
+  left:-14%;
+  top:-20%;
+  transform:rotate(-18deg);
+}
+.beam-right{
+  right:-14%;
+  top:-10%;
+  transform:rotate(18deg);
+  animation-delay:3s;
+}
+@keyframes beamSweep{
+  0%{transform:translateX(0) rotate(var(--angle,18deg));opacity:0.6;}
+  50%{transform:translateX(6%) rotate(var(--angle,18deg));opacity:0.9;}
+  100%{transform:translateX(0) rotate(var(--angle,18deg));opacity:0.6;}
+}
+
+/* Polaroid strip */
+.polaroid-strip{
+  margin:10px auto 0;
+  display:flex;
+  justify-content:center;
+  gap:10px;
+}
+.polaroid{
+  background:#f9fafb;
+  padding:5px 5px 8px;
+  border-radius:6px;
+  box-shadow:0 14px 30px rgba(15,23,42,0.8);
+}
+.polaroid img{
+  display:block;
+  width:54px;
+  height:54px;
+  object-fit:cover;
+  border-radius:4px;
+}
+.polaroid:nth-child(1){transform:rotate(-5deg);}
+.polaroid:nth-child(2){transform:translateY(-4px);}
+.polaroid:nth-child(3){transform:rotate(4deg);}
+
+/* fandom badges grid on final screen */
+.badges-grid{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:8px;
+  margin-top:14px;
+  font-size:11px;
+  text-transform:uppercase;
+  letter-spacing:0.08em;
+  color:#9ca3af;
+  justify-items:center;
+}
+.badge-pill{
+  padding:4px 10px;
+  border-radius:999px;
+  border:1px solid rgba(148,163,184,0.7);
+  background:rgba(15,23,42,0.9);
+}
+.badge-pill.center-span{
+  grid-column:1 / 3;
+}
+
+/* lap indicator */
+.lap-indicator{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  gap:8px;
+  margin-top:16px;
+  font-size:10px;
+  text-transform:uppercase;
+  letter-spacing:0.08em;
+  color:#6b7280;
+}
+.lap-dots{
+  display:flex;
+  gap:4px;
+}
+.lap-dot{
+  width:6px;
+  height:6px;
+  border-radius:999px;
+  background:#111827;
+  border:1px solid #374151;
+}
+.lap-dot.active{
+  background:#f97316;
+  border-color:#fbbf24;
+  box-shadow:0 0 8px rgba(251,191,36,0.85);
+}
+
+/* tiny signature */
+.signature{
+  margin-top:6px;
+  font-size:10px;
+  text-transform:uppercase;
+  letter-spacing:0.18em;
+  color:#9ca3af;
+}
+
 /* Mobile */
 @media (max-width:600px){
   .card{width:95vw;padding:26px 16px;border-radius:22px;}
@@ -246,23 +546,28 @@ button{
 <audio id="music" src="taaron-se.mp3" preload="auto"></audio>
 <div class="shooting-star" id="shoot"></div>
 
-<div class="orbit" style="width:420px;height:420px;left:6vw;top:18vh">
-  <img src="planet-earth.png" class="planet" width="150">
-</div>
-<div class="orbit" style="width:560px;height:560px;right:4vw;top:8vh">
-  <img src="planet-saturn.png" class="planet" width="210">
-</div>
-<div class="orbit" style="width:320px;height:320px;left:12vw;bottom:8vh">
-  <img src="planet-mars.png" class="planet" width="120">
-</div>
-<div class="orbit" style="width:640px;height:640px;right:6vw;bottom:2vh">
-  <img src="planet-jupiter.png" class="planet" width="190">
+<div class="bg-orb" style="width:420px;height:420px;left:8vw;top:20vh;background:radial-gradient(circle,#f472b6,#7c3aed);"></div>
+<div class="bg-orb" style="width:520px;height:520px;right:6vw;top:8vh;background:radial-gradient(circle,#38bdf8,#0f172a);"></div>
+<div class="bg-orb" style="width:360px;height:360px;left:14vw;bottom:6vh;background:radial-gradient(circle,#22c55e,#0f172a);opacity:0.55;"></div>
+<div class="bg-orb" style="width:640px;height:640px;right:4vw;bottom:0;background:radial-gradient(circle,#f97316,#0b1120);opacity:0.45;"></div>
+
+<div class="beams">
+  <div class="beam beam-left" style="--angle:-18deg;"></div>
+  <div class="beam beam-right" style="--angle:18deg;"></div>
 </div>
 
-<div class="card" id="card">
-  <h1>Astronomy Interaction 🔭</h1>
-  <p>This project studies responses to astronomy questions.</p>
-  <button class="primary" onclick="ask()">Start 🚀</button>
+<div class="card webbed" id="card">
+  <h1 style="letter-spacing:0.08em;font-size:22px;margin-bottom:18px;">PROMPOSAL</h1>
+  <p style="margin-bottom:6px;">Hey, Vedanshi.</p>
+  <p style="margin-top:0;">If there was a multiverse, a grid of starting lights, and a thousand concerts,</p>
+  <p style="margin-top:4px;margin-bottom:6px;">I’d still choose you in every timeline, every race, every song.</p>
+  <p style="margin-top:4px;">Can I test something with you for a second?</p>
+  <div class="tags">
+    <span class="tag-pill">🕷️ Spider‑Verse</span>
+    <span class="tag-pill">🏁 Lights Out</span>
+    <span class="tag-pill">🎵 The Weeknd</span>
+  </div>
+  <button class="primary" onclick="startLights()">Begin</button>
 </div>
 
 <script>
@@ -284,41 +589,99 @@ setInterval(()=>{
 
 const card=document.getElementById('card');
 
+function renderLap(step){
+  return `
+    <div class="lap-indicator">
+      <span>lap</span>
+      <div class="lap-dots">
+        <span class="lap-dot${step>=1 ? ' active' : ''}"></span>
+        <span class="lap-dot${step>=2 ? ' active' : ''}"></span>
+        <span class="lap-dot${step>=3 ? ' active' : ''}"></span>
+        <span class="lap-dot${step>=4 ? ' active' : ''}"></span>
+      </div>
+    </div>
+  `;
+}
+
+function startLights(){
+  card.innerHTML=`
+    <h1 style="letter-spacing:0.08em;font-size:22px;margin-bottom:10px;">LIGHTS OUT</h1>
+    <p style="margin-top:0;margin-bottom:10px;font-size:14px;color:#cbd5f5;">
+      Stay with me until the lights go green.
+    </p>
+    <div class="lights-wrap">
+      <div class="light-dot"></div>
+      <div class="light-dot"></div>
+      <div class="light-dot"></div>
+      <div class="light-dot"></div>
+      <div class="light-dot"></div>
+    </div>
+    ${renderLap(1)}
+  `;
+
+  const dots=document.querySelectorAll('.light-dot');
+  let index=0;
+  const interval=setInterval(()=>{
+    if(index<dots.length){
+      dots[index].classList.add('on');
+      index++;
+    }else{
+      clearInterval(interval);
+      dots.forEach(d=>d.classList.remove('on'));
+      dots.forEach(d=>d.classList.add('green'));
+      card.classList.add('racing');
+      setTimeout(()=>card.classList.remove('racing'),900);
+      setTimeout(()=>{ ask(); },2300);
+    }
+  },220);
+}
+
 function ask(){
   card.innerHTML=`
-    <h1>Astronomy Check 🌞</h1>
-    <p>Is the Sun a star?</p>
+    <h1 style="margin-bottom:8px;">Tiny Space Question</h1>
+    <p style="margin-top:0;margin-bottom:16px;font-size:14px;color:#cbd5f5;">
+      Answer this right and I’ll show you something very, very us.
+    </p>
+    <p style="margin-top:0;">Across every Spider‑Verse you can imagine, the Sun is still a star… right?</p>
     <div class="buttons">
       <button class="primary" id="yes">Yes</button>
       <button class="secondary" id="no">No</button>
-      <div class="cat" id="cat">🐱</div>
     </div>
-    <p style="font-size:12px;color:#6b7280">No may behave unpredictably</p>
+    <p style="font-size:12px;color:#6b7280;margin-top:10px;">
+      One of these options has serious commitment issues 😼
+    </p>
+    ${renderLap(2)}
   `;
   const no=document.getElementById('no');
-  const cat=document.getElementById('cat');
-  const area=document.querySelector('.buttons');
 
-  function run(){
-    const x=Math.random()*(area.clientWidth-no.offsetWidth);
-    const y=Math.random()*(area.clientHeight-no.offsetHeight);
-    no.style.left=x+'px';
-    no.style.top=y+'px';
-    cat.style.left=(x-26)+'px';
-    cat.style.top=(y+6)+'px';
-  }
-
-  no.addEventListener('mouseenter',run);
-  no.addEventListener('touchstart',run);
+  // Turn NO into a tiny F1 cat-car that runs away when she clicks it
+  no.addEventListener('click',()=>{
+    if(no.disabled) return;
+    no.textContent='😼';
+    no.classList.add('no-run');
+    no.style.cursor='default';
+    no.disabled=true;
+    setTimeout(()=>{
+      no.style.display='none';
+    },900);
+  });
   document.getElementById('yes').onclick=confirm;
 }
 
 function confirm(){
   card.innerHTML=`
-    <h1>Final Confirmation ⭐</h1>
-    <button class="primary" onclick="reveal()">Okiee Yawrr</button>
-    <button class="secondary" onclick="reveal()">YUPEEE</button>
+    <h1>Final Confirmation ✨</h1>
+    <button class="primary" onclick="finishLine()">Okiee Yawrr</button>
+    <button class="secondary" onclick="finishLine()">YUPEEE</button>
+    ${renderLap(3)}
   `;
+}
+
+function finishLine(){
+  const overlay=document.createElement('div');
+  overlay.className='flag-wipe';
+  card.appendChild(overlay);
+  setTimeout(()=>{ overlay.remove(); reveal(); },560);
 }
 
 function launchConfetti(){
@@ -336,6 +699,7 @@ function launchConfetti(){
 
 function reveal(){
   document.body.classList.add("glow");
+  document.body.classList.add("redroom");
 
   if(navigator.vibrate){ navigator.vibrate(80); }
 
@@ -344,12 +708,24 @@ function reveal(){
   card.innerHTML=`
     <div class="star-core"></div>
     <div style="margin-top:22px">
-      <div class="glitter" style="font-size:40px">Vedannshi</div>
-      <div class="final-text" style="font-size:28px;font-weight:800;margin-top:10px">
-        YOU’RE GOING TO PROM<br>WITH ME!!!!!
+      <div class="glitter glitch-name" style="font-size:40px;font-family:'Great Vibes',cursive;">Vedanshi</div>
+      <div class="final-text" style="font-size:28px;font-weight:800;margin-top:10px;letter-spacing:0.05em;">
+        WILL YOU BE MY<br>PROM DATE?
+      </div>
+      <div class="badges-grid">
+        <span class="badge-pill">🕷️ My Spider‑Verse partner</span>
+        <span class="badge-pill">🏁 Pole position in my heart</span>
+        <span class="badge-pill center-span">🎵 On repeat like The Weeknd</span>
       </div>
     </div>
+    <div class="polaroid-strip">
+      <div class="polaroid"><img src="vm2.jpg" alt="us"></div>
+      <div class="polaroid"><img src="vm3.jpg" alt="us"></div>
+      <div class="polaroid"><img src="vm4.jpg" alt="us"></div>
+    </div>
     <div class="const-wrap" id="const"></div>
+    <div class="signature">crafted by Raghav for Vedanshi</div>
+    ${renderLap(4)}
   `;
 
   setTimeout(()=>{
@@ -358,7 +734,11 @@ function reveal(){
   },450);
 
   setTimeout(()=>{
-    document.getElementById('music').play();
+    const music=document.getElementById('music');
+    if(music){
+      music.volume=0.67;
+      music.play();
+    }
     drawConstellation();
   },500);
 }
@@ -377,7 +757,7 @@ function drawConstellation(){
     I:{points:[[20,0],[20,55]],lines:[[0,1]]}
   };
 
-  const name="VEDANNSHI";
+  const name="VEDANSHI";
   const baseSpacing=55;
   const scale=Math.min(1,(wrap.clientWidth-20)/(name.length*baseSpacing));
   const spacing=baseSpacing*scale;
