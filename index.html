@@ -953,8 +953,8 @@ body.theme-reveal .bg-theme-reveal { opacity: 1; }
 
   /* --- Constellation --- */
   .const-wrap {
-    height: 70px !important;
-    margin-top: 8px !important;
+    height: 90px !important;
+    margin-top: 12px !important;
   }
 
   /* --- Signature --- */
@@ -964,7 +964,7 @@ body.theme-reveal .bg-theme-reveal { opacity: 1; }
 
   /* --- Lap indicator: hide on confirm screen --- */
   .lap-indicator {
-    margin-top: 8px !important;
+    margin-top: 24px !important;
   }
 }
 
@@ -1160,7 +1160,7 @@ const maxDim = Math.max(window.innerWidth, window.innerHeight) * 2.5;
 const cx = window.innerWidth / 2;
 const cy = window.innerHeight / 2;
 
-const starCount = window.innerWidth < 768 ? 1500 : 8000;
+const starCount = window.innerWidth < 768 ? 3500 : 8000;
 for(let i=0; i<starCount; i++){
   const size = Math.random() > 0.8 ? (Math.random() * 2 + 1) : Math.random() * 1.5 + 0.5;
   const colors = ['#ffffff', '#ffffff', '#ffffff', '#e2e8f0', '#bfdbfe', '#fbcfe8'];
