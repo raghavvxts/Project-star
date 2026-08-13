@@ -1,0 +1,1668 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<title>Happy Birthday • Vedanshi</title>
+<link rel="icon" type="image/png" href="favicon.png">
+<link rel="apple-touch-icon" href="favicon.png">
+
+<!-- Preload heavy images to prevent lag -->
+<link rel="preload" as="image" href="leap-of-faith.jpg">
+<link rel="preload" as="image" href="vm2.jpg">
+<link rel="preload" as="image" href="vm3.jpg">
+<link rel="preload" as="image" href="vm4.jpg">
+<link rel="preload" as="image" href="vm5.jpg">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Great+Vibes&family=Cormorant+Garamond:wght@500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cabin+Sketch:wght@400;700&display=swap" rel="stylesheet">
+
+<style>
+ :root{
+  --bg-0:#000000;
+  --bg-1:#09090b;
+  --bg:#0a0a0a;
+  --card:rgba(20,20,20,0.7);
+  --text:#cbd5e1; /* Much softer, elegant off-white */
+  --muted:#94a3b8;
+  --accent:#3b82f6;
+  --glow:rgba(59,130,246,0.3);
+}
+
+ *{
+  box-sizing:border-box;
+  font-family: 'Cabin Sketch', cursive;
+  margin: 0;
+  padding: 0;
+}
+
+html{
+  scroll-behavior:smooth;
+  overflow-x: hidden;
+}
+
+body{
+  min-height:100dvh;
+  overflow:hidden;
+  background: radial-gradient(circle at center, var(--bg-1) 0%, var(--bg-0) 100%);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  color:var(--text);
+  position:relative;
+}
+
+/* Override inline colors for background orbs to be monochromatic */
+.bg-orb{
+  position:absolute;
+  border-radius:50%;
+  filter: grayscale(100%) opacity(0.15) blur(60px) !important;
+  pointer-events:none;
+  z-index:0;
+  mix-blend-mode: screen;
+}
+
+/* Weeknd-style red room overlay for final reveal */
+body::before{
+  content:"";
+  position:fixed;
+  inset:0;
+  background:radial-gradient(circle at center, rgba(30, 0, 0, 0.8), #000 80%);
+  opacity:0;
+  pointer-events:none;
+  z-index:0;
+  transition:opacity 1.5s ease-in-out;
+}
+
+
+
+/* Ambient Glow Pulse */
+body::after{
+  content:"";
+  position:fixed;
+  inset:0;
+  background:
+    radial-gradient(circle at center, rgba(255,255,255,0.05), transparent 60%);
+  opacity:0;
+  pointer-events:none;
+  z-index:0;
+  transition: opacity 1.5s ease-out;
+}
+
+body::selection{
+  background:rgba(255,255,255,0.2);
+  color:#fff;
+}
+
+@keyframes ambientPulse{
+  0%{opacity:0;}
+  50%{opacity:.8;}
+  100%{opacity:0;}
+}
+
+body.glow::after{
+  animation:ambientPulse 2.5s ease-out forwards;
+}
+
+/* Stars */
+.star{
+  position:absolute;
+  width:1px;
+  height:1px;
+  background:#fff;
+  border-radius: 50%;
+  opacity:.4;
+  animation:twinkle 5s infinite alternate ease-in-out;
+}
+@keyframes twinkle{
+  0%{opacity:.1; transform: scale(0.8);}
+  100%{opacity:.7; transform: scale(1.5); box-shadow: 0 0 4px #fff;}
+}
+
+/* Shooting Star */
+.shooting-star{
+  position:absolute;
+  width:120px;
+  height:1px;
+  background:linear-gradient(90deg, rgba(255,255,255,0.8), transparent);
+  left:-150px;
+  opacity:0;
+  box-shadow: 0 0 8px rgba(255,255,255,0.4);
+}
+@keyframes shoot{
+  0%{transform:translateX(0) translateY(0) rotate(-20deg); opacity:1;}
+  100%{transform:translateX(150vw) translateY(50vh) rotate(-20deg); opacity:0;}
+}
+
+/* Frameless Card Wrapper */
+.card{
+  background: transparent !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  border: none !important;
+  box-shadow: none !important;
+  color:var(--text);
+  padding:10px 16px 100px;
+  width:min(640px,calc(100vw - 32px));
+  max-height:calc(100vh - 32px);
+  overflow:visible;
+  text-align:center;
+  z-index:10;
+  position:relative;
+  transition:transform .6s cubic-bezier(0.16, 1, 0.3, 1);
+  animation: floatInSpace 8s ease-in-out infinite;
+}
+@keyframes floatInSpace{
+  0%,100%{ transform:translateY(0); }
+  50%{ transform:translateY(-8px); }
+}
+
+.card.zoom{transform:scale(1.05);}
+
+@keyframes subtleShake{
+  0%{transform:scale(1.05) translateX(0)}
+  25%{transform:scale(1.05) translateX(-3px)}
+  50%{transform:scale(1.05) translateX(3px)}
+  75%{transform:scale(1.05) translateX(-2px)}
+  100%{transform:scale(1.05) translateX(0)}
+}
+.card.impact{animation:subtleShake .5s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;}
+
+h1{
+  font-size:clamp(22px,2.8vw,32px);
+  margin-bottom:14px;
+  line-height:1.2;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  color: #e2e8f0;
+  text-shadow: 0 4px 12px rgba(0,0,0,1), 0 0 10px rgba(255,255,255,0.05);
+}
+h1,h2,h3{
+  margin:0;
+  font-weight:600;
+  line-height:1.2;
+  color: #e2e8f0; /* Soft contrast for headers */
+  font-family: 'Cabin Sketch', cursive;
+}
+p{
+  margin:0 0 10px;
+  font-size:clamp(16px,2.2vw,20px);
+  line-height:1.6;
+  color: var(--text);
+  font-family: 'Poppins', sans-serif;
+}
+.muted{
+  color:var(--muted);
+}
+
+.intro-copy{
+  max-width:38ch;
+  margin-left:auto;
+  margin-right:auto;
+}
+
+.handwritten-line{
+  font-family: 'Cabin Sketch', cursive;
+  font-size:clamp(24px,3.5vw,32px);
+  line-height:1.4;
+  color:var(--text); /* Use subtle text color */
+  font-style: italic;
+  font-weight:400;
+  letter-spacing:0.03em;
+  text-shadow: 0 2px 8px rgba(0,0,0,0.8);
+}
+
+button{
+  font-family: 'Poppins', sans-serif;
+  padding:14px 36px;
+  font-size:18px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  border-radius:999px;
+  border:none;
+  cursor:pointer;
+  margin:10px 8px;
+  transition:all .6s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+button:focus-visible{
+  outline:2px solid rgba(248,250,252,0.8);
+  outline-offset:4px;
+}
+
+button:active {
+  transform: scale(0.97) !important;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+/* Glassmorphic floating buttons */
+.primary{
+  background:rgba(255, 255, 255, 0.1);
+  color:#fff;
+  backdrop-filter: blur(20px) saturate(1.5);
+  -webkit-backdrop-filter: blur(20px) saturate(1.5);
+  border: 1px solid rgba(255,255,255,0.4);
+  box-shadow: 
+    0 10px 30px rgba(0, 0, 0, 0.5),
+    inset 0 1px 1px rgba(255,255,255,0.4);
+}
+.primary:hover{
+  background:rgba(255, 244, 143, 0.15);
+  transform:translateY(-4px) scale(1.02);
+  box-shadow: 
+    0 15px 40px rgba(255, 244, 143, 0.2),
+    inset 0 1px 2px rgba(255,255,255,0.5);
+}
+.primary::before{
+  content: '';
+  position: absolute;
+  top: 0; left: -100%; width: 100%; height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+  transition: left 0.6s ease;
+}
+.primary:hover::before{
+  left: 100%;
+}
+
+.secondary{
+  background:rgba(10, 10, 10, 0.3);
+  color:var(--muted);
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  border:1px solid rgba(255, 255, 255, 0.15);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+}
+.secondary:hover{
+  color:#fff;
+  background:rgba(20, 20, 20, 0.5);
+  border-color:rgba(255, 255, 255, 0.3);
+  transform:translateY(-4px) scale(1.02);
+  box-shadow: 0 15px 40px rgba(0,0,0,0.7);
+}
+
+.buttons{
+  position:relative;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  gap:16px;
+  margin-top:24px;
+  flex-wrap:wrap;
+}
+#yes,#no{
+  min-width:140px;
+  flex:0 0 140px;
+  transition:all .5s ease;
+}
+.cat{position:absolute;font-size:26px;pointer-events:none}
+
+/* F1-style runaway No button */
+.no-run{
+  animation:noRun 0.8s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+}
+@keyframes noRun{
+  0%{transform:translateX(0) scale(1);opacity:1;filter:blur(0);}
+  30%{transform:translateX(40px) scale(1.1) rotate(5deg);opacity:1;}
+  100%{transform:translateX(100px) scale(0.5) rotate(15deg);opacity:0;filter:blur(4px);pointer-events:none;}
+}
+
+/* Photo */
+.star-core{
+  width:120px;
+  height:120px;
+  margin:4px auto 0;
+  border-radius:50%;
+  background:url("vm1.jpg") center/cover no-repeat;
+  box-shadow:
+    0 0 0 2px rgba(255, 255, 255, 0.2),
+    0 25px 50px rgba(0,0,0,0.8),
+    0 0 60px rgba(255,255,255,0.1);
+  transition: transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  filter: grayscale(40%) contrast(1.1);
+}
+.star-core:hover{
+  transform: scale(1.08) rotate(4deg) translateY(-5px);
+  box-shadow:
+    0 0 0 2px rgba(255, 255, 255, 0.3),
+    0 35px 70px rgba(0,0,0,0.9),
+    0 0 80px rgba(255,255,255,0.15);
+}
+
+/* Constellation White/Silver */
+.const-wrap{
+  position:relative;
+  width:100%;
+  height:120px;
+  margin:20px auto 0;
+  overflow:hidden;
+}
+.const-star{
+  position:absolute;
+  width:4px;
+  height:4px;
+  border-radius:50%;
+  background:#f6c1d8;
+  box-shadow:0 0 10px 2px rgba(255, 182, 193, 0.8);
+  animation:pulseStar 3s ease-in-out infinite alternate;
+}
+@keyframes pulseStar{
+  from{transform:scale(0.8);opacity:.5}
+  to{transform:scale(1.5);opacity:1}
+}
+.const-line{
+  position:absolute;
+  height:1px;
+  background:rgba(246, 193, 216, 0.6);
+  transform-origin:left center;
+  box-shadow:0 0 8px rgba(255, 182, 193, 0.6);
+  opacity:0;
+  width:0;
+  transition: width 0.8s linear, opacity 0.1s ease;
+}
+
+/* text pop */
+@keyframes textPop{
+  0%{transform:translateY(15px);opacity:0; letter-spacing: 0.1em;}
+  100%{transform:translateY(0);opacity:1; letter-spacing: 0.15em;}
+}
+.final-text{
+  animation:textPop 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  color: #fff;
+  font-weight: 300;
+  text-shadow: 0 8px 24px rgba(0,0,0,1), 0 0 20px rgba(255,255,255,0.2);
+}
+
+.reveal-stage{
+  position:relative;
+  padding-top:4px;
+  overflow:visible;
+}
+
+.reveal-halo{
+  position:absolute;
+  inset:-40px -20px auto;
+  height:160px;
+  background: radial-gradient(ellipse at center, rgba(255,255,255,0.05), transparent 60%);
+  filter:blur(12px);
+  pointer-events:none;
+}
+
+.reveal-subtitle{
+  margin-top:16px;
+  font-size:11px;
+  letter-spacing:0.25em;
+  text-transform:uppercase;
+  color:var(--muted);
+  font-weight: 400;
+}
+
+.reveal-note{
+  margin-top:24px;
+  font-size:20px;
+  line-height:1.6;
+  color:#fff;
+  font-style: italic;
+  max-width:32ch;
+  margin-left:auto;
+  margin-right:auto;
+  opacity: 0.8;
+  text-shadow: 0 4px 12px rgba(0,0,0,1);
+}
+
+.reveal-line{
+  width:40px;
+  height:1px;
+  margin:32px auto 0;
+  background:rgba(255,255,255,0.3);
+  box-shadow: 0 2px 4px rgba(0,0,0,0.8);
+}
+
+/* racing line under card when lights go green - now floats free */
+.card.racing::after{
+  content:"";
+  position:absolute;
+  left:-50%;
+  right:-50%;
+  bottom:-20px;
+  height:2px;
+  background:linear-gradient(90deg, transparent, #fff, transparent);
+  box-shadow:0 0 15px rgba(255,255,255,.8);
+  animation:raceLine .6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  border-radius: 50%;
+}
+@keyframes raceLine{
+  0%{transform:translateX(-50%);opacity:0;}
+  50%{opacity:1;}
+  100%{transform:translateX(50%);opacity:0;}
+}
+
+/* tiny fandom tags - glassmorphic */
+.tags{
+  display:flex;
+  justify-content:center;
+  flex-wrap:wrap;
+  gap:10px;
+  margin-top:24px;
+}
+.tag-pill{
+  font-family: 'Poppins', sans-serif;
+  padding:6px 16px;
+  border-radius:999px;
+  font-size:12px;
+  font-weight: 600;
+  letter-spacing:0.05em;
+  text-transform:uppercase;
+  background:rgba(255, 255, 255, 0.05);
+  border:1px solid rgba(255, 255, 255, 0.15);
+  color:var(--muted);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.5);
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+.tag-pill:hover{
+  color: #fff;
+  background:rgba(255, 255, 255, 0.15);
+  border-color: rgba(255, 255, 255, 0.3);
+  transform: translateY(-3px) scale(1.05);
+  box-shadow: 0 12px 30px rgba(0,0,0,0.7);
+}
+
+/* glitch accent on name - Minimalist */
+.glitch-name{
+  position:relative;
+  animation:glitch 5s infinite;
+  display: inline-block;
+  color: #fff;
+}
+@keyframes glitch{
+  0%,95%,100%{ text-shadow: 0 0 15px rgba(255,182,193,0.8), 0 0 30px rgba(255,182,193,0.5); transform:none; }
+  96%{ text-shadow: -1px 0 rgba(255,182,193,0.8), 0 0 15px rgba(255,182,193,0.8); transform:translate(1px,0); }
+  97%{ text-shadow: 1px 0 rgba(255,182,193,0.8), 0 0 15px rgba(255,182,193,0.8); transform:translate(-1px,0); }
+}
+
+/* F1 lights-out bar - Glassmorphic */
+.lights-wrap{
+  display:flex;
+  justify-content:center;
+  gap:16px;
+  margin-top:32px;
+  padding: 16px 24px;
+  background: rgba(15, 15, 15, 0.5);
+  backdrop-filter: blur(25px) saturate(1.5);
+  -webkit-backdrop-filter: blur(25px) saturate(1.5);
+  border-radius: 999px; /* Pill shape */
+  border: 1px solid rgba(255,255,255,0.15);
+  box-shadow: 
+    0 15px 40px rgba(0,0,0,0.8),
+    inset 0 1px 1px rgba(255,255,255,0.1);
+  display: inline-flex;
+  transition: transform 0.4s ease;
+}
+.lights-wrap:hover{
+  transform: translateY(-2px);
+}
+.light-dot{
+  width:14px;
+  height:14px;
+  border-radius:50%;
+  background:#171717;
+  border:1px solid #333;
+  box-shadow: inset 0 2px 4px rgba(0,0,0,0.8);
+  transition: all 0.05s;
+}
+.light-dot.on{
+  background:#dc2626;
+  border-color: #ef4444;
+  box-shadow: 0 0 20px rgba(220,38,38,0.7), inset 0 2px 4px rgba(255,255,255,0.3);
+}
+.light-dot.green{
+  background:#16a34a;
+  border-color: #22c55e;
+  box-shadow: 0 0 20px rgba(22,163,74,0.7), inset 0 2px 4px rgba(255,255,255,0.3);
+}
+
+/* glitter */
+.glitter{
+  background: linear-gradient(135deg, #ff758c 0%, #ff7eb3 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 0 15px rgba(255, 117, 140, 0.4);
+}
+
+/* Confetti override */
+.confetti{
+  position:fixed;
+  width:10px;
+  height:18px;
+  top:-20px;
+  border-radius: 2px;
+  opacity:.9;
+  background: #fff !important;
+  box-shadow: 0 0 8px #fff;
+  animation:fall 3.5s linear forwards;
+}
+@keyframes fall{
+  to{
+    transform:translateY(110vh) rotate(1080deg);
+    opacity:0;
+  }
+}
+
+/* chequered flag wipe overlay */
+.flag-wipe{
+  position:fixed; /* make it full screen instead of card-bound */
+  inset:0;
+  background-size:24px 24px;
+  background-image:
+    linear-gradient(45deg, #020617 25%, transparent 25%, transparent 75%, #020617 75%, #020617),
+    linear-gradient(45deg, #020617 25%, transparent 25%, transparent 75%, #020617 75%, #020617);
+  background-position: 0 0, 12px 12px;
+  background-color: rgba(255,255,255,0.05);
+  transform:translateX(-100%);
+  animation:flagWipe .6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  z-index: 100;
+}
+@keyframes flagWipe{
+  50% { transform:translateX(0); }
+  100%{ transform:translateX(100%); }
+}
+
+/* Weeknd-style stage beams - Cinematic Dark */
+.beams{
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  z-index:0;
+  opacity:0;
+  transition:opacity 2s ease-out;
+}
+body.redroom .beams{
+  opacity:1;
+}
+.beam{
+  position:absolute;
+  width:20%;
+  height:150%;
+  background:linear-gradient(120deg, rgba(255,255,255,0.03), rgba(255,0,0,0.05), transparent 70%);
+  filter:blur(10px);
+  mix-blend-mode:screen;
+  animation:beamSweep 15s linear infinite;
+  transform-origin: top center;
+}
+.beam-left{ left:10%; top:-20%; transform:rotate(-20deg); }
+.beam-right{ right:10%; top:-20%; transform:rotate(20deg); animation-delay:5s; }
+@keyframes beamSweep{
+  0%{transform:rotate(var(--angle,20deg)) translateX(-5%);opacity:0.2;}
+  50%{transform:rotate(var(--angle,20deg)) translateX(5%);opacity:0.6;}
+  100%{transform:rotate(var(--angle,20deg)) translateX(-5%);opacity:0.2;}
+}
+
+/* Polaroid strip - Floating glass */
+.polaroid-strip{
+  margin:32px auto 0;
+  display:flex;
+  justify-content:center;
+  gap:16px;
+  flex-wrap:wrap;
+  perspective: 1200px; /* Enhanced perspective */
+}
+.polaroid{
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) !important;
+  background:rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px); /* Glassy frame */
+  -webkit-backdrop-filter: blur(10px);
+  padding:6px 6px 16px;
+  border-radius:4px; /* slightly softer corners */
+  box-shadow:
+    0 15px 35px rgba(0,0,0,0.7),
+    inset 0 0 0 1px rgba(255,255,255,0.8);
+  transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.5s ease;
+  cursor: pointer;
+}
+.polaroid img{
+  display:block;
+  width:64px;
+  height:64px;
+  object-fit:cover;
+  border-radius:2px;
+  filter: grayscale(30%) contrast(1.1);
+  transition: filter 0.3s ease;
+}
+.polaroid:hover{
+  z-index: 10;
+  transform: scale(1.15) translateY(-10px) rotate(0deg) !important;
+  box-shadow: 
+    0 30px 60px rgba(0,0,0,0.9),
+    0 0 30px rgba(255, 117, 140, 0.3),
+    inset 0 0 0 1px rgba(255,255,255,1);
+}
+.polaroid:hover img{
+  filter: grayscale(0%) contrast(1.1);
+}
+.polaroid:nth-child(1){transform:rotate(-8deg) translateY(6px) translateZ(0);}
+.polaroid:nth-child(2){transform:rotate(3deg) translateY(-4px) translateZ(0);}
+.polaroid:nth-child(3){transform:rotate(6deg) translateY(4px) translateZ(0);}
+.polaroid:nth-child(4){transform:rotate(-4deg) translateY(-6px) translateZ(0);}
+
+.polaroid:nth-child(1):hover{transform:rotate(-2deg) scale(1.3) translateZ(50px);}
+.polaroid:nth-child(2):hover{transform:rotate(0deg) scale(1.3) translateZ(50px);}
+.polaroid:nth-child(3):hover{transform:rotate(2deg) scale(1.3) translateZ(50px);}
+.polaroid:nth-child(4):hover{transform:rotate(-1deg) scale(1.3) translateZ(50px);}
+
+/* fandom badges grid on final screen */
+.badges-grid{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:12px;
+  margin-top:24px;
+  font-size:10px;
+  text-transform:uppercase;
+  letter-spacing:0.15em;
+  color:var(--muted);
+  justify-items:center;
+}
+.badge-pill{
+  font-family: 'Poppins', sans-serif;
+  padding:8px 16px;
+  border-radius:999px;
+  background:rgba(255,255,255,0.03);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255,255,255,0.1);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+}
+.badge-pill.center-span{
+  grid-column:1 / 3;
+}
+
+/* lap indicator */
+.lap-indicator{
+  font-family: 'Poppins', sans-serif;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  gap:12px;
+  margin-top:32px;
+  font-size:10px;
+  text-transform:uppercase;
+  letter-spacing:0.2em;
+  color:var(--muted);
+  text-shadow: 0 2px 4px rgba(0,0,0,0.8);
+}
+.lap-dots{
+  display:flex;
+  gap:8px;
+}
+.lap-dot{
+  width:6px;
+  height:6px;
+  border-radius:50%;
+  background:rgba(255,255,255,0.1);
+  box-shadow: inset 0 1px 2px rgba(0,0,0,0.5);
+  transition: all 0.3s ease;
+}
+.lap-dot.active{
+  background:#fff;
+  box-shadow:0 0 10px rgba(255,255,255,0.8), inset 0 1px 1px rgba(255,255,255,1);
+}
+
+/* tiny signature */
+.signature{
+  font-family: 'Poppins', sans-serif;
+  margin-top:40px;
+  font-size:9px;
+  text-transform:uppercase;
+  letter-spacing:0.3em;
+  color:rgba(255,255,255,0.2);
+  text-shadow: 0 2px 4px rgba(0,0,0,0.8);
+}
+
+/* Mobile */
+@media (max-width:600px){
+  .card{
+    width:calc(100vw - 20px);
+    padding:32px 16px 24px;
+    animation: none; /* Disable overarching float on mobile for stability */
+  }
+  .star-core{width:110px;height:110px;}
+  .const-wrap{height:80px;}
+  .tags{gap:4px}
+  .tag-pill{font-size:9px; padding: 4px 8px;}
+  .polaroid { padding: 6px 6px 18px !important; }
+  .polaroid img{width:56px !important; height:70px !important;}
+  .badges-grid{grid-template-columns:1fr; gap:6px;}
+  .badge-pill.center-span{grid-column:auto;}
+  .intro-copy{max-width:none;}
+  h1 {font-size: 26px;}
+  p {font-size: 16px;}
+  button {padding: 12px 24px; font-size: 16px; min-width: 120px; flex: 0 0 120px;}
+  
+  /* Make sure runaway button doesn't stretch viewport horizontally */
+  .no-run {
+    animation: noRunMobile 0.6s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+  }
+  
+  /* Fix badges overflow on mobile */
+  .badges-wrap {
+    flex-wrap: wrap !important;
+    gap: 8px !important;
+  }
+}
+@keyframes noRunMobile{
+  0%{transform:translateX(0) scale(1);opacity:1;}
+  100%{transform:translateX(50px) translateY(50px) scale(0.5) rotate(30deg);opacity:0;pointer-events:none;}
+}
+
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{
+    animation-duration:0.01ms !important;
+    animation-iteration-count:1 !important;
+    transition-duration:0.01ms !important;
+    scroll-behavior:auto !important;
+  }
+}
+
+/* Mac Preview Lightbox */
+.mac-preview-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  z-index: 1000;
+  opacity: 0;
+  transition: opacity 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+  cursor: zoom-out;
+}
+.mac-preview-overlay.active {
+  opacity: 1;
+}
+.mac-preview-img {
+  position: fixed;
+  object-fit: cover;
+  border-radius: 2px;
+  box-shadow: 0 30px 60px rgba(0,0,0,0.8), 0 0 0 1px rgba(255,255,255,0.2);
+  transform-origin: center center;
+  transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+  cursor: zoom-out;
+  z-index: 1001;
+}
+
+/* Cinematic Transitions */
+#card-content {
+  transition: all 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+}
+#card-content.fade-out {
+  opacity: 0;
+  filter: blur(8px);
+  transform: scale(0.97) translateY(2px);
+}
+#card-content.fade-in {
+  animation: contentFadeIn 0.7s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+@keyframes contentFadeIn {
+  from { opacity: 0; filter: blur(8px); transform: scale(1.03) translateY(-2px); }
+  to { opacity: 1; filter: blur(0); transform: scale(1) translateY(0); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; filter: blur(8px); transform: translateY(15px); }
+  to { opacity: 1; filter: blur(0); transform: translateY(0); }
+}
+
+/* Dynamic Lighting overlays */
+.bg-theme {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0;
+  transition: opacity 1.5s ease;
+}
+.bg-theme-lights {
+  background: radial-gradient(circle at center, rgba(40, 5, 5, 0.6), #000 80%);
+}
+.bg-theme-reveal {
+  background: radial-gradient(circle at center, rgba(40, 5, 5, 0.6), #000 80%);
+}
+body.theme-lights .bg-theme-lights { opacity: 1; }
+body.theme-reveal .bg-theme-reveal { opacity: 1; }
+
+.leap-container { height: 40vh; display: flex; align-items: center; justify-content: center; }
+.leap-text { font-size: 32px; font-weight: 300; letter-spacing: 0.1em; text-shadow: 0 0 20px #fff; }
+.final-heading { font-size: 40px; font-weight: 800; letter-spacing: 0.05em; line-height: 1.3; }
+.reveal-note { margin-top: 2vh; font-size: 18px; opacity: 0.9; max-width: 85%; margin-left: auto; margin-right: auto; text-align: center; }
+.final-container { display: flex; flex-direction: column; align-items: center; justify-content: space-evenly; min-height: 70vh; }
+.badges-container { display: flex; justify-content: center; gap: 8px; flex-wrap: nowrap; white-space: nowrap; animation: fadeWord 1s 7.5s both; margin-top: 2vh; transform: scale(1); }
+.final-polaroids { margin-top: 3vh; margin-bottom: 2vh; animation: fadeWord 1s 8.5s both; gap: 20px; }
+
+
+/* ===========================================
+   Performance Pass
+=========================================== */
+.polaroid, .badges-grid, .final-text, .reveal-note, .star-core, .const-wrap {
+  will-change: transform, opacity;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+
+/* ===========================================
+   MOBILE — 768px and below (tablets & phones)
+=========================================== */
+@media (max-width: 768px) {
+
+  /* --- Reveal Line: hidden on mobile to save space --- */
+  .reveal-line { display: none !important; }
+
+  /* --- Flag wipe: disabled on mobile (confusing on small screens) --- */
+  .flag-wipe { display: none !important; }
+
+  /* --- Racing line flash: disable on mobile --- */
+  .card.racing::after { display: none !important; }
+
+  /* --- Star core (profile pic on reveal) --- */
+  .star-core {
+    width: 90px !important;
+    height: 90px !important;
+    margin: 8px auto 0 !important;
+  }
+
+  /* --- Reveal stage --- */
+  .reveal-stage {
+    padding-top: 6px !important;
+  }
+
+  /* --- WILL YOU BE MY PROM DATE --- */
+  .final-text {
+    font-size: 26px !important;
+    margin-top: 4px !important;
+    line-height: 1.1 !important;
+  }
+
+  /* --- Subtext italic note --- */
+  .reveal-note {
+    font-size: 13px !important;
+    margin-top: 8px !important;
+    line-height: 1.35 !important;
+    max-width: 90% !important;
+    text-wrap: balance !important;
+  }
+
+  /* --- Badges grid: force 3 in a row or 2+1 --- */
+  .badges-grid {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    justify-content: center !important;
+    gap: 6px !important;
+    margin-top: 10px !important;
+  }
+  .badge-pill {
+    font-size: 11px !important;
+    padding: 5px 10px !important;
+    white-space: nowrap !important;
+  }
+  .badge-pill.center-span {
+    grid-column: auto !important;
+  }
+
+  /* --- Polaroid strip: 2x2 staggered grid --- */
+  .polaroid-strip {
+    display: grid !important;
+    grid-template-columns: repeat(2, auto) !important;
+    gap: 6px 14px !important;
+    justify-content: center !important;
+    margin-top: 10px !important;
+  }
+  .polaroid-strip .polaroid {
+    padding: 5px 5px 14px !important;
+  }
+  .polaroid-strip .polaroid:nth-child(even) {
+    transform: translateY(10px) rotate(4deg) !important;
+  }
+  .polaroid-strip .polaroid:nth-child(odd) {
+    transform: translateY(0px) rotate(-4deg) !important;
+  }
+  .polaroid-strip .polaroid img {
+    width: 60px !important;
+    height: 68px !important;
+    object-fit: cover !important;
+  }
+  .polaroid-strip .polaroid img[src="vm4.jpg"] {
+    height: 58px !important;
+  }
+
+  /* --- Constellation --- */
+  .const-wrap {
+    height: 70px !important;
+    margin-top: 8px !important;
+  }
+
+  /* --- Signature --- */
+  .signature {
+    display: none !important;
+  }
+
+  /* --- Lap indicator: hide on confirm screen --- */
+  .lap-indicator {
+    margin-top: 8px !important;
+  }
+}
+
+/* ===========================================
+   MOBILE — 430px and below (compact phones)
+=========================================== */
+@media (max-width: 430px) {
+  .star-core {
+    width: 76px !important;
+    height: 76px !important;
+    margin: 6px auto 0 !important;
+  }
+  .final-text {
+    font-size: 22px !important;
+    margin-top: 2px !important;
+  }
+  .reveal-note {
+    font-size: 12px !important;
+    margin-top: 6px !important;
+  }
+  .badges-grid {
+    gap: 5px !important;
+    margin-top: 8px !important;
+  }
+  .badge-pill {
+    font-size: 10px !important;
+    padding: 4px 8px !important;
+  }
+  .polaroid-strip {
+    gap: 4px 10px !important;
+    margin-top: 8px !important;
+  }
+  .polaroid-strip .polaroid {
+    padding: 4px 4px 11px !important;
+  }
+  .polaroid-strip .polaroid img {
+    width: 50px !important;
+    height: 57px !important;
+  }
+  .polaroid-strip .polaroid img[src="vm4.jpg"] {
+    height: 48px !important;
+  }
+  .const-wrap {
+    height: 55px !important;
+    margin-top: 5px !important;
+  }
+
+  /* Glitch name (Vedanshi) */
+  .glitch-name {
+    font-size: 30px !important;
+  }
+
+  /* Reveal halo slightly smaller */
+  .reveal-halo {
+    height: 100px !important;
+  }
+}
+
+
+/* === CINEMATIC LETTERBOX BARS === */
+.cine-bar {
+  position: fixed;
+  left: 0;
+  width: 100%;
+  height: 10vh;
+  background: #000;
+  z-index: 100;
+  pointer-events: none;
+  transition: transform 1.5s ease-in-out;
+}
+.cine-bar-top { top: 0; transform: translateY(-100%); }
+.cine-bar-bottom { bottom: 0; transform: translateY(100%); }
+
+body.show-bars .cine-bar-top,
+body.show-bars .cine-bar-bottom {
+  transform: translateY(0);
+}
+
+
+/* === GLOBAL CINEMATIC FONT OVERRIDE === */
+* {
+  font-weight: 300 !important;
+  letter-spacing: 0.08em !important;
+}
+.glitch-name, .glitter {
+  font-weight: normal !important;
+  letter-spacing: normal !important;
+}
+
+
+.leap-container { height: 40vh; display: flex; align-items: center; justify-content: center; }
+.leap-text { font-size: 32px; font-weight: 300; letter-spacing: 0.1em; text-shadow: 0 0 20px #fff; text-align: center; }
+
+
+/* Ripple Effect */
+.ripple-effect {
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.5);
+  transform: scale(0);
+  animation: rippleAnim 0.6s linear;
+  pointer-events: none;
+}
+@keyframes rippleAnim {
+  to {
+    transform: scale(4);
+    opacity: 0;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<!-- Cinematic Letterbox Bars -->
+<div class="cine-bar cine-bar-top"></div>
+<div class="cine-bar cine-bar-bottom"></div>
+
+<canvas id="starfield" style="position:fixed;top:0;left:0;width:100%;height:100%;z-index:1;pointer-events:none;"></canvas>
+
+<div class="bg-theme bg-theme-lights"></div>
+<div class="bg-theme bg-theme-reveal"></div>
+
+<audio id="music" src="tose-naina.mp3" preload="auto" loop></audio>
+
+<div class="bg-orb" style="width:420px;height:420px;left:8vw;top:20vh;background:radial-gradient(circle,#f472b6,#7c3aed);"></div>
+<div class="bg-orb" style="width:520px;height:520px;right:6vw;top:8vh;background:radial-gradient(circle,#38bdf8,#0f172a);"></div>
+<div class="bg-orb" style="width:360px;height:360px;left:14vw;bottom:6vh;background:radial-gradient(circle,#22c55e,#0f172a);opacity:0.55;"></div>
+<div class="bg-orb" style="width:640px;height:640px;right:4vw;bottom:0;background:radial-gradient(circle,#f97316,#0b1120);opacity:0.45;"></div>
+
+<div class="beams">
+  <div class="beam beam-left" style="--angle:-18deg;"></div>
+  <div class="beam beam-right" style="--angle:18deg;"></div>
+</div>
+
+<div class="card webbed" id="card">
+  <div id="card-content">
+    <h1 style="letter-spacing:0.16em;font-size:clamp(24px, 4vw, 32px);margin-bottom:10px;">PROPOSAL</h1>
+    <p style="margin-bottom:6px;">Hey, Vedanshi.</p>
+    <p class="intro-copy handwritten-line" style="margin-top:0;">If there was a multiverse, a grid of starting lights, and a thousand concerts,</p>
+    <p class="intro-copy handwritten-line" style="margin-top:4px;margin-bottom:6px;">I’d still choose you in every timeline, every race, every song.</p>
+    <p class="intro-copy" style="margin-top:4px;">Can I test something with you for a second?</p>
+    <div class="tags">
+      <span class="tag-pill">🕷️ Spider‑Verse</span>
+      <span class="tag-pill">🏁 Lights Out</span>
+      <span class="tag-pill">🎵 The Weeknd</span>
+    </div>
+    <button class="primary" onclick="startLights()">Begin</button>
+  </div>
+</div>
+
+<script>
+// --- RIPPLE EFFECT ---
+document.addEventListener('click', function(e) {
+  if(e.target.tagName === 'BUTTON' || e.target.closest('button')) {
+    const btn = e.target.closest('button');
+    const ripple = document.createElement('span');
+    ripple.classList.add('ripple-effect');
+    const rect = btn.getBoundingClientRect();
+    const size = Math.max(rect.width, rect.height);
+    ripple.style.width = ripple.style.height = `${size}px`;
+    ripple.style.left = `${e.clientX - rect.left - size/2}px`;
+    ripple.style.top = `${e.clientY - rect.top - size/2}px`;
+    btn.appendChild(ripple);
+    setTimeout(() => ripple.remove(), 600);
+  }
+});
+
+// --- PHYSICS STARS (CANVAS OPTIMIZED) ---
+const canvas = document.getElementById('starfield');
+const ctx = canvas.getContext('2d');
+let w, h;
+function resize() {
+  w = canvas.width = window.innerWidth;
+  h = canvas.height = window.innerHeight;
+}
+window.addEventListener('resize', resize);
+resize();
+
+const stars = [];
+const maxDim = Math.max(window.innerWidth, window.innerHeight) * 2.5;
+const cx = window.innerWidth / 2;
+const cy = window.innerHeight / 2;
+
+for(let i=0; i<8000; i++){
+  const size = Math.random() > 0.8 ? (Math.random() * 2 + 1) : Math.random() * 1.5 + 0.5;
+  const colors = ['#ffffff', '#ffffff', '#ffffff', '#e2e8f0', '#bfdbfe', '#fbcfe8'];
+  const color = colors[Math.floor(Math.random() * colors.length)];
+  
+  stars.push({
+    bx: cx - maxDim/2 + Math.random() * maxDim,
+    by: cy - maxDim/2 + Math.random() * maxDim,
+    dx: 0, dy: 0,
+    vx: 0, vy: 0,
+    size: size,
+    color: color,
+    depth: Math.random() * 0.8 + 0.2,
+    twinkleSpeed: Math.random() * 0.03 + 0.01,
+    alpha: Math.random() * Math.PI * 2
+  });
+}
+
+let mouseX = -1000;
+let mouseY = -1000;
+document.addEventListener('mousemove', (e) => {
+  mouseX = e.clientX;
+  mouseY = e.clientY;
+});
+
+let globalRotation = 0;
+function animateStars() {
+  ctx.clearRect(0, 0, w, h);
+  
+  globalRotation += 0.0003;
+  ctx.save();
+  ctx.translate(w/2, h/2);
+  ctx.rotate(globalRotation);
+  ctx.translate(-w/2, -h/2);
+  
+  for(let i=0; i<stars.length; i++) {
+    const star = stars[i];
+    
+    star.alpha += star.twinkleSpeed;
+    const currentAlpha = 0.3 + Math.abs(Math.sin(star.alpha)) * 0.7;
+    
+    const px = star.bx + star.dx;
+    const py = star.by + star.dy;
+    
+    const dx = px - mouseX;
+    const dy = py - mouseY;
+    const dist = Math.sqrt(dx*dx + dy*dy);
+    
+    const maxDist = 150;
+    if(dist < maxDist && dist > 0) {
+      const force = (maxDist - dist) / maxDist;
+      star.vx += (dx / dist) * force * 2.0 * star.depth;
+      star.vy += (dy / dist) * force * 2.0 * star.depth;
+    }
+    
+    star.vx += -star.dx * 0.05;
+    star.vy += -star.dy * 0.05;
+    
+    star.vx *= 0.85;
+    star.vy *= 0.85;
+    
+    star.dx += star.vx;
+    star.dy += star.vy;
+    
+    ctx.globalAlpha = currentAlpha;
+    ctx.fillStyle = star.color;
+    ctx.beginPath();
+    ctx.arc(star.bx + star.dx, star.by + star.dy, star.size/2, 0, Math.PI*2);
+    ctx.fill();
+  }
+  
+  ctx.restore();
+  requestAnimationFrame(animateStars);
+}
+requestAnimationFrame(animateStars);
+
+// --- SHOOTING STAR ---
+// Moved to loadLeapOfFaith for cinematic timing
+
+// --- STATE MANAGEMENT ---
+const card=document.getElementById('card');
+const cardContent=document.getElementById('card-content');
+
+function transitionContent(newHTML, callback){
+  cardContent.classList.add('fade-out');
+  setTimeout(()=>{
+    cardContent.innerHTML = newHTML;
+    cardContent.classList.remove('fade-out');
+    cardContent.classList.add('fade-in');
+    setTimeout(()=>{
+      cardContent.classList.remove('fade-in');
+      if(callback) callback();
+    }, 700);
+  }, 700);
+}
+
+function renderLap(step){
+  return `
+    <div class="lap-indicator">
+      <span>lap</span>
+      <div class="lap-dots">
+        <span class="lap-dot${step>=1 ? ' active' : ''}"></span>
+        <span class="lap-dot${step>=2 ? ' active' : ''}"></span>
+        <span class="lap-dot${step>=3 ? ' active' : ''}"></span>
+        <span class="lap-dot${step>=4 ? ' active' : ''}"></span>
+      </div>
+    </div>
+  `;
+}
+
+function startLights(){
+  const music=document.getElementById('music');
+  if(music){
+    music.volume=0;
+    music.play().catch(()=>{});
+    let vol=0;
+    const fade=setInterval(()=>{
+      vol+=0.02;
+      if(vol>=0.67){vol=0.67;clearInterval(fade);}
+      music.volume=vol;
+    },100);
+  }
+  document.body.classList.add('theme-lights');
+  document.body.classList.add('show-bars');
+  
+  transitionContent(`
+    <h1 style="letter-spacing:0.08em;font-size:clamp(32px, 5vw, 48px);margin-bottom:8px;">LIGHTS OUT</h1>
+    <p style="margin-top:0;margin-bottom:10px;font-size:14px;color:#cbd5f5;">
+      Stay with me until the lights turn green.
+    </p>
+    <div class="lights-wrap">
+      <div class="light-dot"></div>
+      <div class="light-dot"></div>
+      <div class="light-dot"></div>
+      <div class="light-dot"></div>
+      <div class="light-dot"></div>
+    </div>
+    ${renderLap(1)}
+  `, () => {
+    const dots=document.querySelectorAll('.light-dot');
+    let index=0;
+    const interval=setInterval(()=>{
+      if(index<dots.length){
+        dots[index].classList.add('on');
+        index++;
+      }else{
+        clearInterval(interval);
+        dots.forEach(d=>d.classList.remove('on'));
+        dots.forEach(d=>d.classList.add('green'));
+        setTimeout(()=>{ ask(); },900);
+      }
+    },150);
+  });
+}
+
+function ask(){
+  transitionContent(`
+    <h1 style="margin-bottom:6px; font-size:clamp(32px, 5vw, 48px);">Pole Position Question</h1>
+    <p style="margin-top:0;margin-bottom:12px;font-size:14px;color:#cbd5f5;">
+      Answer this right and I’ll show you what comes next.
+    </p>
+    <p style="margin-top:0;max-width:32ch;margin-left:auto;margin-right:auto;">It's lights out, and out of all the stars in the galaxy, <span style="color:#FFF48F; text-shadow: 0 0 10px rgba(255, 244, 143, 0.6);">you're the only one I'm racing towards</span> 🏎️✨</p>
+    <div class="buttons">
+      <button class="primary" id="yes">Yes</button>
+      <button class="secondary" id="no">No</button>
+    </div>
+    <p style="font-size:16px;color:#6b7280;margin-top:8px;">
+      One of these options just got a 5-second time penalty...
+    </p>
+    ${renderLap(2)}
+  `, () => {
+    const no=document.getElementById('no');
+    
+    // Add both mouseenter and touchstart for mobile support
+    const triggerRun = () => {
+      if(no.disabled) return;
+      no.textContent='〰';
+      no.classList.add('no-run');
+      no.style.cursor='default';
+      no.disabled=true;
+      setTimeout(()=>{
+        no.style.minWidth = '0px';
+        no.style.width = '0px';
+        no.style.flex = '0 0 0px';
+        no.style.margin = '0px';
+        no.style.padding = '0px';
+        no.style.borderWidth = '0px';
+      }, 200);
+      setTimeout(()=>{
+        no.style.display='none';
+      },900);
+    };
+    
+    no.addEventListener('mouseenter', triggerRun);
+    no.addEventListener('touchstart', triggerRun, {passive: true});
+    no.addEventListener('click', triggerRun);
+    
+    document.getElementById('yes').onclick=confirm;
+  });
+}
+
+function confirm(){
+  transitionContent(`
+    <h1 style="margin-bottom:8px; font-size:clamp(32px, 5vw, 48px);">Final Confirmation ✧</h1>
+    <button class="primary" onclick="finishLine()">Okiee Yawrr</button>
+    ${renderLap(3)}
+  `);
+}
+
+function finishLine(){
+  const music=document.getElementById('music');
+  if(music){
+    let vol=music.volume;
+    const dip=setInterval(()=>{
+      vol-=0.03;
+      if(vol<=0.15){vol=0.15;clearInterval(dip);}
+      music.volume=vol;
+    },100);
+  }
+  reveal();
+}
+
+function launchConfetti(){
+  const colors=["#f472b6","#ec4899","#f9a8d4","#fb7185","#fca5a5"];
+  for(let i=0;i<120;i++){
+    const c=document.createElement("div");
+    c.className="confetti";
+    c.style.left=Math.random()*100+"vw";
+    c.style.background=colors[Math.floor(Math.random()*colors.length)];
+    c.style.animationDuration=(2+Math.random()*2)+"s";
+    document.body.appendChild(c);
+    setTimeout(()=>c.remove(),4000);
+  }
+}
+
+function reveal(){
+  document.body.classList.remove('theme-lights');
+  document.body.classList.add('theme-reveal');
+  
+  // Start opening the cinematic borders immediately as the text appears
+  document.body.classList.remove('show-bars');
+
+  // Leap of faith screen
+  const leapBg = document.createElement('div');
+  leapBg.id = 'leap-bg';
+  leapBg.style.cssText = "position:fixed; top:0; left:0; width:100%; height:100%; background:url('leap-of-faith.jpg') center/cover; z-index:2; opacity:0; transform:scale(1.1); filter:blur(10px); transition:all 3.5s cubic-bezier(0.2, 0.8, 0.2, 1); pointer-events:none;";
+  document.body.appendChild(leapBg);
+  
+  // Emerge image cinematically ONLY AFTER text has completely appeared (2200ms)
+  setTimeout(() => { 
+    leapBg.style.opacity = '1'; 
+    leapBg.style.transform = 'scale(1)';
+    leapBg.style.filter = 'blur(0)';
+  }, 2200);
+
+  transitionContent(`
+
+    <div class="leap-container">
+      <h2 class="leap-text" style="opacity:0; animation: fadeIn 2s 0.2s ease forwards;">
+        Then let's take a leap of faith
+      </h2>
+    </div>
+  `, () => {
+    setTimeout(() => {
+      // Swell music back up
+      const music = document.getElementById('music');
+      if(music) {
+        let vol = music.volume;
+        const swell = setInterval(() => {
+          vol += 0.05;
+          if(vol >= 0.67) { vol = 0.67; clearInterval(swell); }
+          music.volume = vol;
+        }, 100);
+      }
+      setTimeout(() => photobomb(), 800);
+    }, 6500); // Wait 6.5s total to allow the 3.5s image transition to finish
+  });
+}
+
+function photobomb(){
+  const leapBg = document.getElementById('leap-bg');
+  if(leapBg) leapBg.style.opacity = '0';
+  
+  const photos = ['vm2.jpg','vm3.jpg','vm4.jpg','vm5.jpg'];
+  const positions = ['center 15%', 'center 10%', 'center 30%', 'center 25%'];
+
+  const montage = document.createElement('div');
+  montage.style.cssText = "position:fixed;inset:0;z-index:9998;background:#000;display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity 0.2s;will-change:opacity;";
+  
+  // Pre-render all images into the DOM to prevent network-fetch lag during the 150ms interval
+  const imgNodes = photos.map((src, i) => {
+    const img = document.createElement('img');
+    img.src = src;
+    img.style.cssText = `width:100vw;height:100dvh;object-fit:cover;object-position:${positions[i]};opacity:0;position:absolute;top:0;left:0;will-change:opacity;transition:opacity 0.2s;`;
+    montage.appendChild(img);
+    return img;
+  });
+  
+  document.body.appendChild(montage);
+
+  let pIdx = 0;
+  setTimeout(() => montage.style.opacity = '1', 50);
+
+  const flash = setInterval(() => {
+    // Hide previous image
+    if (pIdx > 0 && pIdx <= photos.length) imgNodes[pIdx - 1].style.opacity = '0';
+    
+    // Show current image
+    if(pIdx < photos.length) {
+      imgNodes[pIdx].style.opacity = '0.85';
+      pIdx++;
+    } else {
+      clearInterval(flash);
+      montage.style.background = '#fff';
+      setTimeout(() => {
+        montage.style.opacity = '0';
+        setTimeout(() => montage.remove(), 600);
+        executeRevealContent();
+      }, 350);
+    }
+  }, 350);
+}
+
+function executeRevealContent(){
+  document.body.classList.add('theme-reveal');
+  document.body.classList.add("glow");
+
+  if(navigator.vibrate){ navigator.vibrate(80); }
+
+  card.classList.add("zoom");
+
+  transitionContent(`
+    <div style="transform: translateY(2vh); display: flex; flex-direction: column; min-height: 85vh; justify-content: space-evenly; align-items: center;">
+      <!-- Top Section -->
+      <div class="star-core"></div>
+
+    <!-- Text Section -->
+    <div class="final-text" style="font-size:68px; font-weight:800; letter-spacing:0.05em; line-height:1.3; margin-top:2vh; margin-bottom:1vh;">
+        Happy Birthday
+    </div>
+    <div class="glitter glitch-name" style="font-size:64px; margin-bottom:2vh; font-family:'Great Vibes',cursive; animation: fadeWord 2s 1s both; color: #f6c1d8; text-shadow: 0 0 15px rgba(255,182,193,0.8), 0 0 30px rgba(255,182,193,0.5);">Vedanshi</div>
+    <div class="reveal-note" style="margin-top:4vh; font-size:22px; opacity:0.9; max-width:85%; margin-left:auto; margin-right:auto;">
+      I made this for you because some feelings deserve their own little universe.
+    </div>
+
+    <!-- Single-lane badges -->
+    <div class="badges-wrap" style="display:flex; justify-content:center; gap:12px; flex-wrap:nowrap; white-space:nowrap; animation: fadeWord 1s 7.5s both; margin-top:4vh;">
+        <span class="badge-pill">🕷️ Spider‑Verse Partner</span>
+        <span class="badge-pill">🏁 Pole Position</span>
+        <span class="badge-pill">🎵 The Weeknd Vibes</span>
+    </div>
+
+    <!-- Polaroids Section -->
+    <div class="polaroid-strip" style="margin-top:5vh; margin-bottom:4vh; animation: fadeWord 1s 8.5s both; gap:24px;">
+      <div class="polaroid" style="padding:10px 10px 28px; transform: rotate(-6deg) translateY(5px);"><img src="vm2.jpg" style="width:86px; height:100px; object-fit:cover; object-position:center 15%;" onclick="openPreview(this)"></div>
+      <div class="polaroid" style="padding:10px 10px 28px; transform: rotate(4deg) translateY(-5px);"><img src="vm3.jpg" style="width:82px; height:105px; object-fit:cover; object-position:center 10%;" onclick="openPreview(this)"></div>
+      <div class="polaroid" style="padding:10px 10px 28px; transform: rotate(-3deg) translateY(5px);"><img src="vm4.jpg" style="width:100px; height:91px; object-fit:cover; object-position:center 30%;" onclick="openPreview(this)"></div>
+      <div class="polaroid" style="padding:10px 10px 28px; transform: rotate(8deg) translateY(0px);"><img src="vm5.jpg" style="width:75px; height:100px; object-fit:cover; object-position:center 25%;" onclick="openPreview(this)"></div>
+    </div>
+
+    <!-- Constellation -->
+    <div id="const" style="margin-top:2vh; height:110px; position:relative; width:100%; max-width:600px; display:flex; justify-content:center;"></div>
+    </div>
+    ${renderLap(4)}
+  `, () => {
+    setTimeout(()=>{
+      card.classList.add("impact");
+      setTimeout(()=>card.classList.remove("impact"),400);
+    },50);
+
+    setTimeout(()=>{
+      drawConstellation();
+    },100);
+  });
+}
+
+function drawConstellation(){
+  const wrap=document.getElementById('const');
+  if(!wrap) return;
+  wrap.innerHTML='';
+  const letters={
+    V:{points:[[0,0],[20,55],[40,0]],lines:[[0,1],[1,2]]},
+    E:{points:[[40,0],[0,0],[0,55],[40,55],[0,27],[32,27]],lines:[[0,1],[1,2],[2,3],[2,4],[4,5]]},
+    D:{points:[[0,0],[0,55],[30,45],[40,27],[30,10],[0,0]],lines:[[0,1],[1,2],[2,3],[3,4],[4,5]]},
+    A:{points:[[0,55],[20,0],[40,55],[10,30],[30,30]],lines:[[0,1],[1,2],[3,4]]},
+    N:{points:[[0,55],[0,0],[40,55],[40,0]],lines:[[0,1],[1,2],[2,3]]},
+    S:{points:[[40,0],[0,0],[0,27],[40,27],[40,55],[0,55]],lines:[[0,1],[1,2],[2,3],[3,4],[4,5]]},
+    H:{points:[[0,0],[0,55],[40,0],[40,55],[0,27],[40,27]],lines:[[0,1],[2,3],[4,5]]},
+    I:{points:[[20,0],[20,55]],lines:[[0,1]]}
+  };
+
+  const name="VEDANSHI";
+  const baseSpacing=55;
+  const scale=Math.min(1,(wrap.clientWidth-20)/(name.length*baseSpacing));
+  const spacing=baseSpacing*scale;
+  const startX=(wrap.clientWidth-(name.length*spacing))/2;
+  const baseY=20;
+
+  let offsetX=startX;
+  let globalMaxDelay = 0;
+
+  for(let char of name){
+    const data=letters[char];
+    const pts=data.points;
+
+    pts.forEach(p=>{
+      const s=document.createElement('div');
+      s.className='const-star';
+      s.style.left=(offsetX+p[0]*scale)+'px';
+      s.style.top=(baseY+p[1]*scale)+'px';
+      wrap.appendChild(s);
+    });
+
+    let charDelay = 0;
+    data.lines.forEach(pair=>{
+      const [i,j]=pair;
+      const x1=offsetX+pts[i][0]*scale;
+      const y1=baseY+pts[i][1]*scale;
+      const x2=offsetX+pts[j][0]*scale;
+      const y2=baseY+pts[j][1]*scale;
+
+      const l=document.createElement('div');
+      l.className='const-line';
+      l.style.left=x1+'px';
+      l.style.top=y1+'px';
+      const dx=x2-x1;
+      const dy=y2-y1;
+      const length = Math.hypot(dx,dy);
+      l.style.width = '0px';
+      l.style.transform=`rotate(${Math.atan2(dy,dx)}rad)`;
+      wrap.appendChild(l);
+
+      setTimeout(()=>{
+        // Force browser to register the initial 0px width before transitioning
+        void l.offsetWidth; 
+        l.style.opacity="1";
+        l.style.width=length+'px';
+      },charDelay);
+      charDelay+=800;
+    });
+    
+    if (charDelay > globalMaxDelay) {
+      globalMaxDelay = charDelay;
+    }
+
+    offsetX+=spacing;
+  }
+
+  setTimeout(launchConfetti,globalMaxDelay+500);
+}
+
+function openPreview(imgEl) {
+  if (document.querySelector('.mac-preview-overlay')) return;
+
+  const rect = imgEl.getBoundingClientRect();
+  
+  const overlay = document.createElement('div');
+  overlay.className = 'mac-preview-overlay';
+  
+  const clone = document.createElement('img');
+  clone.src = imgEl.src;
+  clone.className = 'mac-preview-img';
+  
+  clone.style.left = rect.left + 'px';
+  clone.style.top = rect.top + 'px';
+  clone.style.width = rect.width + 'px';
+  clone.style.height = rect.height + 'px';
+  
+  document.body.appendChild(overlay);
+  document.body.appendChild(clone);
+  
+  void clone.offsetWidth;
+  
+  const hint = document.createElement('div');
+  hint.innerText = "Tap anywhere to close";
+  hint.style.cssText = "position:absolute; bottom:30px; left:50%; transform:translateX(-50%); color:rgba(255,255,255,0.7); font-size:14px; letter-spacing:1px; opacity:0; transition:opacity 0.4s; pointer-events:none; font-family:'Inter', sans-serif;";
+  overlay.appendChild(hint);
+  
+  const natW = imgEl.naturalWidth || 800;
+  const natH = imgEl.naturalHeight || 800;
+  const aspect = natW / natH;
+  
+  const maxW = window.innerWidth * 0.9;
+  const maxH = window.innerHeight * 0.8;
+  
+  let tWidth, tHeight;
+  if (aspect > maxW / maxH) {
+    tWidth = maxW;
+    tHeight = maxW / aspect;
+  } else {
+    tHeight = maxH;
+    tWidth = maxH * aspect;
+  }
+  
+  if (tWidth > natW * 2.5) {
+    tWidth = natW * 2.5;
+    tHeight = natH * 2.5;
+  }
+  
+  const targetLeft = (window.innerWidth - tWidth) / 2;
+  const targetTop = (window.innerHeight - tHeight) / 2;
+  
+  overlay.classList.add('active');
+  hint.style.opacity = '1';
+  clone.style.left = targetLeft + 'px';
+  clone.style.top = targetTop + 'px';
+  clone.style.width = tWidth + 'px';
+  clone.style.height = tHeight + 'px';
+  clone.style.borderRadius = '8px';
+  
+  const closePreview = () => {
+    overlay.classList.remove('active');
+    const newRect = imgEl.getBoundingClientRect();
+    clone.style.left = newRect.left + 'px';
+    clone.style.top = newRect.top + 'px';
+    clone.style.width = newRect.width + 'px';
+    clone.style.height = newRect.height + 'px';
+    clone.style.borderRadius = '2px';
+    
+    setTimeout(() => {
+      overlay.remove();
+      clone.remove();
+    }, 400);
+  };
+  
+  overlay.onclick = closePreview;
+  clone.onclick = closePreview;
+}
+</script>
+
+</body>
+</html>
