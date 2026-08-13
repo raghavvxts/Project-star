@@ -1134,7 +1134,8 @@ const maxDim = Math.max(window.innerWidth, window.innerHeight) * 2.5;
 const cx = window.innerWidth / 2;
 const cy = window.innerHeight / 2;
 
-for(let i=0; i<8000; i++){
+const starCount = window.innerWidth < 768 ? 1500 : 8000;
+for(let i=0; i<starCount; i++){
   const size = Math.random() > 0.8 ? (Math.random() * 2 + 1) : Math.random() * 1.5 + 0.5;
   const colors = ['#ffffff', '#ffffff', '#ffffff', '#e2e8f0', '#bfdbfe', '#fbcfe8'];
   const color = colors[Math.floor(Math.random() * colors.length)];
