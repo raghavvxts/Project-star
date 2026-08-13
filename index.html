@@ -338,7 +338,7 @@ button:active {
   width:100%;
   height:120px;
   margin:20px auto 0;
-  overflow:hidden;
+  overflow:visible;
 }
 .const-star{
   position:absolute;
@@ -348,6 +348,15 @@ button:active {
   background:#f6c1d8;
   box-shadow:0 0 10px 2px rgba(255, 182, 193, 0.8);
   animation:pulseStar 3s ease-in-out infinite alternate;
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  cursor: pointer;
+  z-index: 20;
+}
+.const-star:hover{
+  transform: scale(3.5) !important;
+  background: #FFF48F;
+  box-shadow: 0 0 20px 5px rgba(255, 244, 143, 0.9);
+  animation: none;
 }
 @keyframes pulseStar{
   from{transform:scale(0.8);opacity:.5}
@@ -361,7 +370,13 @@ button:active {
   box-shadow:0 0 8px rgba(255, 182, 193, 0.6);
   opacity:0;
   width:0;
-  transition: width 0.8s linear, opacity 0.1s ease;
+  transition: width 0.8s linear, opacity 0.1s ease, background 0.3s ease, box-shadow 0.3s ease, height 0.3s ease;
+  pointer-events: none;
+}
+.const-wrap:hover .const-line{
+  background: rgba(255, 244, 143, 0.8);
+  box-shadow: 0 0 12px rgba(255, 244, 143, 0.9);
+  height: 2px;
 }
 
 /* text pop */
@@ -1073,7 +1088,18 @@ body.show-bars .cine-bar-bottom {
 <div class="bg-theme bg-theme-lights"></div>
 <div class="bg-theme bg-theme-reveal"></div>
 
-<audio id="music" src="tose-naina.mp3" preload="auto" loop></audio>
+<audio id="music" preload="auto" loop></audio>
+<script>
+  let lastSongIndex = localStorage.getItem('lastSongIndex');
+  let nextSongIndex = 0; // Default to song1.mp3 for the very first time
+  if (lastSongIndex !== null) {
+    nextSongIndex = (parseInt(lastSongIndex) + 1) % 2; // Toggle between 0 and 1
+  }
+  localStorage.setItem('lastSongIndex', nextSongIndex);
+  
+  const songs = ["song1.mp3", "song2.mp3"];
+  document.getElementById('music').src = songs[nextSongIndex];
+</script>
 
 <div class="bg-orb" style="width:420px;height:420px;left:8vw;top:20vh;background:radial-gradient(circle,#f472b6,#7c3aed);"></div>
 <div class="bg-orb" style="width:520px;height:520px;right:6vw;top:8vh;background:radial-gradient(circle,#38bdf8,#0f172a);"></div>
@@ -1496,7 +1522,7 @@ function executeRevealContent(){
     </div>
 
     <!-- Constellation -->
-    <div id="const" style="margin-top:2vh; height:110px; position:relative; width:100%; max-width:600px; display:flex; justify-content:center;"></div>
+    <div id="const" class="const-wrap" style="margin-top:2vh; height:110px; position:relative; width:100%; max-width:600px; display:flex; justify-content:center;"></div>
     </div>
     ${renderLap(4)}
   `, () => {
